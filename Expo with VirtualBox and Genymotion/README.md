@@ -6,6 +6,8 @@ My home PC runs Windows for various conveniences, such as gaming. However, for d
 
 **Please Note:** This will also work for VMWare Player.
 
+---------------------------------------------------------------------------------------------------
+
 ## Solution
 
 There are a few networking options we can choose from when setting up a VM.
@@ -18,11 +20,15 @@ There are a few networking options we can choose from when setting up a VM.
 
 ![Network Diagaram](images/network.png)
 
+---------------------------------------------------------------------------------------------------
+
 ## Prerequisites
 
-* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) installed on the host machine
+* [VirtualBox](https://www.virtualbox.org/wiki/Downloads) Installed on the host machine
 * An [Expo](https://docs.expo.io/versions/latest/workflow/create-react-native-app) app in the (Ubuntu) development VM
 * [Genymotion](https://www.genymotion.com/desktop/) Installed and setup on the host machine
+
+---------------------------------------------------------------------------------------------------
 
 ## VirtualBox
 
@@ -37,12 +43,16 @@ NAT allows the Ubuntu VM to use the host machines internet access, it allows it 
 ![Figure 1: Ubuntu VM network settings](images/ubuntu_network1.png)
 ![Figure 1: Ubuntu VM network settings](images/ubuntu_network2.png)
 
+---------------------------------------------------------------------------------------------------
+
 ## Genymotion
 
 Genymotion network settings are pretty much the same as the Ubuntu VM, as shown in Figure 2. Please note that the Host-only adapters can be the same (i.e. #7).
 
 ![Figure 2: Android emulator VM network settings](images/phone_network1.png)
 ![Figure 2: Android emulator VM network settings](images/phone_network2.png)
+
+---------------------------------------------------------------------------------------------------
 
 ## Expo
 
@@ -61,6 +71,8 @@ exp android
 That’s it you should see your app running on the Genymotion Android emulator now. You can see how to start the application below in Figure 4.
 
 ![Figure 4: Starting Expo application on Android emulator](images/connecting.gif)
+
+---------------------------------------------------------------------------------------------------
 
 ## Appendix
 
