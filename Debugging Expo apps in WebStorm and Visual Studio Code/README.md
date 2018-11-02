@@ -28,7 +28,7 @@ You can actually debug, with breakpoints and all those other fancy features, you
 
 * Install and turn on CORS plugin in Chrome, make sure it's the same chrome browser you use in your configuration. (NOTE make sure your aware of the security implication on using CORS, switch the plugin off when your not using it).
 * Open WebStorm and your Expo project
-* Add the following lines of code to your "package.json" file
+* Add the following lines of code to your _package.json_ file
 
 ```json
 "scripts": {
@@ -51,7 +51,7 @@ You can actually debug, with breakpoints and all those other fancy features, you
 ## Visual Studio Code
 
 * Open Visual Studio Code and your Expo project
-* Create a new file in your .vscode folder called "settings.json" and add the following
+* Create a new file in your .vscode folder called _settings.json_ and add the following
 
 ```json
 {
@@ -64,11 +64,11 @@ You can actually debug, with breakpoints and all those other fancy features, you
 ```
 
 * Go to "Debug" window (CTRL + SHIFT + D)
-* When prompted for environment choose "React Native", it should give an "launch.json" file like this, make sure it contains the following
+* When prompted for environment choose "React Native", it should give an _launch.json_ file like this, make sure it contains the following
 
 ```json
 {
-   [
+    [
         {
             "name": "Attach to packager",
             "program": "${workspaceRoot}/.vscode/launchReactNative.js",
@@ -77,7 +77,6 @@ You can actually debug, with breakpoints and all those other fancy features, you
             "sourceMaps": true,
             "outDir": "${workspaceRoot}/.vscode/.react"
         },
-  
     ]
 }
 ```
@@ -99,6 +98,7 @@ You can actually debug, with breakpoints and all those other fancy features, you
 
 ## Appendix
 
+* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
 * GIFs created with [screentogif](https://www.screentogif.com/)
 * ["Debugging create-react-native-app with VSCode"](https://medium.com/r/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D0_MnXPD55-E)
 * ["WebStorm 2018.1 EAP, 181.3263.21: improvements for React Native, extract Vue component"](https://blog.jetbrains.com/webstorm/2018/02/webstorm-2018-1-eap-181-3263/)

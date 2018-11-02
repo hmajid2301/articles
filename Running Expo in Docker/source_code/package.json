@@ -1,0 +1,15 @@
+{
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "android": "expo-cli start --android",
+    "ios": "expo-cli start --ios",
+    "start": "expo-cli start"
+  },
+  "dependencies": {
+    "expo": "30.0.0",
+    "expo-cli": "2.2.4",
+    "react": "16.3.1",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
+  }
+}

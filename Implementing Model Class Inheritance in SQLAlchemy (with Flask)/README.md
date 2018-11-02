@@ -12,7 +12,7 @@ Each table is referred to as a model, each model is simply just a python class a
 
 ![models.py](images/models.png)
 
-Taking a look at the models.py module, we define an abstract class called Pets. Which means SQLAlchemy will not create a table for that model. Our next two models Cats and Dogs inherit all the attributes form Pets. So Cats and Dog tables will each have a column called name, price and breed.
+Taking a look at the _models.py_ module, we define an abstract class called Pets. Which means SQLAlchemy will not create a table for that model. Our next two models Cats and Dogs inherit all the attributes form Pets. So Cats and Dog tables will each have a column called name, price and breed.
 
 The main advantage of this is if you ever need to change the models you just have to change it in once place. The more models that inherit from the base model.
 
@@ -22,7 +22,7 @@ The main advantage of this is if you ever need to change the models you just hav
 
 ![__init__.py](images/init.png)
 
-Above is an example __init__.py file to initialise the database and create all the database tables from the models. That's it folks, thanks for reading.
+Above is an example _\_\_init\_\_.py_ file to initialise the database and create all the database tables from the models. That's it folks, thanks for reading.
 
 **Please** note there are other ways to implement inheritance with SQLAlchemy, I personally found this way to be the cleanest in terms of code readability.
 
@@ -30,5 +30,8 @@ Above is an example __init__.py file to initialise the database and create all t
 
 ## Appendix
 
+* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20\(with%20Flask\))
 * [SQLAlchemy](https://www.sqlalchemy.org/)
 * [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
+
+tags: Python, Sql, Orm, Sqlalchemy, Database

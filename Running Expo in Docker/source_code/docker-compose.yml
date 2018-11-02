@@ -1,0 +1,14 @@
+version: "3.5"
+
+services:
+  expo_android:
+    container_name: expo_android
+    build:
+      context: .
+      dockerfile: Dockerfile
+    env_file: .env
+    ports:
+      - 19000:19000
+      - 19001:19001
+    volumes:
+      - ${PWD}/:/app/

@@ -1,0 +1,21 @@
+{
+  "expo": {
+    "name": "Docker Expo React Native Android",
+    "description": "This is a dummy app for running in a docker contianer, supposed to get overwritten.",
+    "slug": "docker-expo-react-native-android",
+    "privacy": "public",
+    "sdkVersion": "30.0.0",
+    "platforms": ["ios", "android"],
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    }
+  }
+}

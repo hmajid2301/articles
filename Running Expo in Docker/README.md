@@ -2,7 +2,7 @@
 
 ![Original Image: https://maraaverick.rbind.io/2017/11/docker-izing-your-work-in-r/ and https://tutuappapkdownload.com/expo-apk/](images/docker-nyan.gif)
 
-Running Expo/React Native in a Docker container can sometimes cause issues. In this example, I will be running Docker 🐳 within a guest VM (Ubuntu) which will run on my host machine (Windows). My host machine will also be running another VM as the Android emulator (Genymotion) for Expo to connect to. You can get a more detailed post about how to connect two VMs together here, #PlugPlugPlug 🔌🔌🔌. Since I’ve set up networking on those two VMs already as far as Expo is concerned it might as well be running on the host machine (Windows). Also in this example, I will be testing this on an Android device.
+Running Expo/React Native in a Docker container can sometimes cause issues. In this example, I will be running Docker 🐳 within a guest VM (Ubuntu) which will run on my host machine (Windows). My host machine will also be running another VM as the Android emulator (Genymotion) for Expo to connect to. You can get a more detailed post about how to connect two VMs together [here](https://medium.com/@hmajid2301/react-native-expo-with-virtualbox-and-genymotion-2b58f622d92b), #PlugPlugPlug 🔌🔌🔌. Since I’ve set up networking on those two VMs already as far as Expo is concerned it might as well be running on the host machine (Windows). Also in this example, I will be testing this on an Android device.
 
 ---------------------------------------------------------------------------------------------------
 
@@ -18,7 +18,7 @@ Running Expo/React Native in a Docker container can sometimes cause issues. In t
 
 ![package.json](images/package.png)
 
-The package.json file I will be using the following example is a very barebones file, just including the minimum packages required to run Expo.
+The _package.json_ file I will be using the following example is a very barebones file, just including the minimum packages required to run Expo.
 
 ---------------------------------------------------------------------------------------------------
 
@@ -37,7 +37,7 @@ ENV REACT_NATIVE_PACKAGER_HOSTNAME="192.255.255.255"
 
 Sets an environment variable which can be accessed during runtime of the Docker container. Strictly speaking, these don’t need to be here because we can always inject into the Docker container at runtime, but I like to have the environment variables documented.
 
-The ADB_IP is IP of the Android device 📱 to connect to. The REACT_NATIVE_PACKAGER_HOSTNAME environment variable is very important because it sets which IP address Expo (cli) is running on, this is the IP Address your phone will try to connect to. If this is not set correctly, you’ll get an error similar to Figure 1. You can work out the correct IP address on Linux by using the following command. The first one should host IP (192.168.27.128 on my machine).
+The **ADB_IP** is IP of the Android device 📱 to connect to. The **REACT_NATIVE_PACKAGER_HOSTNAME** environment variable is very important because it sets which IP address Expo (cli) is running on, this is the IP Address your phone will try to connect to. If this is not set correctly, you’ll get an error similar to Figure 1. You can work out the correct IP address on Linux by using the following command. The first one should host IP (192.168.27.128 on my machine).
 
 ```bash
 hostname -I
@@ -65,7 +65,7 @@ COPY package.json yarn.lock app.json ./
 RUN yarn --network-timeout 100000
 ```
 
-Copy some important files from host to Docker container. The package.json and yarn.lock are used to install the dependencies and app.json is required by expo as a bare minimum.
+Copy some important files from host to Docker container. The _package.json_ and _yarn.lock_ are used to install the dependencies and _app.json_ is required by expo as a bare minimum.
 
 ```text
 CMD adb connect $ADB_IP && \
@@ -79,7 +79,7 @@ CMD adb connect $ADB_IP && \
 
 ## Running Docker
 
-This command runs when the Docker Image is first to run, every other command is used to build to the image itself. This uses an environment variable passed into the Docker container and connects to the Android device at $ADB_IP. Then run the android command in package.json. Then you can simply run the following commands to build and start your Docker container.
+This command runs when the Docker Image is first to run, every other command is used to build to the image itself. This uses an environment variable passed into the Docker container and connects to the Android device at $ADB_IP. Then run the **android** command in _package.json_. Then you can simply run the following commands to build and start your Docker container.
 
 ![Docker Build/Run command](images/docker-build.png)
 
@@ -106,14 +106,17 @@ I also mount my current directory on the host machine to /app/ directory on the 
 
 ![.env](images/.env.png)
 
-An example .env file used to pass environment variables (using docker-compose) to the Docker container.
+An example _.env_ file used to pass environment variables (using docker-compose) to the Docker container.
 
 ---------------------------------------------------------------------------------------------------
 
 ## Appendix
 
+* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
 * [Code images with Carbon](https://carbon.now.sh/)
 * [Docker explained](https://medium.freecodecamp.org/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b)
 * [GitHub Issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
 * [Genymotion Emulator](https://www.genymotion.com/)
 * [GIF Overlay Creator (Nyan Docker)](https://ezgif.com/overlay)
+
+:tags Docker, React Native, Expo, Docker Compose, Containers
