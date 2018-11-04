@@ -1,3 +1,9 @@
+---
+title: 'React Native/Expo with VirtualBox and Genymotion'
+tags: ['Android', 'React Native', 'Virtualbox', 'Android Development', 'Expo']
+license: 'public-domain'
+---
+
 # React Native/Expo with VirtualBox and Genymotion
 
 ![VirtualBox Preview](images/virtualbox_preview.png)

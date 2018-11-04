@@ -1,3 +1,9 @@
+---
+title: 'Debugging Expo apps in WebStorm and Visual Studio Code'
+tags: ['React Native', 'Expo', 'Debugging', 'Visual Studio', 'Webstorm']
+license: 'public-domain'
+---
+
 # Debugging Expo apps in WebStorm and Visual Studio Code
 
 ![Icon made by https://www.flaticon.com/authors/monkik](images/bug.png)
@@ -98,7 +104,7 @@ You can actually debug, with breakpoints and all those other fancy features, you
 
 ## Appendix
 
-* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
+* [Example source code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
 * GIFs created with [screentogif](https://www.screentogif.com/)
 * ["Debugging create-react-native-app with VSCode"](https://medium.com/r/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D0_MnXPD55-E)
 * ["WebStorm 2018.1 EAP, 181.3263.21: improvements for React Native, extract Vue component"](https://blog.jetbrains.com/webstorm/2018/02/webstorm-2018-1-eap-181-3263/)

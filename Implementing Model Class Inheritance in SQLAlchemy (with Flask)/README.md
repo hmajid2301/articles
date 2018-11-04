@@ -1,3 +1,9 @@
+---
+title: 'Implementing Model Class Inheritance in SQLAlchemy (with Flask)'
+tags: ['Python', 'Sql', 'Orm', 'Sqlalchemy', 'Database']
+license: 'public-domain'
+---
+
 # Implementing Model Class Inheritance in SQLAlchemy (with Flask)
 
 ![More cats and dogs than you expect](https://media.giphy.com/media/xBAreNGk5DapO/giphy.gif)
@@ -30,8 +36,6 @@ Above is an example _\_\_init\_\_.py_ file to initialise the database and create
 
 ## Appendix
 
-* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20\(with%20Flask\))
+* [Example source code](https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20\(with%20Flask\))
 * [SQLAlchemy](https://www.sqlalchemy.org/)
 * [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
-
-tags: Python, Sql, Orm, Sqlalchemy, Database

@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "scripts": {
+    "publish": "./node_modules/.bin/markdown-to-medium"
+  },
+  "dependencies": {
+    "markdown-to-medium": "1.4.4"
+  }
+}

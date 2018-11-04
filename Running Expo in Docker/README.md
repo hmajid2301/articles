@@ -1,3 +1,9 @@
+---
+title: 'Running Expo/React Native in Docker'
+tags: ['Docker', 'React Native', 'Expo', 'Docker Compose', 'Containers']
+license: 'public-domain'
+---
+
 # Running Expo/React Native in Docker
 
 ![Original Image: https://maraaverick.rbind.io/2017/11/docker-izing-your-work-in-r/ and https://tutuappapkdownload.com/expo-apk/](images/docker-nyan.gif)
@@ -112,11 +118,9 @@ An example _.env_ file used to pass environment variables (using docker-compose
 
 ## Appendix
 
-* [Example Source Code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
-* [Code images with Carbon](https://carbon.now.sh/)
+* [Example source code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
+* [Code images made with Carbon](https://carbon.now.sh/)
 * [Docker explained](https://medium.freecodecamp.org/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b)
-* [GitHub Issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
-* [Genymotion Emulator](https://www.genymotion.com/)
-* [GIF Overlay Creator (Nyan Docker)](https://ezgif.com/overlay)
-
-:tags Docker, React Native, Expo, Docker Compose, Containers
+* [GitHub issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
+* [Genymotion emulator](https://www.genymotion.com/)
+* [GIF overlay creator (Nyan Docker)](https://ezgif.com/overlay)
