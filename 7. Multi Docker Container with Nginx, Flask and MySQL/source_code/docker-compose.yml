@@ -1,0 +1,35 @@
+version: '3.5'
+
+services:
+  web_server:
+    container_name: nginx
+    build:
+      context: .
+      dockerfile: docker/nginx/Dockerfile
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
+  app:
+    container_name: flask
+    build:
+      context: .
+      dockerfile: docker/flask/Dockerfile
+    env_file: docker/database.conf
+    expose:
+      - 8080
+    depends_on:
+      - database
+
+  database:
+    container_name: postgres
+    image: postgres:latest
+    env_file: docker/database.conf
+    ports:
+      - 5432:5432  
+    volumes:
+      - db_volume:/var/lib/postgresql
+
+volumes:
+  db_volume:

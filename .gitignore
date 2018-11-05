@@ -1,2 +1,7 @@
 node_modules/*
 .vscode/*
+.venv/*
+*.egg
+*.egg-info
+*.idea
+__pycache__

@@ -5,7 +5,7 @@ import pytest
 
 from .tcp_server import TCPServer
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(autouse=True)
 def dummy_tcp_server():
     tcp_server = TCPServer()
     with example_server as tcp_server:
