@@ -6,6 +6,8 @@ license: 'public-domain'
 
 # Pytest with Background Thread Fixtures
 
+![All cool people test](https://media.giphy.com/media/5xrkJe3IJKSze/giphy.gif)
+
 Recently I had to test some of my Python code which required an external dependency and communicating by using TCP sockets. You can think of this dependency as essentially a database because it stored information. However, when testing my Python code, I couldn't rely on there always being a TCP server to send messages to.
 
 So I ended up creating a simplified mocked version in Python. This way I could run automated tests on my code without needing to either install/rely on this server already existing there. Essentially I ended up creating a TCP server in Python, which would receive some input and respond how I would expect the real TCP server too.
