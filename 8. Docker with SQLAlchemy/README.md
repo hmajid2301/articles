@@ -1,19 +1,19 @@
 ---
-title: 'Implementing SQLAlchemy with Docker '
+title: 'Simple App with Flask, SQLalchemy and Docker'
 tags: ['docker', 'python', 'docker-compose', 'sqlalchemy']
 license: 'public-domain'
 ---
 
-# Implementing SQLAlchemy with Docker
+# Simple App with Flask, SQLalchemy and Docker
 
-https://giphy.com/gifs/qPhUzRN9RLIR2/html5
+https://media.giphy.com/media/35KpaeAHCl0wt8O8Nc/giphy.gif
 
 Unfortunately, we won't be turning any SQL statements into gold in this tutorial.
 
 SQLAlchemy is an object-relational mapper (ORM), it allow us to interact with a database using Python functions and objects. For example, if we have a table called
 `Cats` we could retrieve every row with a command like `Cats.query.all()`. The main advantage of this is that it allows us to abstract away the SQL.
 
-Docker :whale: allows us to quickly bring up a database within a Docker container, this means we don't have to set up and configure a database on our local machine. We can simply kill the Docker container when are done the database. In this article, I will show you how you can create a very simple RESTful API using Flask and SQLAlchemy, which will connect to a database running in a Docker container.
+Docker :whale: allows us to quickly bring up a database within a Docker container, this means we don't have to set up and configure a database on our local machine. We can simply kill the Docker container when we are done with the database. In this article, I will show you how you can create a very simple RESTful API using Flask and SQLAlchemy, which will connect to a database running in a Docker container.
 
 **NOTE:** Flask server will be running locally, not in a Docker container.
 
@@ -81,7 +81,7 @@ POSTGRES_DB=example
 **NOTE:** If you're running the Flask app in a Docker container you will need to change the variable `POSTGRES_HOST=postgres`, (from localhost)
 where `postgres` is the Docker container name we are connecting to.
 
-**WARNING:** Make these are the same values passed to the Flask app and the Postgres database.
+**WARNING:** Make sure these are the same values passed to the Flask app and the Postgres database.
 
 ---------------------------------------------------------------------------------------------------
 
@@ -99,7 +99,8 @@ The `db` variable is imported from here by the `__init__.py` file, that's how th
 
 ![app.py](images/app.png)
 
-This is a simple Flask file, which creates our app by calling `create_app()` function from `__init__.py` module. Then has four routes for our "RESTful" API.
+This is a simple Flask file, which creates our app by calling `create_app()` function from `__init__.py` module.
+Then it defines four functions for our four routes for the "RESTful" API:
 
 * GET: Get information about all the cats
 * POST: Add a new cat
@@ -146,8 +147,8 @@ First, we define our version number `version: '3.5'`, it is recommended by Docke
 
 Then we give our a service name, in this case, `database`. I like to name my services with what they are used for generic names such as `web server`, `database` or `message broker`. This means I can change the underlying technology without changing the service name.
 
-After this we name our container `postgres`, this is the name of the Docker container and the name we will
-kill container or execute commands onto etc.
+After this we name our container `postgres`, this is the name of the Docker container.
+It can be used to interact with the container (to kill it or exec onto it) without using an ID.
 
 We use the official Postgres image on [Docker Hub](https://hub.docker.com/_/postgres/), we pull the image that is tagged with `latest`.
 

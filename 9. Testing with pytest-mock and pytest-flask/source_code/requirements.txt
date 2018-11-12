@@ -1,0 +1,5 @@
+flask==1.0.2
+flask-sqlalchemy==2.3.0
+pytest-flask==0.10.0
+pytest-mock
+psycopg2==2.7.6.1
