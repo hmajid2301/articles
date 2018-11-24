@@ -1,9 +1,10 @@
-import threading
 import socket
+import threading
 
 import pytest
 
 from .tcp_server import TCPServer
+
 
 @pytest.fixture(autouse=True)
 def dummy_tcp_server():

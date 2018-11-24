@@ -1,5 +1,6 @@
 import socket
 
+
 class TCPServer:
     def __init__(self):
             self._sock = socket.socket(socket.AF_INET, 
@@ -22,4 +23,3 @@ class TCPServer:
                 response = "Received"
                 connection.send(response.encode())
                 connection.close()
-    
