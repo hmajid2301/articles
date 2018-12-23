@@ -1,4 +1,4 @@
-node_modules/*
+node_modules/
 .vscode/*
 .venv/*
 *.egg
@@ -6,3 +6,4 @@ node_modules/*
 *.idea
 __pycache__
 .history/*
+.expo/

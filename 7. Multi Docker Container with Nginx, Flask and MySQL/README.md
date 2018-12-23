@@ -1,8 +1,8 @@
----
+----------------------------------------------------------------------------------------------------
 title: 'Using Multiple Docker Containers to Setup Nginx, Flask and Postgres'
 tags: ['docker', 'python', 'docker-compose', 'flask']
 license: 'public-domain'
----
+----------------------------------------------------------------------------------------------------
 
 # Using Multiple Docker Containers to Setup Nginx, Flask and Postgres
 
@@ -143,7 +143,7 @@ docker run -d --name nginx -p 80:80 nginx
 docker run -d --name flask -p 8080  --env-file docker/database.conf flask
 docker volume create --name db_volume
 docker run -d --name postgres -p 5432:5432 \
-           --env-file docker/database.conf \
+           ---------------------------------------------------------------------------------------------------env-file docker/database.conf \
            -v db_volume:/var/lib/postgresql postgres:latest
 ```
 

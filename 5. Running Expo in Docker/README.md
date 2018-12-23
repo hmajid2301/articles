@@ -1,8 +1,8 @@
----
+----------------------------------------------------------------------------------------------------
 title: 'Running Expo/React Native in Docker'
 tags: ['Docker', 'React Native', 'Expo', 'Docker Compose', 'Containers']
 license: 'public-domain'
----
+----------------------------------------------------------------------------------------------------
 
 # Running Expo/React Native in Docker
 

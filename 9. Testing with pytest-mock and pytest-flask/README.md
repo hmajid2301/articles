@@ -96,3 +96,4 @@ not a very good test, you would make it a bit more interesting.
 
 * [Example source code](https://github.com/hmajid2301/medium/tree/master/9.%20Testing%20with%20pytest-mock%20and%20pytest-flask)
 * [Code images made with carbon](https://carbon.now.sh)
+>>>>>>> master

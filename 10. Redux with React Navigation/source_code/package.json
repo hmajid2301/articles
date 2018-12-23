@@ -1,0 +1,21 @@
+{
+  "name": "empty-project-template",
+  "main": "node_modules/expo/AppEntry.js",
+  "private": true,
+  "scripts": {
+    "start": "expo-cli start"
+  },
+  "dependencies": {
+    "expo": "^31.0.2",
+    "expo-cli": "2.4.0",
+    "react": "16.5.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-navigation": "^2.18.0",
+    "react-redux": "^5.1.1",
+    "redux": "^4.0.1",
+    "redux-actions": "^2.6.4"
+  },
+  "devDependencies": {
+    "babel-preset-expo": "^5.0.0"
+  }
+}

@@ -45,5 +45,9 @@ def remove(cat_id):
 def edit(cat_id):
     data = request.get_json()
     new_price = data['price']
+<<<<<<< HEAD
+    database.update_instance(Cats, id=cat_id, price=new_price)
+=======
     database.edit_instance(Cats, id=cat_id, price=new_price)
+>>>>>>> master
     return json.dumps("Edited"), 200

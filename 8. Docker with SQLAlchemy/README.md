@@ -173,7 +173,7 @@ The equivalent commands using just normal Docker would be
 ```bash
 docker volume create --name db_volume
 docker run -d --name postgres -p 5432:5432 \
-           --env-file docker/database.conf \
+           ---------------------------------------------------------------------------------------------------env-file docker/database.conf \
            -v db_volume:/var/lib/postgresql postgres:latest
 ```
 
