@@ -17,7 +17,7 @@ COPY dist/ ./dist/
 COPY docker/flask/uwsgi.ini ./
 COPY --from=BASE /root/wheels /root/wheels
 
-RUN apk add --no-cache build-base linux-headers pcre-dev libpq uwsgi-python3 && \
+RUN apk add --no-cache build-base linux-headers postgresql-dev pcre-dev libpq uwsgi-python3 && \
     pip install --no-index --find-links=/root/wheels /root/wheels/* && \
     pip install dist/*
 
