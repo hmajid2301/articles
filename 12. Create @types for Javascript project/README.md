@@ -4,8 +4,12 @@ tags: ["javascript", "typescript", "react-native", "expo"]
 license: "public-domain"
 ---
 
+![Script](https://giphy.com/gifs/JIX9t2j0ZTN9S/html5)
+
 Recently I started using TypeScript (TS) with React Native. Now I won't be going over the benefits of
 typescript in this article there are plenty for other articles that will explain the benefits (and drawbacks).
+
+![TypeScript](images/ts.png)
 
 TS is a superset of JavaScript (JS) so anything JS can do TS can do (and more). One of the main advantages of TS is
 it's strict type checking. JS is weakly typed which means variable and parameters can be of any type. One of the
