@@ -35,7 +35,7 @@ When you run the Pytest command it will automatically run tests on all modules a
 So taking a look at the _dummy\_tcp\_server()_ function, first we use a context manager (with) to set up our TCP server.
 
 ```python
-with example_server as tcp_server:
+with tcp_server as example_server:
 ```
 
 This calls the _\_\_enter\_\_()_ dunder method, which starts up our TCP server and so it's now listening for any traffic on port 9500.  

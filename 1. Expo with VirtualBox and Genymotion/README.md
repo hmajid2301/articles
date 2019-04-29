@@ -22,7 +22,7 @@ There are a few networking options we can choose from when setting up a VM.
 
 * **Bridged**: Allows your VMs to access a network using the host computer’s Ethernet adapter. However this adds a bit of complexity, as your VM needs it own identity on the network as essentially its treated like another physical machine.
 
-* **Host-only**: Acts a hybrid between the other two options. It allows your VM to communicate with your host machine. So essentially all we for multiple VMs to communicate with each is other is to turn on Host-only network (on all VMs). This allow them to communicate with the host machine which will act as a “bridge” (no pun intended).
+* **Host-only**: Acts a hybrid between the other two options. It allows your VM to communicate with your host machine. So essentially all we need for multiple VMs to communicate with each is other is to turn on Host-only network (on all VMs). This allow them to communicate with the host machine which will act as a “bridge” (no pun intended).
 
 ![Network Diagaram](images/network.png)
 

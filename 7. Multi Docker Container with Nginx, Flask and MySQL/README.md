@@ -80,6 +80,8 @@ So our actual Docker image is a bit more interesting. It does the following;
 
 In theory, you could simply copy and install the requirements.txt and copy all the source code to the `/app` folder. However, I prefer to generate and install the actual Python package I think it's cleaner and you only have to copy a single `tar` file. However, this does require you to run the command to generate the `dist` folder before you try to build the Docker image.
 
+**Note**: The environment variables POSTGRES_ should be the same values as defined in database.conf.
+
 ### uwsgi.ini
 
 ![uwsgi.ini](images/flask_uwsgi.png)
