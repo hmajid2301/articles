@@ -9,7 +9,7 @@ license: "public-domain"
 RESTful APIs are very popular at the moment and Python is a great language to develop
 web APIs with. In this article we will go over a documentation first approach to building APIs.
 We will be using Flask, Swagger Code-Gen (OpenAPI) and Connexions.
-In this article I will go over an API/documentation first approach to building a RESTful API in 
+I will go over an API/documentation first approach to building a RESTful API in 
 Python. Which will try to minimise the differences between what's defined in the API 
 specification and the actual API logic
 itself. 
@@ -47,6 +47,8 @@ have access to all the functionality we would have when developing a normal Flas
 **NOTE:** At the time of writing this article OAS3 support had just come out for codegen.
 So this article is written using OAS2. However everything in this article should be applicable
 to OAS2 and AOS3.
+
+![Swagger UI](https://synaptiklabs.com/wp-content/uploads/2019/02/javaee-swagger-screen-1.png)
 
 ---------------------------------------------------------------------------------------------------
 
@@ -260,10 +262,10 @@ def get_pet(pet_id):  # noqa: E501
     return response
 ```
 
-As you can see we call our `get_pet()` function from our `core.pets` module. Then if the pets exists
+As you can see we call our `get_pet()` function from our `core.pets` module. Then if the pets exist
 we turn the dict that is returned, into a Python object of class `Pet` as per `rtype` we defined in 
 our OAS. Connexion will handle converting this object into JSON. One other thing we do is if a
-`KeyError` exception was thrown, that must mean we don't have a pet with that id in the pet store. Say we have the following;
+`KeyError` exception was thrown, that must mean we don't have a pet with that id in the pet store. Say we have the following
 
 ```json
 {
@@ -299,7 +301,7 @@ responses:
     description: "Pet doesn't exist"
 ```
 
-One very important thing to note is that when we receieve a HTTP request with JSON, say for
+One very important thing to note is that when we receive a HTTP request with JSON, say for
 the `add_pet()` function Connexion will convert this into a Python object for us and when we
 return a Python object it will convert that Python object into JSON. So within our controllers
 and core logic we don't actually need to interact with JSON at all. It's all abstracted away
@@ -327,7 +329,7 @@ def add_pet(body):  # noqa: E501
     return {}, 201
 ```
 
-The body variable will be a Python object of class Pet. We can then pass this an argument
+The body variable will be a Python object of class Pet. We can then pass this as an argument
 to our other `add_pet` function in our core folder. As you can see we access attributes 
 because it's an object not a dict i.e. `pets["name"]` vs `pets.name`.
 
@@ -345,7 +347,7 @@ def add_pet(pet):
 
 ## Run a Server
 
-Now we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn 
+Now that we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn 
 will create our Connexion/Flask app and start the server,  called `__init__.py` inside of our `test_api` folder.
 
 ```python
