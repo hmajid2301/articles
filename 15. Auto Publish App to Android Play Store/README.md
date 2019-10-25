@@ -191,6 +191,7 @@ saves us having to type out the same (very long) command again.
 * bundle: Bundles all of our react native code into a single file
 * publish-package: Will build our AAB and also publish it along with all the meta-data we include
 
+```json
 {
   ...
   "scripts": {
@@ -200,7 +201,7 @@ saves us having to type out the same (very long) command again.
   }
   ...
 }
-
+```
 ---------------------------------------------------------------------------------------------------
 
 ## .gitlab-ci.yml
