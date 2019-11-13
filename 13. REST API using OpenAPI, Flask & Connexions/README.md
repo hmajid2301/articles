@@ -133,7 +133,7 @@ paths:
             $ref: "#/definitions/Pet"
         404:
           description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
     delete:
       tags:
       - "pet"
@@ -150,7 +150,7 @@ paths:
           description: "Successfully deleted pet"
         404:
           description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
 ...
 ```
 
@@ -162,8 +162,8 @@ the specification.
 
 **Note** the extra field `x-swagger-router-controller` is very important. It is used by `Connexion` to 
 map which module (and function) to send requests to. For example a GET request send to `/api/v1/pets`,
-will go to `test_api.web.controllers.pets_controllers` and function called `get_pet` (`operation_id`) 
-so it looks like `test_api.web.controllers.pets_controllers:get_pet`. Which means we call the function
+will go to `test_api.web.controllers.pets_controller` and function called `get_pet` (`operation_id`) 
+so it looks like `test_api.web.controllers.pets_controller:get_pet`. Which means we call the function
 in the folder `src/test_api/web/controllers/pets_controller` we call the `get_pet` function.
 
 ---------------------------------------------------------------------------------------------------
@@ -343,12 +343,29 @@ def add_pet(pet):
     write_to_file(pets)
 ```
 
+### Swagger Codegen vs Connexion
+
+So Connexion does all the routing and validation for us but Swagger codegen is what converts
+our input and output into Python classes. Connexions only deals with JSON, it will convert
+the JSON into it's equivalent Python object such as lists, strings and dictionary. Swagger
+codegen will take this input (a dictionary) and convert that into a Python class. 
+One example of this in the `add_pet` function in the `pets_controller` file. It converts our
+dictionary into a `Pet` object (as shown below). So rather than accessing data using normal
+dictionary notation `body["id"]` we can now use `body.id`.
+`body = Pet.from_dict(connexion.request.get_json())  # noqa: E501`
+
+For Codegen to convert our Python objects back into a dictionary, so that Connexion can then
+convert this into JSON so respond back we use the JSON encoder that codegen provides us
+(`test_api.web.encoder`). To use it all we need to add is to set it as our default encoder
+for our flask app `flask_app.json_encoder = encoder.JSONEncoder`, usually this is done in the
+app setup (shown below).
+
 ---------------------------------------------------------------------------------------------------
 
 ## Run a Server
 
 Now that we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn 
-will create our Connexion/Flask app and start the server,  called `__init__.py` inside of our `test_api` folder.
+will create our Connexion/Flask app and start the server,  called `run.py` inside of our `test_api` folder.
 
 ```python
 import os
@@ -371,20 +388,10 @@ def create_app():
     return flask_app
 ```
 
-In preparation for "productionising" this project we will call the function from `wsgi.py` folder as in production.
-We shouldn't use the Flask development server, as it literally warns us `WARNING: This is a development server. Do not use it in a production deployment.`.
-We should use a WSGI server such as gunicorn of uWSGI, so we also need a file `wsgi.py` which looks like
-
-```python
-from . import create_app
-
-application = create_app()
-```
-
 You can run the application like a normal flask app from the project root(running from folder where `openapi/` and `src/` exist.)
 
 ```bash
-FLASK_APP=test_api.wsgi:app FLASK_DEBUG=1 flask run
+FLASK_APP=./src/test_api/run.py FLASK_DEBUG=1 flask run
 ```
 
 ### Example Project
@@ -394,7 +401,7 @@ Voila we have built a Flask web service with Connexion and OpenAPI.
 
 ```bash
 git clone https://gitlab.com/hmajid2301/medium.git
-cd medium/13.\ REST\ API\ using\ OpenAPI\,\ Flask\ \&\ Connexions/
+cd medium/13.\ REST\ API\ using\ OpenAPI\,\ Flask\ \&\ Connexions/source_code/test-api
 virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

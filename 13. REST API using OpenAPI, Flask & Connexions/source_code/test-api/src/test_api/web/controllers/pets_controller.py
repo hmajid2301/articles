@@ -5,7 +5,7 @@ from ..models.pet import Pet  # noqa: E501
 from ..models.pets import Pets  # noqa: E501
 from .. import util
 
-import test_api.core import pets
+from test_api.core import pets
 
 
 def add_pet(body):  # noqa: E501

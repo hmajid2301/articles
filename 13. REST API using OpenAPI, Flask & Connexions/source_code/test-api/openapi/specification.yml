@@ -15,7 +15,7 @@ paths:
   /pet/{pet_id}:
     get:
       tags:
-      - "pet"
+        - "pet"
       summary: "Get a pet in the store"
       operationId: "get_pet"
       parameters:
@@ -31,10 +31,10 @@ paths:
             $ref: "#/definitions/Pet"
         404:
           description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
     delete:
       tags:
-      - "pet"
+        - "pet"
       summary: "Remove a pet in the store"
       operationId: "remove_pet"
       parameters:
@@ -48,10 +48,10 @@ paths:
           description: "Successfully deleted pet"
         404:
           description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
     put:
       tags:
-      - "pet"
+        - "pet"
       summary: "Update and replace a pet in the store"
       operationId: "update_pet"
       parameters:
@@ -70,11 +70,11 @@ paths:
           description: "Successfully updated pet"
         404:
           description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
   /pet:
     get:
       tags:
-      - "pet"
+        - "pet"
       summary: "Gets all pets in the store"
       operationId: "get_all_pets"
       responses:
@@ -82,34 +82,34 @@ paths:
           description: "Successfully received all pets."
           schema:
             $ref: "#/definitions/Pets"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
     post:
       tags:
-      - "pet"
+        - "pet"
       summary: "Add a new pet to the store"
       operationId: "add_pet"
       parameters:
-      - in: "body"
-        name: "body"
-        description: "Pet to add to the store"
-        required: true
-        schema:
-          $ref: "#/definitions/Pet"
+        - in: "body"
+          name: "body"
+          description: "Pet to add to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Pet"
       responses:
         201:
           description: "Pet added"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controllers"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
 definitions:
   Pets:
     type: array
     items:
-      $ref: '#/definitions/Pet'
+      $ref: "#/definitions/Pet"
   Pet:
     type: "object"
     required:
-    - "name"
-    - "breed"
-    - "price"
+      - "name"
+      - "breed"
+      - "price"
     properties:
       id:
         type: "integer"
