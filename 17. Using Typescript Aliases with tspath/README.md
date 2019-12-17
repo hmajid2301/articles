@@ -196,6 +196,26 @@ of your build process, for example in my `package.json` I have the following
 That's it! We have now used TS path aliases with our project. I have shown how you can solve the
 **path hell** issue in our TS project.
 
+## Jest
+
+If you have tests written in Jest you can also have paths like the above resolve. First you need to edit your jest.config.js file (or equivalent configuration file). Then add the following below (to have the same paths as above).
+
+```js
+module.exports = {
+  moduleNameMapper: {
+    '~/(.*)': '<rootDir>/src/$1',
+  },
+....
+};
+```
+
+Then in our tests we can do the following, to import our dependencies
+
+```js
+import AboutList from '~/components/AboutList';
+import {about} from '~/data';
+```
+
 ---------------------------------------------------------------------------------------------------
 
 ## Appendix
