@@ -4,7 +4,8 @@ tags: ['React Native', 'React']
 license: 'public-domain'
 ---
 
-https://giphy.com/gifs/483CQ50Cd83Uk/html5
+https://giphy.com/gifs/3o7TKNbCswyI8YcG40/html5
+
 
 In this article, I will show you how you can change the theme of your app depending on
 the time of the day. We will change the theme of the app depending on if the sun has set or risen.
