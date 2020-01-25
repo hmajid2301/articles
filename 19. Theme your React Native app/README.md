@@ -485,6 +485,8 @@ yarn run android
 
 Here is a GIF of the app running.
 
+![Demo App](images/demo.gif)
+
 ---------------------------------------------------------------------------------------------------
 
 ## Appendix
