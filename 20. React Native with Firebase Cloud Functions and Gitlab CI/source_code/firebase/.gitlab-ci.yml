@@ -1,0 +1,13 @@
+image: node:8
+
+stages:
+  - publish
+
+publish:firebase:functions:
+  stage: publish
+  only:
+    - /^release/.*$/
+  script:
+    - cd functions
+    - yarn
+      - yarn run deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_TOKEN
