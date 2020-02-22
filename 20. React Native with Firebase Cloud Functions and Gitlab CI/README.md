@@ -17,6 +17,8 @@ only do using the GCP GUI, such as increasing the RAM of your cloud function "co
 
 ## Firebase Cloud Functions 
 
+![Firebase](images/firebase.jpg)
+
 Firebase Cloud Functions can be referred to as serverless or as Functions-as-a-service (FaaS).
 This means we simply deploy our code as a function, the tool (Firebase) installs our dependencies
 and set up the environment. Essentially all we manage is the "code" and let the platform manage the
