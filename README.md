@@ -1,7 +1,13 @@
-# Medium
+# Articles
 
-This stores all of my medium articles in markdown.
+This repo contains all my articles that I publish in Markdown and also all the source code examples related to those articles.
 
-## Run
+You can currently find them on
 
-`yarn run publish <PATH-TO-README>`
+- [dev.to](https://dev.to/hmajid2301)
+- [Medium](https://medium.com/@hmajid2301)
+- [Personal Blog](https://blog.haseebmajid.dev/)
+
+## Appendix
+
+- [Icon From FlatIcon](www.flaticon.com)
