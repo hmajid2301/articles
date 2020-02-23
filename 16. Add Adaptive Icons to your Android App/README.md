@@ -2,6 +2,7 @@
 title: 'Add adaptive icons to your Android app'
 tags: ['React Native', 'Android']
 license: 'public-domain'
+cover_image: https://assets.materialup.com/uploads/0a227925-9c0f-4745-b6b4-3b8614026252/attachment.png
 ---
 
 In this article, we will go over how you can use add the "new" adaptive app icons to your Android app.
@@ -59,3 +60,4 @@ Then you should see something like the image below instead of the default green 
 
 - [Example source code](https://github.com/hmajid2301/medium/tree/master/16.%20Add%20Adaptive%20Icons%20to%20your%20Android%20App)
 - [Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/index.html)
+- [Cover Photo from UpLabs](https://www.uplabs.com/posts/adaptive-icons-for-android-o)

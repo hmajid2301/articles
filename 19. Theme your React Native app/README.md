@@ -2,10 +2,8 @@
 title: 'Auto Toggle Dark Theme on your React Native Application'
 tags: ['React Native', 'React']
 license: 'public-domain'
+cover_image: https://dev-to-uploads.s3.amazonaws.com/i/haazcmkvayo5uv51gvqr.png
 ---
-
-https://giphy.com/gifs/3o7TKNbCswyI8YcG40/html5
-
 
 In this article, I will show you how you can change the theme of your app depending on
 the time of the day. We will change the theme of the app depending on if the sun has set or risen.

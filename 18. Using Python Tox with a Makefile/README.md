@@ -2,9 +2,8 @@
 title: 'Using Tox with a Makefile to Automate Python related tasks'
 tags: ['Python', 'Tox', 'Makefile', 'automation']
 license: 'public-domain'
+cover_image: https://dev-to-uploads.s3.amazonaws.com/i/b0wpzxsospsn0kvx2o46.jpg
 ---
-
-![Cover Photo](images/cover.jpg)
 
 In this article, we will go over how we can use a makefile and tox to automate various Python related command line (CLI) tools.
 This article assumes you are running bash (or equivalent).

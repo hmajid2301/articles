@@ -2,9 +2,8 @@
 title: 'React Native with Firebase Cloud Functions and Gitlab CI'
 tags: ['React Native', 'React', 'Firebase', 'Gitlab', 'CI']
 license: 'public-domain'
+cover_image: https://cdn-images-1.medium.com/max/1024/1*0a8UZxHW5C7FVx7aQRFOlg.jpeg
 ---
-
-https://giphy.com/gifs/Me7C8ln2qbeAguJjzT/html5
 
 In this article, we will talk about how you can use React Native with [Firebase Cloud Functions](https://firebase.google.com/docs/functions).
 We will also go over how we can automate the process of updating the cloud functions using [Gitlab CI](https://docs.gitlab.com/ee/ci/).
@@ -16,8 +15,6 @@ only do using the GCP GUI, such as increasing the RAM of your cloud function "co
 **Note**: We will be using Typescript in this article
 
 ## Firebase Cloud Functions 
-
-![Firebase](images/firebase.jpg)
 
 Firebase Cloud Functions can be referred to as serverless or as Functions-as-a-service (FaaS).
 This means we simply deploy our code as a function, the tool (Firebase) installs our dependencies

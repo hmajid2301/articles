@@ -2,6 +2,7 @@
 title: 'Better Imports with Typescript Aliases, Babel and TSPath'
 tags: ['typescript', 'javascript', 'programming']
 license: 'public-domain'
+cover_image: https://dev-to-uploads.s3.amazonaws.com/i/l1z7llh6g1wn51fhh2hf.png
 ---
 
 https://media.giphy.com/media/xUPGcM9CazM9H5KrEA/giphy.gif

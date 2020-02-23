@@ -2,9 +2,8 @@
 title: 'Build an Android APK using GitLab for a React Native Application'
 tags: ['React Native', 'CI', 'GitLab', 'Automation', 'Android']
 license: 'public-domain'
+cover_image: https://dev-to-uploads.s3.amazonaws.com/i/a62rixo6cd2hg4dx8sr1.jpg
 ---
-
-![GitLab CI with React Native and Android](images/cover.jpg)
 
 In this article I will show how you can use the GitLab CI with React Native to create a binary which can be published to the
 Google Play Store.
