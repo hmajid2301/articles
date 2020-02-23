@@ -50,7 +50,7 @@ root and then define our jobs (we will see this a bit later in the article).
 
 ### Example
 
-![https://docs.gitlab.com/ee/ci/introduction/](images/pipeline.png)
+![https://docs.gitlab.com/ee/ci/introduction/](https://docs.gitlab.com/ee/ci/introduction/img/gitlab_workflow_example_11_9.png)
 
 The image above shows an example of a workflow we may use. So we create a new branch for our feature called `feature/add-x`.
 We then create our commits (with our new code) and push them to Gitlab. Open a merge request, this triggers the CI
