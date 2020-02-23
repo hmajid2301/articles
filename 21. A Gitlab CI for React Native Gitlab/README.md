@@ -7,7 +7,7 @@ license: 'public-domain'
 ![Cover Image](https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png)
 
 A bit of backstory when I first started developing React Native applications (apps), I found there weren't
-any good example of Gitlab CI files. So in this article, I will show you an example `.gitlab-ci.yaml`
+any good example of Gitlab CI files. So in this article, I will show you an example `.gitlab-ci.yml`
 file you can use with your React Native app. You can of course tweak and makes changes as required by your
 project.
 
@@ -45,7 +45,7 @@ to be successfully running (green ticks) before this can happen, however.
 [Gitlab CI](https://docs.gitlab.com/ee/ci/), is defined as a YAML file. In the file, we define "jobs" which can do various
 different task. You can read more [here](https://docs.gitlab.com/ee/user/project/pages/getting_started_part_four.html).
 Full [reference docs here](https://docs.gitlab.com/ee/ci/yaml/README.html), which details all the different parameters we
-can use. To use Gitlab CI within our projects is very straight forward, create a new file `.gitlab-ci.yaml` in our project
+can use. To use Gitlab CI within our projects is very straight forward, create a new file `.gitlab-ci.yml` in our project
 root and then define our jobs (we will see this a bit later in the article).
 
 ### Example
@@ -54,7 +54,7 @@ root and then define our jobs (we will see this a bit later in the article).
 
 The image above shows an example of a workflow we may use. So we create a new branch for our feature called `feature/add-x`.
 We then create our commits (with our new code) and push them to Gitlab. Open a merge request, this triggers the CI
-pipeline (from the `.gitlab-ci.yaml`) file. In this example, the pipeline fails, perhaps because a unit test failed. This
+pipeline (from the `.gitlab-ci.yml`) file. In this example, the pipeline fails, perhaps because a unit test failed. This
 causes the whole pipeline to fail.
 
 We then fix our code so the unit tests pass and then create more commits and push them. This then triggers the
@@ -62,11 +62,11 @@ pipeline to run again, this time it passes. Now our code is ready to be reviewed
 After the code review, it will be merged onto the `master` (main) branch. Then we will trigger the deployment process,
 this can also be defined within our CI file.
 
-## .gitlab-ci.yaml
+## .gitlab-ci.yml
 
-Now onto the real meat and potatoes of this article, our `.gitlab-ci.yaml` file for React Native apps.
-Taking a look at an [example application](https://gitlab.com/hmajid2301/stegappasaurus). You can find the `.gitlab-ci.yaml`
-and `package.json` in the appendix below or follow the link above. Now let's take a look the `.gitlab-ci.yaml` file.
+Now onto the real meat and potatoes of this article, our `.gitlab-ci.yml` file for React Native apps.
+Taking a look at an [example application](https://gitlab.com/hmajid2301/stegappasaurus). You can find the `.gitlab-ci.yml`
+and `package.json` in the appendix below or follow the link above. Now let's take a look the `.gitlab-ci.yml` file.
 
 ### setup
 
@@ -480,7 +480,7 @@ pages:
       - public
 ```
 
-Finally it's done! That's it! That is one example of a `.gitlab-ci.yaml` file you can use to for
+Finally it's done! That's it! That is one example of a `.gitlab-ci.yml` file you can use to for
 your React Native projects.
 
 ## Appendix
