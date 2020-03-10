@@ -2,17 +2,23 @@
 title: 'Debugging Expo apps in WebStorm and Visual Studio Code'
 tags: ['React Native', 'Expo', 'Debugging', 'Visual Studio', 'Webstorm']
 license: 'public-domain'
+publish: false
+cover_image: 'images/cover.png'
 ---
 
-# Debugging Expo apps in WebStorm and Visual Studio Code
+Visual Studio Code and WebStorm are two popular editors for developing React Native/Expo apps. These editors have lots
+of useful features, such as syntax highlighting, git integration and auto completion. However working out to debug
+Expo apps can be a bit confusing.
 
-![Icon made by https://www.flaticon.com/authors/monkik](images/bug.png)
+One of the main advantages of working in an editor/IDE (let us be honest Visual Studio Code is pretty close to an IDE)
+is being able to use a debugger (and breakpoints) to go through your code line by line and see which part of your code
+is not running as expected. Debuggers can be a powerful tool when trying to remove bugs from your software, being able
+to stop your code at any point and check the state, analyse variables etc.
 
-Visual Studio Code and WebStorm are two popular editors for developing React Native/Expo apps. These editors have lots of useful features, such as syntax highlighting, git integration and auto completion. However working out to debug Expo apps can be a bit confusing.
-
-One of the main advantages of working in an editor/IDE (let us be honest Visual Studio Code is pretty close to an IDE) is being able to use a debugger (and breakpoints) to go through your code line by line and see which part of your code is not running as expected. Debuggers can be a powerful tool when trying to remove bugs from your software, being able to stop your code at any point and check the state, analyse variables etc.
-
-You can actually debug, with breakpoints and all those other fancy features, your Expo apps in both IDEs (WebStorm and Visual Studio Code). I will be running my app in a [Genymotion Android emulator](https://genymotion.com/). Also please note there are likely several ways to debug your React Native/Expo app , I’m simply showing you the way I was able to get my debugger running.
+You can actually debug, with breakpoints and all those other fancy features, your Expo apps in both IDEs
+(WebStorm and Visual Studio Code). I will be running my app in a [Genymotion Android emulator](https://genymotion.com/).
+Also please note there are likely several ways to debug your React Native/Expo app , I’m simply showing you the way
+I was able to get my debugger running.
 
 ![Debugging](https://media.giphy.com/media/ThOHTmBZlHOQ8/giphy.gif)
 

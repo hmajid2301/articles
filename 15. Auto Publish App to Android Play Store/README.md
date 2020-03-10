@@ -2,6 +2,7 @@
 title: 'Auto Publish React Native App to Android Play Store using GitLab CI'
 tags: ['React Native', 'CI', 'GitLab', 'Automation', 'Android']
 license: 'public-domain'
+publish: false
 cover_image: https://dev-to-uploads.s3.amazonaws.com/i/w00r4rpmfpjqb8wgygxu.jpg
 ---
 
