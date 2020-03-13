@@ -1,6 +1,6 @@
 ---
-title: 'Debugging Expo apps in WebStorm and Visual Studio Code'
-tags: ['React Native', 'Expo', 'Debugging', 'Visual Studio', 'Webstorm']
+title: 'Debugging React Native apps in WebStorm and Visual Studio Code'
+tags: ['React Native', 'Debugging', 'Visual Studio', 'Webstorm']
 license: 'public-domain'
 publish: false
 cover_image: 'images/cover.png'
