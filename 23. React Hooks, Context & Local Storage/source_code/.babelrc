@@ -1,0 +1,14 @@
+{
+  "presets": ["@babel/env", "@babel/react", "@babel/typescript"],
+  "plugins": [
+    ["transform-class-properties"],
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "~": "./src"
+        }
+      }
+    ]
+  ]
+}

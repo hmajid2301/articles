@@ -1,0 +1,52 @@
+image: node:12.13.0
+
+stages:
+  - test
+  - post-publish
+
+before_script:
+  - yarn
+
+lint:
+  stage: test
+  except:
+    - master
+    - tags
+  script:
+    - yarn lint
+
+lint:code-formatter:
+  stage: test
+  except:
+    - master
+    - tags
+  script:
+    - yarn code-formatter-check
+
+lint:types:
+  stage: test
+  except:
+    - master
+    - tags
+  script:
+    - yarn types-check
+
+pages:
+  only:
+    - /^release/.*$/
+  script:
+    - yarn build
+    - mkdir public
+    - mv dist/* public/
+  artifacts:
+    paths:
+      - public/
+
+post-publish:audit-report:
+  stage: post-publish
+  image: cypress/browsers:node10.16.0-chrome77
+  # only:
+  #   - /^release/.*$/
+  script:
+    - yarn run build
+    - yarn lhci autorun --upload.target=temporary-public-storage --collect.settings.chromeFlags="--no-sandbox" || echo "LHCI failed!"
