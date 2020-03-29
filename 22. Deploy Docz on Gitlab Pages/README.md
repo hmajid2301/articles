@@ -2,7 +2,7 @@
 title: 'Deploy Docz on Gitlab Pages'
 tags: ['Docz', 'gitlab', 'ci']
 license: 'public-domain'
-publish: false
+published: true
 cover_image: 'images/cover.png'
 ---
 
@@ -170,8 +170,7 @@ pages:
 ```
 
 This will publish our "website" to https://<username>.gitlab.io/<project_name>. So, for example, my username is
-`hmajid2301` and my project name is `stegappasaurus` hence the website URL is
-https://hmajid2301.gitlab.io/stegappasaurus.
+`hmajid2301` and my project name is `stegappasaurus` hence the website URL is https://hmajid2301.gitlab.io/stegappasaurus.
 
 ### Custom Domain (Optional)
 

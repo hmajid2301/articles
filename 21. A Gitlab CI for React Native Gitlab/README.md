@@ -1,10 +1,12 @@
 ---
 title: 'A Gitlab CI file for React Native Apps'
 tags: ['React Native', 'Gitlab', 'CI']
+published: true
 license: 'public-domain'
+cover_image: https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
 ---
 
-![Cover Image](https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png)
+> Info: Cover image from https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
 
 A bit of backstory when I first started developing React Native applications (apps), I found there weren't
 any good example of Gitlab CI files. So in this article, I will show you an example `.gitlab-ci.yml`
