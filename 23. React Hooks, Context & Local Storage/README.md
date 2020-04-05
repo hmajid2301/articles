@@ -2,9 +2,11 @@
 title: 'React Hooks, Context & Local Storage'
 tags: ['react', 'react-hooks', 'react-context']
 license: 'public-domain'
-publish: false
+published: false
 cover_image: 'images/cover.jpg'
 ---
+
+> Photo by Cristian Palmer on Unsplash
 
 In this article, I will show how you can use React Context with React Hooks to store global state across a React app,
 then store that state in local storage. This can be used for example to store light vs dark theme, then whenever the
