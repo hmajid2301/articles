@@ -2,7 +2,8 @@
 title: 'Debug React Native WebView'
 tags: ['React Native', 'Expo', 'Chrome', 'Mobile App Development']
 license: 'public-domain'
-publish: false
+date: 20181027T10:00Z
+published: true
 cover_image: 'images/cover.jpg'
 ---
 

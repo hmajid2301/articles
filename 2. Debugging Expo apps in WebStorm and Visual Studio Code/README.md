@@ -2,7 +2,8 @@
 title: 'Debugging React Native apps in WebStorm and Visual Studio Code'
 tags: ['React Native', 'Debugging', 'Visual Studio', 'Webstorm']
 license: 'public-domain'
-publish: false
+date: 20180907T10:00Z
+published: true
 cover_image: 'images/cover.png'
 ---
 

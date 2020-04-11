@@ -2,7 +2,8 @@
 title: 'Inheritance in SQLAlchemy (with Flask)'
 tags: ['Python', 'Orm', 'Sqlalchemy', 'Database']
 license: 'public-domain'
-publish: false
+date: 20181018T10:00Z
+published: true
 cover_image: 'images/cover.jpg'
 ---
 

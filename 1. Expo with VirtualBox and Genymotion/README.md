@@ -2,7 +2,8 @@
 title: 'React Native/Expo with VirtualBox and Genymotion'
 tags: ['Android', 'React Native', 'Virtualbox', 'Expo']
 license: 'public-domain'
-publish: false
+date: 20180903T10:00Z
+published: true
 cover_image: 'images/cover.png'
 ---
 
