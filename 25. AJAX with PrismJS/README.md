@@ -89,8 +89,27 @@ function onPaste() {
 So first we get the `editable` element (our `pre` tag). Next we get the innerText of said element. This should be the new content
 the user wants to paste into the `pre` tag. Sometimes when you copy/paste into the code block the old `code` tag get's deleted
 so just in case we add the `code` tag back in. As this is where PrismJS will render our "new" yaml "code" in. This is done like so
-`editable.innerHTML = '<code id="yaml" class="language-yaml"></code>';`
+`editable.innerHTML = '<code id="yaml" class="language-yaml"></code>';`, this code replaces all the "children" of the `pre` tag
+with this new code block. Next we get the `code` tag with id `yaml`.
+
+```js
+yaml.innerHTML = Prism.highlight(
+    dockerCompose,
+    Prism.languages.yaml,
+    "yaml"
+  );
+```
+
+Finally the main part of our code which actually highlights our code. We pass the newly pasted yaml it's stored in `dockerCompose`
+variable. Next we tell Prism what langauge to use `Prism.languages.yaml` (this is the language grammar0 and finally we pass the
+language name in this case yaml. Then we set this as the `innerHTML` of the `code` tag. 
+
+That's it! Now when the user paste's in new yaml code, it'll be automatically syntax highlighted by PrismJS. This process
+can of course, also be used for AJAX content as well. If you make an API request and the API responds with code that needs
+to be syntax highlighted.
+
+> Note: The code in this project isn't particularly clean, it's mostly all in one file. This is just to make the example a bit easier to follow in reality you would likely split this into multiple files.
 
 ## Appendix
 
-- [Source Code](https://gitlab.com/hmajid2301/articles/-/blob/master/23.%20React%20Hooks%2C%20Context%20%26%20Local%20Storage/source_code)
+- [Example Project](https://composerisation.haseebmajid.dev/#yaml)
