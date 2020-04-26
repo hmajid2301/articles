@@ -6,10 +6,8 @@ published: false
 cover_image: 'images/cover.jpg'
 ---
 
-
-In this article, I will show how you can use React Context with React Hooks to store global state across a React app,
-then store that state in local storage. This can be used for example to store light vs dark theme, then whenever the
-user visits your website again they will have the same theme they last selected. Which leads to an improved experience.
+In this article, we will go over how you can make PrismJS code blocks editable and force PrismJS to re-render so the code
+blocks will be syntax highlighted again.
 
 
 ## Appendix
