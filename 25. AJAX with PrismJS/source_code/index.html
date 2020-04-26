@@ -24,7 +24,7 @@
   <body>
     <div id="code">
       <pre
-        onPaste="setTimeout(function() {reRunPrismJS();}, 0)"
+        onPaste="setTimeout(function() {onPaste();}, 0)"
         id="editable"
         contenteditable
       >
@@ -33,5 +33,44 @@
     </div>
     <script src="javascript/prism.js"></script>
     <script src="javascript/main.js"></script>
+    <script>
+      const yamlContent = `
+version: "3.5"
+
+services:
+  web_server:
+    container_name: nginx
+    build:
+      cache_from:
+        - alpine:latest
+        - corp/web_app:3.14
+      context: .
+      args:
+        buildno: 1
+        gitcommithash: cdc3b19
+        shm_size: "2gb"
+    ports:
+      - 80:80
+    depends_on:
+      - app
+
+  webapp:
+    build:
+      context: ./dir
+      dockerfile: Dockerfile-alternate
+      args:
+        buildno: 1
+      shm_size: 10000000
+      labels:
+        - "com.example.description=Accounting webapp"
+        - "com.example.department=Finance"
+        - "com.example.label-with-empty-value"
+      target: prod
+    env_file: docker/database.conf
+`;
+
+      const yaml = document.getElementById("yaml");
+      yaml;
+    </script>
   </body>
 </html>
