@@ -11,9 +11,28 @@ blocks will be syntax highlighted again.
 
 ## index.html
 
-```html
-```
+So our HTML will look something like this.
 
+```html
+<head>
+  <link
+    rel="stylesheet"
+    type="text/css"
+    href="stylesheets/prism.css"
+    rel="stylesheet"
+  />
+</head>
+...
+
+<pre
+  onPaste="setTimeout(function() {onPaste();}, 0)"
+  id="editable"
+  contenteditable
+>
+  <code id="yaml" class="language-yaml"></code>
+</pre>
+<script src="javascript/prism.js"></script>
+```
 
 ## Appendix
 
