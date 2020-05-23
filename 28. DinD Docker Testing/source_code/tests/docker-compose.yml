@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  service1:
+    container_name: container1
+    image: docker
+    command: ["tail", "-f", "/dev/null"]
+
+  service2:
+    container_name: container2
+    image: docker
+    command: ["tail", "-f", "/dev/null"]

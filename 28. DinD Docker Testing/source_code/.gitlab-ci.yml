@@ -1,0 +1,9 @@
+services:
+  - docker:dind
+
+tests:integration:
+  stage: test
+  image: hmajid2301/dind-docker-compose
+  script:
+    - pip install pytest docker lovely-pytest-docker
+    - pytest -s tests/test_integration.py
