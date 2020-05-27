@@ -1,10 +1,11 @@
-----------------------------------------------------------------------------------------------------
+---
 title: 'Pytest with Background Thread Fixtures'
 tags: ['pytest', 'python', 'testing', 'development', 'threads']
 license: 'public-domain'
-----------------------------------------------------------------------------------------------------
-
-# Pytest with Background Thread Fixtures
+date: 20181105T10:00Z
+published: true
+cover_image: 'images/cover.jpg'
+---
 
 ![All cool people test their own code](https://media.giphy.com/media/5xrkJe3IJKSze/giphy.gif)
 
@@ -18,7 +19,33 @@ I write my tests using Pytest for several reasons, I prefer it to unittest becau
 
 ## tcp_server.py
 
-![tcp_server.py](images/tcp_server.png)
+```python
+import socket
+
+
+class TCPServer:
+    def __init__(self):
+            self._sock = socket.socket(socket.AF_INET, 
+                                       socket.SOCK_STREAM)
+            self._sock.setsockopt(socket.SOL_SOCKET, 
+                                  socket.SO_REUSEADDR, 1)
+            
+    def __enter__(self):
+            self._sock.bind(('127.0.0.1', 9500))
+            return self
+            
+    def __exit__(self, exception_type, exception_value, traceback):
+            self._sock.close()
+            
+    def listen_for_traffic(self):
+            while True:
+                self._sock.listen(5)
+                connection, address = self._sock.accept()
+                message = connection.recv(1024)
+                response = "Received"
+                connection.send(response.encode())
+                connection.close()
+```
 
 This is a very basic TCP server, it received some input but always replies with "Received". Also, I created the class to be used with the context manager so that the socket can be closed, hence the _\_\_enter\_\_()_ and _\_\_exit\_\_()_ dunder (magic) method. This TCP server will always listen on localhost on port 9500, this is the same port the client will also have to connect to, to send messages to this TCP server.
 
@@ -28,7 +55,37 @@ The main function of interest is _listen\_for\_traffic()_, which loops forever w
 
 ## test_example.py
 
-![test_example.py](images/test_example.png)
+```python
+import socket
+import threading
+
+import pytest
+
+from .tcp_server import TCPServer
+
+
+@pytest.fixture(autouse=True)
+def dummy_tcp_server():
+    tcp_server = TCPServer()
+    with example_server as tcp_server:
+        thread = threading.Thread(target=example_server.listen_for_traffic)
+        thread.daemon = True
+        thread.start()
+        yield example_server
+
+
+def test_example():
+    HOST = '127.0.0.1'
+    PORT = 9500
+
+    data = ""
+    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+        s.connect((HOST, PORT))
+        s.sendall(b'Hello, world')
+        data = s.recv(1024)
+
+    assert data.decode() == "Received"
+```
 
 When you run the Pytest command it will automatically run tests on all modules and method that start with "test_". I have created a fixture (using the fixture decorator), fixtures allow for code reuse within a Pytest module. Fixtures are typically used to connect to databases, fixtures are the run before any tests hence we can also use them to setup is code.
 

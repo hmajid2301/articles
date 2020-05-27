@@ -2,9 +2,10 @@
 title: 'Testing with pytest-mock and pytest-flask'
 tags: ['testing', 'python', 'mocking', 'pytest', 'flask']
 license: 'public-domain'
+date: 20181215T10:00Z
+published: true
+cover_image: 'images/cover.jpg'
 ---
-
-# Testing with pytest-mock and pytest-flask
 
 https://media.giphy.com/media/gw3IWyGkC0rsazTi/giphy.gif
 
@@ -85,7 +86,26 @@ What this bit of code is doing is any time the any of the mocked functions are c
 
 ## test_example.py
 
-![test_example.py](images/test_example.png)
+```python
+import pytest
+
+from example import create_app
+
+
+@pytest.fixture
+def app(mocker):
+    mocker.patch("flask_sqlalchemy.SQLAlchemy.init_app", return_value=True)
+    mocker.patch("flask_sqlalchemy.SQLAlchemy.create_all", return_value=True)
+    mocker.patch("example.database.get_all", return_value={})
+    app = create_app()
+    return app
+
+
+def test_example(client):
+    response = client.get("/")
+    assert response.status_code == 200
+
+```
 
 In this example it's very boring as when we send an HTTP GET request to the app it will not interact with the database since we've mocked this out but instead just return an empty dict ({}). In reality, this is
 not a very good test, you would make it a bit more interesting.
@@ -96,4 +116,3 @@ not a very good test, you would make it a bit more interesting.
 
 * [Example source code](https://github.com/hmajid2301/medium/tree/master/9.%20Testing%20with%20pytest-mock%20and%20pytest-flask)
 * [Code images made with carbon](https://carbon.now.sh)
->>>>>>> master

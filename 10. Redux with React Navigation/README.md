@@ -2,6 +2,9 @@
 title: 'Theme your Expo app with Redux and React Navigation'
 tags: ['redux', 'react-native', 'react-navigation', 'expo']
 license: 'public-domain'
+date: 20181223T10:00Z
+published: true
+cover_image: 'images/cover.jpg'
 ---
 
 # Theme your Expo app with Redux and React Navigation
@@ -93,7 +96,12 @@ The project structure will look like this
 
 ### themes
 
-![themes/index.js](images/theme-index.png)
+```js
+export const COLORS = {
+  red: { name: 'red', hexCode: '#DE5448' },
+  blue: { name: 'blue', hexCode: '#498AF4' },
+}
+```
 
 Here we define our two colours that will be used as themes, red and blue. I have given each colour a name because it makes the toggle logic easier to follow.
 
@@ -101,7 +109,29 @@ Here we define our two colours that will be used as themes, red and blue. I have
 
 ### reducers
 
-![reducers/Theme.js](images/reducer-theme.png)
+```js
+import { COLORS } from '../themes';
+
+const initialState = {
+  colorData: COLORS.red,
+};
+
+const Theme = (state = initialState, action) => {
+  switch (action.type) {
+    case 'TOGGLE_THEME':
+      switch(action.payload.name) {
+        case 'red':
+          return { colorData: COLORS.blue };
+        case 'blue':
+          return { colorData: COLORS.red };
+      }
+    default:
+      return state;
+  }
+};
+
+export default Theme;
+```
 
 A reducer is a pure function which takes some state and returns a new state. In this example
 it gets passed the current theme colour and swaps it to the new theme colour.
@@ -110,7 +140,14 @@ In this example if the action is `TOGGLE_THEME`, we get the colour name from the
 statement we swap the colours over. So if the current colour is red we update the state (`colorData`) to be
 blue.
 
-![reducers/index.js](images/reducer-index.png)
+```js
+import { combineReducers } from 'redux';
+import Theme from './Theme';
+
+export default combineReducers({
+  Theme,
+});
+```
 
 Here we combine all of our reducers, in this example, we are only using the one reducer but if we had multiple reducers, The `combineReducers` function to would be necessary to combine them together. In this
 example we can simply add new reducers to the function as and when we need them.
@@ -119,12 +156,21 @@ example we can simply add new reducers to the function as and when we need them.
 
 ### actions
 
-![actions/actionTypes.js](images/actions-actionTypes.png)
+```js
+export const TOGGLE_THEME = 'TOGGLE_THEME';
+```
 
 This file defines all the actions we can dispatch to our store. In this example, we only need one action to
 toggle our theme.
 
-![actions/index.js](images/actions-index.png)
+```js
+import { TOGGLE_THEME } from './actionTypes';
+
+export const toggleTheme = theme => ({
+  type: TOGGLE_THEME,
+  payload: theme,
+});
+```
 
 In this file, we define our actions, so here we have a single action `toggleTheme`, which takes a
 theme as input and passes it as our payload, hence to access the name of the colour we use `action.payload.name` in our reducer.
@@ -133,7 +179,13 @@ theme as input and passes it as our payload, hence to access the name of the col
 
 ### store
 
-![store/index.js](images/store-index.png)
+```js
+import { createStore } from 'redux';
+import rootReducer from '../reducers';
+
+
+export default store = createStore(rootReducer);
+```
 
 The Redux store is used to store the current state for our app, we have to link our store with our reducers we can do this using the `createStore` function and import the reducers from `reducers/index.js`.
 
@@ -141,7 +193,23 @@ The Redux store is used to store the current state for our app, we have to link 
 
 ### App.js
 
-![App.png](images/app.png)
+```js
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+
+import store from './src/store';
+import CustomTabNavigator from './src/components/CustomTabNavigator';
+
+export default class App extends Component {
+  render() {
+    return (
+      <Provider store={store}>
+        <CustomTabNavigator />
+      </Provider>
+    );
+  }
+};
+```
 
 This acts as the main file for our app, to use Redux with our app we must wrap around `Provider` tags and
 set the store props to our `store/index.js` file. The `<CustomTabNavigator>` contains the logic for our two screens and the tab navigator.
@@ -150,7 +218,56 @@ set the store props to our `store/index.js` file. The `<CustomTabNavigator>` con
 
 ### components
 
-![components/CustomTabNavigator.png](images/custom-tab-navigator.png)
+```js
+import store from '../store';
+import { createMaterialTopTabNavigator } from 'react-navigation';
+
+import PageA from '../screens/PageA';
+import PageB from '../screens/PageB';
+import { COLORS } from '../themes';
+import { toggleTheme } from '../actions';
+
+
+const commonTabOptions = color => ({
+  activeTintColor: 'white',
+  pressColor: '#fff',
+  inactiveTintColor: '#ddd',
+  style: {
+    backgroundColor: color,
+  },
+});
+
+
+const CustomerTabNavigator = createMaterialTopTabNavigator({
+  Encoding: {
+    screen: PageA,
+    navigationOptions: {
+      tabBarLabel: 'A',
+      tabBarOptions: commonTabOptions(COLORS.red.hexCode),
+      tabBarOnPress: ({ _, defaultHandler }) => {
+        store.dispatch(toggleTheme(COLORS.blue));
+        defaultHandler();
+      },
+    },
+  },
+  Decoding: {
+    screen: PageB,
+    navigationOptions: {
+      tabBarLabel: 'B',
+      tabBarOptions: commonTabOptions(COLORS.blue.hexCode),
+      tabBarOnPress: ({ _, defaultHandler }) => {
+        store.dispatch(toggleTheme(COLORS.red));
+        defaultHandler();
+      },
+    },
+  },
+}, {
+    tabBarPosition: 'bottom',
+});
+
+
+export default CustomerTabNavigator
+```
 
 Here is where we use react navigation to create our tab navigator. We define two screens called A and B,
 each screen has a different tab colour, red for A and blue for B. The main part of this file is the following
@@ -183,7 +300,38 @@ const commonTabOptions = color => ({
 tabBarOptions: commonTabOptions(COLORS.red.hexCode)
 ```
 
-![components/toggle-theme.png](images/toggle-theme.png)
+```js
+import React, { Component } from 'react';
+import { View, Button } from 'react-native';
+import { connect } from 'react-redux';
+
+import { toggleTheme } from '../actions';
+
+
+class ToggleTheme extends Component {
+  render() {
+    return (
+      <View style={{marginTop: 25}}>
+        <Button
+          title="Toggle Color"
+          color={this.props.color.hexCode}
+          onPress={() => this.props.toggleTheme(this.props.color)}
+        />
+      </View>
+    )
+  }
+}
+
+const mapStateToProps = state => ({
+  color: state.Theme.colorData,
+});
+
+const mapDispatchToProps = dispatch => ({
+  toggleTheme: color => dispatch(toggleTheme(color)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToggleTheme);
+```
 
 This file does most of the heavy lifting for this app, this is where most of the logic sits. So, first of all, we have a button, which calls `toggleTheme` on a press of the and passes the current colour (state) as an argument.
 
@@ -219,7 +367,23 @@ button is pressed it will dispatch an action to toggle the theme.
 
 ### PageA
 
-![screens/PageA.png](images/pagea.png)
+```js
+import React, { Component } from 'react';
+import { View, Text } from 'react-native';
+
+import ToggleTheme from '../components/ToggleTheme';
+
+export default class PageA extends Component {
+  render() {
+    return (
+      <View style={{ flex: 1 }}>
+        <ToggleTheme />
+        <Text>PageA</Text>
+      </View>
+    );
+  }
+}
+```
 
 This is an example of one of our screens, it's very simple just the page name and `<ToggleTheme>` component.
 

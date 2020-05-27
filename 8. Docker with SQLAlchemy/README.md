@@ -2,9 +2,10 @@
 title: 'Simple App with Flask, SQLalchemy and Docker'
 tags: ['docker', 'python', 'docker-compose', 'sqlalchemy']
 license: 'public-domain'
+date: 20181124T10:00Z
+published: true
+cover_image: 'images/cover.jpg'
 ---
-
-# Simple App with Flask, SQLalchemy and Docker
 
 https://media.giphy.com/media/35KpaeAHCl0wt8O8Nc/giphy.gif
 
@@ -38,7 +39,22 @@ psycopg2==2.7.6.1
 
 ## __init__.py
 
-![__init__.py](images/init.png)
+```python
+from flask import Flask
+
+from .models import db
+from . import config
+
+
+def create_app():
+    flask_app = Flask(__name__)
+    flask_app.config['SQLALCHEMY_DATABASE_URI'] = config.DATABASE_CONNECTION_URI
+    flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    flask_app.app_context().push()
+    db.init_app(flask_app)
+    db.create_all()
+    return flask_app
+```
 
 The init file has one function `create_app()`, which funnily enough creates our Flask app with this line `Flask(__name__)`. It then assigns a URI, from the `config.py` file, to the Flask app's configuration. This URI is used to connect to the Postgres database.
 
@@ -54,7 +70,17 @@ After pushing our context, we link our `db` to the Flask app with the following 
 
 ## config.py
 
-![config.py](images/config.png)
+```python
+import os
+
+user = os.environ['POSTGRES_USER']
+password = os.environ['POSTGRES_PASSWORD']
+host = os.environ['POSTGRES_HOST']
+database = os.environ['POSTGRES_DB']
+port = os.environ['POSTGRES_PORT']
+
+DATABASE_CONNECTION_URI = f'postgresql+psycopg2://{user}:{password}@{host}:{port}/{database}'
+```
 
 This module's only job at the moment is to generate this URI, but could easily be extended to add extra configuration variables if required.
 
@@ -87,7 +113,19 @@ where `postgres` is the Docker container name we are connecting to.
 
 ## models.py
 
-![models.py](images/models.png)
+```python
+import flask_sqlalchemy
+
+db = flask_sqlalchemy.SQLAlchemy()
+
+
+class Cats(db.Model):
+    __tablename__ = 'cats'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100))
+    price = db.Column(db.Integer)
+    breed = db.Column(db.String(100))
+```
 
 This module defines our classes which then become tables within our database. For example, the class `Cats` (cats) is the table name and each attribute becomes a column in that table. So the `cats` table with have four columns id, name, price and breed.
 
@@ -97,7 +135,57 @@ The `db` variable is imported from here by the `__init__.py` file, that's how th
 
 ## app.py
 
-![app.py](images/app.png)
+```python
+import json
+
+from flask import request
+
+from . import create_app, database
+from .models import Cats
+
+app = create_app()
+
+
+@app.route('/', methods=['GET'])
+def fetch():
+    cats = database.get_all(Cats)
+    all_cats = []
+    for cat in cats:
+        new_cat = {
+            "id": cat.id,
+            "name": cat.name,
+            "price": cat.price,
+            "breed": cat.breed
+        }
+
+        all_cats.append(new_cat)
+    return json.dumps(all_cats), 200
+
+
+@app.route('/add', methods=['POST'])
+def add():
+    data = request.get_json()
+    name = data['name']
+    price = data['price']
+    breed = data['breed']
+
+    database.add_instance(Cats, name=name, price=price, breed=breed)
+    return json.dumps("Added"), 200
+
+
+@app.route('/remove/<cat_id>', methods=['DELETE'])
+def remove(cat_id):
+    database.delete_instance(Cats, id=cat_id)
+    return json.dumps("Deleted"), 200
+
+
+@app.route('/edit/<cat_id>', methods=['PATCH'])
+def edit(cat_id):
+    data = request.get_json()
+    new_price = data['price']
+    database.edit_instance(Cats, id=cat_id, price=new_price)
+    return json.dumps("Edited"), 200
+```
 
 This is a simple Flask file, which creates our app by calling `create_app()` function from `__init__.py` module.
 Then it defines four functions for our four routes for the "RESTful" API:
@@ -111,7 +199,36 @@ Then it defines four functions for our four routes for the "RESTful" API:
 
 ## database.py
 
-![database.py](images/database.png)
+```python
+from .models import db
+
+
+def get_all(model):
+    data = model.query.all()
+    return data
+
+
+def add_instance(model, **kwargs):
+    instance = model(**kwargs)
+    db.session.add(instance)
+    commit_changes()
+
+
+def delete_instance(model, id):
+    model.query.filter_by(id=id).delete()
+    commit_changes()
+
+
+def edit_instance(model, id, **kwargs):
+    instance = model.query.filter_by(id=id).all()[0]
+    for attr, new_value in kwargs:
+        setattr(instance, attr, new_value)
+    commit_changes()
+
+
+def commit_changes():
+    db.session.commit()
+```
 
 This module is created so we can abstract away how we interact with the database. We simply use
 the functions in this module to interact with the database. This means it's easier to change the
@@ -136,7 +253,21 @@ and passes them as keyword arguments.
 
 ## docker-compose.yml
 
-![docker-compose.yml](images/docker-compose.png)
+```yaml
+version: '3.5'
+services:
+  database:
+    container_name: postgres
+    image: postgres:latest
+    env_file: database.conf
+    ports:
+      - 5432:5432  
+    volumes:
+      - db_volume:/var/lib/postgresql
+
+volumes:
+  db_volume:
+```
 
 For development, I like to use docker-compose. In docker compose we can specify Docker containers using YAML. It can help to simplify the commands we need to type when trying to build/run multiple Docker containers. In this example, we only define a single Docker container.
 
