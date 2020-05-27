@@ -1,6 +1,6 @@
 ---
 title: 'Testing with pytest-mock and pytest-flask'
-tags: ['testing', 'python', 'mocking', 'pytest', 'flask']
+tags: ['testing', 'python', 'pytest', 'flask']
 license: 'public-domain'
 date: 20181215T10:00Z
 published: true

@@ -1,6 +1,6 @@
 ---
 title: 'Pytest with Background Thread Fixtures'
-tags: ['pytest', 'python', 'testing', 'development', 'threads']
+tags: ['pytest', 'python', 'testing', 'threads']
 license: 'public-domain'
 date: 20181105T10:00Z
 published: true
