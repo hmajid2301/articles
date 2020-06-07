@@ -1,0 +1,128 @@
+swagger: "2.0"
+info:
+  version: "1.0.0"
+  title: "Pet Store"
+basePath: "/api/v1"
+tags:
+  - name: "pet"
+schemes:
+  - "https"
+consumes:
+  - "application/json"
+produces:
+  - "application/json"
+paths:
+  /pet/{pet_id}:
+    get:
+      tags:
+        - "pet"
+      summary: "Get a pet in the store"
+      operationId: "get_pet"
+      parameters:
+        - name: "pet_id"
+          in: "path"
+          description: "The id of the pet to retrieve"
+          required: true
+          type: "string"
+      responses:
+        200:
+          description: "Successfully retrived pet"
+          schema:
+            $ref: "#/definitions/Pet"
+        404:
+          description: "Pet doesn't exist"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+    delete:
+      tags:
+        - "pet"
+      summary: "Remove a pet in the store"
+      operationId: "remove_pet"
+      parameters:
+        - name: "pet_id"
+          in: "path"
+          description: "The id of the pet to remove from the store"
+          required: true
+          type: "string"
+      responses:
+        202:
+          description: "Successfully deleted pet"
+        404:
+          description: "Pet doesn't exist"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+    put:
+      tags:
+        - "pet"
+      summary: "Update and replace a pet in the store"
+      operationId: "update_pet"
+      parameters:
+        - name: "pet_id"
+          in: "path"
+          description: "The id of the pet to update from the store"
+          required: true
+          type: "string"
+        - name: "Pet"
+          in: "body"
+          required: true
+          schema:
+            $ref: "#/definitions/Pet"
+      responses:
+        200:
+          description: "Successfully updated pet"
+        404:
+          description: "Pet doesn't exist"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+  /pet:
+    get:
+      tags:
+        - "pet"
+      summary: "Gets all pets in the store"
+      operationId: "get_all_pets"
+      responses:
+        200:
+          description: "Successfully received all pets."
+          schema:
+            $ref: "#/definitions/Pets"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+    post:
+      tags:
+        - "pet"
+      summary: "Add a new pet to the store"
+      operationId: "add_pet"
+      parameters:
+        - in: "body"
+          name: "body"
+          description: "Pet to add to the store"
+          required: true
+          schema:
+            $ref: "#/definitions/Pet"
+      responses:
+        201:
+          description: "Pet added"
+      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+definitions:
+  Pets:
+    type: array
+    items:
+      $ref: "#/definitions/Pet"
+  Pet:
+    type: "object"
+    required:
+      - "name"
+      - "breed"
+      - "price"
+    properties:
+      id:
+        type: "integer"
+        format: "int32"
+      name:
+        type: "string"
+      breed:
+        type: "string"
+      price:
+        type: "number"
+        format: "float"
+    example:
+      id: 1
+      name: "doggie"
+      breed: "German Shepherd"
+      price: 100.00
