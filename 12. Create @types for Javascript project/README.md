@@ -2,7 +2,9 @@
 title: "How to add your own type definitions to DefinitelyTyped"
 tags: ["javascript", "typescript", "react-native", "expo"]
 license: "public-domain"
-cover_image: https://dev-to-uploads.s3.amazonaws.com/i/9xcigrnnf9iml0hzsypk.png
+cover_image: images/cover.png
+date: 20190419T10:00Z
+published: true
 ---
 
 Recently I started using TypeScript (TS) with React Native. Now I won't be going over the benefits of
@@ -165,7 +167,7 @@ return anything. Below is an example of `ref` being used (in JS).
 
 ```jsx
 class App extends Component {
-  handleCanvas = canvas => {
+  handleCanvas = (canvas) => {
     const ctx = canvas.getContext("2d");
     ctx.fillStyle = "purple";
     ctx.fillRect(0, 0, 100, 100);

@@ -1,44 +1,45 @@
 ---
-title: 'Auto Publish React Native App to Android Play Store using GitLab CI'
-tags: ['React Native', 'CI', 'GitLab', 'Automation', 'Android']
-license: 'public-domain'
-publish: false
-cover_image: https://dev-to-uploads.s3.amazonaws.com/i/w00r4rpmfpjqb8wgygxu.jpg
+title: "Auto Publish React Native App to Android Play Store using GitLab CI"
+tags: ["ReactNative", "CI", "GitLab", "Android"]
+license: "public-domain"
+cover_image: images/cover.jpg
+date: 20191009T10:00Z
+published: true
 ---
 
 In this article, I will show you how can automate the publishing of your AAB/APK to the `Google Play Console`.
 We will be using the [Gradle Play Publisher](https://github.com/Triple-T/gradle-play-publisher) (GPP) plugin to do
 automate this process for us. Using this plugin we cannot only automate the publishing and release of our app,
-we can also update the release notes, store listing (including photos) all from GitLab CI. 
+we can also update the release notes, store listing (including photos) all from GitLab CI.
 
 **Note:** In this article I will assume that you are using Linux and React Native version >= 0.60.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Prerequisites
 
 - [Google Developers Account](https://play.google.com/apps/publish/signup/#EnterDetailsPlace)
 - A working React Native Android project.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Google Play Console
 
 First, we need to create a service account, this account will be used to make changes to our app
 automatically, such as publish it or change the store listing.
 
-* Go to the [Google Play Console](https://play.google.com/apps/publish)
-* Go to "Settings"
-* Go to "Developer Account"
-* Select "API access"
-* Click the "Create Service Account" button
-* Click the "Google API Console" button, this will take you to the `Google Cloud Platform` 
-* Click "Create Service Account", give your service account a `name` and a `description`
-* Select the `Role` as `Owner`, select the "Continue" button and then finally select "Done"
-* After creating your service account you should have a file automatically downloading `api<...>.json`, if not click on "Actions (3 Dots) > Create Key", as shown in `Image 1`
-* Now go back to "Play Console"
-* Go to "Service Accounts" (on the current page), and select "Grant Access"
-* Next set the permission as shown in `Image 2`
+- Go to the [Google Play Console](https://play.google.com/apps/publish)
+- Go to "Settings"
+- Go to "Developer Account"
+- Select "API access"
+- Click the "Create Service Account" button
+- Click the "Google API Console" button, this will take you to the `Google Cloud Platform`
+- Click "Create Service Account", give your service account a `name` and a `description`
+- Select the `Role` as `Owner`, select the "Continue" button and then finally select "Done"
+- After creating your service account you should have a file automatically downloading `api<...>.json`, if not click on "Actions (3 Dots) > Create Key", as shown in `Image 1`
+- Now go back to "Play Console"
+- Go to "Service Accounts" (on the current page), and select "Grant Access"
+- Next set the permission as shown in `Image 2`
 
 If you would like, you can set the permissions either globally so you can use this account for all your apps,
 or you can specify an app so that you will create a new account each time you want to auto-publish a new app.
@@ -49,7 +50,7 @@ more safe, for example, if your credentials are leaked, only one of your apps is
 
 ![Image 2: Permissions](images/permissions.png)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## GitLab
 
@@ -74,19 +75,18 @@ look something like this;
 Now, let's move the relevant keystore information to GitLab CI variables, so we can access them during our CI jobs.
 First, go to your GitLab project;
 
-* Settings > CI/CD > Variables
-* Add Type: File, Key: PLAY_STORE_JSON, Value: (the contents of your JSON file)
+- Settings > CI/CD > Variables
+- Add Type: File, Key: PLAY_STORE_JSON, Value: (the contents of your JSON file)
 
 **Note:** When I'm testing locally sometimes I store this JSON file locally, so I include it in my `.gitignore` (I call mine `play-store.json`) file
 so it doesn't accidentally get published online.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## build.gradle
 
 We need to edit the `android/build.gradle` file first. The Maven URL is a place where we can download
-the GPP plugin. The dependencies list the plugins we want to download and their versions. 
-
+the GPP plugin. The dependencies list the plugins we want to download and their versions.
 
 ```groovy
 buildscript {
@@ -107,11 +107,11 @@ buildscript {
 
 ### gradle-wrapper.properties
 
-To use GPP version `2.4.1` we need to use gradle version >= 5.6.1. To do this we open 
+To use GPP version `2.4.1` we need to use gradle version >= 5.6.1. To do this we open
 `android/gradle/wrapper/gradle-wrapper.properties` and edit the line `distributionUrl` so that the gradle version match
-the required version for example `distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.1-all.zip`. 
+the required version for example `distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.1-all.zip`.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## app/build.gradle
 
@@ -120,10 +120,10 @@ Add the `apply plugin: "com.github.triplet.play"` to the top of your file after 
 Then at the bottom of the file add the code below. This is what the GPP plugin uses to determine how to publish your app.
 In this case, it will
 
-* defaultToAppBundles: It will generate an AAB (Android App  Bundle) instead of APK
-* track: Which track we should deploy the new AAB to, you can chose for example production or beta, in this case it's the internal track
-* serviceAccountCredentials: The location of the Play Store JSON we stored in our CI/CD variables in this example it will be kept in `android/app/play-store.json`
-* resolutionStrategy: Automatically updates the app's version code to matches the next available number required so it's published
+- defaultToAppBundles: It will generate an AAB (Android App Bundle) instead of APK
+- track: Which track we should deploy the new AAB to, you can chose for example production or beta, in this case it's the internal track
+- serviceAccountCredentials: The location of the Play Store JSON we stored in our CI/CD variables in this example it will be kept in `android/app/play-store.json`
+- resolutionStrategy: Automatically updates the app's version code to matches the next available number required so it's published
 
 ```groovy
 play {
@@ -140,7 +140,7 @@ play {
 There are numerous more options you can enable/use, such as generating a draft which you can manually publish yourself from the Play store console.
 You can find more details [here](https://github.com/Triple-T/gradle-play-publisher), in the GPPs very well documented README.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Meta Data
 
@@ -179,7 +179,7 @@ about meta-data [here](https://github.com/Triple-T/gradle-play-publisher#managin
         └── default.txt
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## package.json
 
@@ -188,8 +188,8 @@ simply use yarn run bundle, for example instead of having to write the whole com
 advantage is that the command is used multiple times in our GitLab CI jobs, we only have to edit in a single location. It also
 saves us having to type out the same (very long) command again.
 
-* bundle: Bundles all of our react native code into a single file
-* publish-package: Will build our AAB and also publish it along with all the meta-data we include
+- bundle: Bundles all of our react native code into a single file
+- publish-package: Will build our AAB and also publish it along with all the meta-data we include
 
 ```json
 {
@@ -202,7 +202,8 @@ saves us having to type out the same (very long) command again.
   ...
 }
 ```
----------------------------------------------------------------------------------------------------
+
+---
 
 ## .gitlab-ci.yml
 
@@ -250,7 +251,7 @@ That's it, we're done :).
 
 ![More automation is good right?](https://giphy.com/gifs/13Csc1WMn9sXSM/html5)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 

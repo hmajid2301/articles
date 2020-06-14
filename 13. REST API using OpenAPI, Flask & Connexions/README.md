@@ -1,7 +1,10 @@
 ---
 title: "Implementing a Simple REST API using OpenAPI, Flask & Connexions"
-tags: ["flask", "swagger", "openapi", "python", "connexion"]
+tags: ["flask",  "openapi", "python", "connexion"]
 license: "public-domain"
+cover_image: images/cover.jpg
+date: 20190816T10:00Z
+published: true
 ---
 
 ![We will need to use Swagger.](https://giphy.com/gifs/hqUGOeVeCARiUKavT7/html5)
@@ -9,17 +12,17 @@ license: "public-domain"
 RESTful APIs are very popular at the moment and Python is a great language to develop
 web APIs with. In this article we will go over a documentation first approach to building APIs.
 We will be using Flask, Swagger Code-Gen (OpenAPI) and Connexions.
-I will go over an API/documentation first approach to building a RESTful API in 
-Python. Which will try to minimise the differences between what's defined in the API 
+I will go over an API/documentation first approach to building a RESTful API in
+Python. Which will try to minimise the differences between what's defined in the API
 specification and the actual API logic
-itself. 
+itself.
 
-One of the main problems you'll find with using openapi is that every time you update your API 
+One of the main problems you'll find with using openapi is that every time you update your API
 you have to update your documentation or your openapi yaml/json file. Now what happens if you
-forget? Now your API is different to what's documented which can be a real pain for your users. 
+forget? Now your API is different to what's documented which can be a real pain for your users.
 The aim of this approach is that you update your specification file first.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Tools/Libraries
 
@@ -27,7 +30,7 @@ Let's very quickly go over the tools and libraries we will use.
 
 ### OpenAPI
 
-Openapi or the Openapi Specification (OAS), defines a standard language agnostic approach to 
+Openapi or the Openapi Specification (OAS), defines a standard language agnostic approach to
 developing RESTful APIs, which are both human and machine readable.
 
 ### Swagger
@@ -50,7 +53,7 @@ to OAS2 and AOS3.
 
 ![Swagger UI](https://synaptiklabs.com/wp-content/uploads/2019/02/javaee-swagger-screen-1.png)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## API
 
@@ -72,31 +75,31 @@ test-api/
 └── setup.py
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### Define Specification
 
-First thing we do is define our OAS. We will use YAML to do this because I think it's much easier to read 
-and almost all specifications you see will be written in YAML (not JSON). However you can write the 
+First thing we do is define our OAS. We will use YAML to do this because I think it's much easier to read
+and almost all specifications you see will be written in YAML (not JSON). However you can write the
 specification in JSON if you so wish. There are a few tools that can make this a bit easier.
 
-We can use the [online swagger editor](https://editor.swagger.io/), which allows us to edit the 
-OAS and you can see the OAS as an interactive document (half the screen for the editor and half 
+We can use the [online swagger editor](https://editor.swagger.io/), which allows us to edit the
+OAS and you can see the OAS as an interactive document (half the screen for the editor and half
 for the interactive document). You can also run the editor locally as a
 [Docker container](https://hub.docker.com/r/swaggerapi/swagger-editor/)
 
-**NOTE**: If you use the editor to generate models (using swagger-codegn), it makes an API call to 
-a remote server. Run the swagger-codegen manually to generate the models locally, if you're using 
+**NOTE**: If you use the editor to generate models (using swagger-codegn), it makes an API call to
+a remote server. Run the swagger-codegen manually to generate the models locally, if you're using
 this for work and confidentality matters.
 
 My preferred way of writing an OAS is using VSCode with the
-[Swagger Viewer](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer) 
-plugin, which allows you to write the OAS and preview the interactive document at the same time. 
+[Swagger Viewer](https://marketplace.visualstudio.com/items?itemName=Arjun.swagger-viewer)
+plugin, which allows you to write the OAS and preview the interactive document at the same time.
 I prefer this approach because I have all my plugins setup (colour scheme, vim bindings etc).
 
-Now we have to define our specification. We will be using OAS version 2 because swagger-codegen 
-at the moment cannot generate models for flask for OAS version 3. Now I've created a very simple 
-specification for an imaginary pet store. 
+Now we have to define our specification. We will be using OAS version 2 because swagger-codegen
+at the moment cannot generate models for flask for OAS version 3. Now I've created a very simple
+specification for an imaginary pet store.
 
 ```yaml
 # openapi/specification.yml
@@ -117,7 +120,7 @@ paths:
   /pet/{pet_id}:
     get:
       tags:
-      - "pet"
+        - "pet"
       summary: "Get a pet in the store"
       operationId: "get_pet"
       parameters:
@@ -136,7 +139,7 @@ paths:
       x-swagger-router-controller: "test_api.web.controllers.pets_controller"
     delete:
       tags:
-      - "pet"
+        - "pet"
       summary: "Remove a pet in the store"
       operationId: "remove_pet"
       parameters:
@@ -151,35 +154,34 @@ paths:
         404:
           description: "Pet doesn't exist"
       x-swagger-router-controller: "test_api.web.controllers.pets_controller"
-...
 ```
 
 The specification defines several endpoints for our API. Essentially I've defined one endpoint
-for each of the main CRUD verbs (GET, POST, PUT and DELETE). Some things to note: 
+for each of the main CRUD verbs (GET, POST, PUT and DELETE). Some things to note:
 the `operation_id`, will be the function name in our Python code. In a production,
-you should also look at using `OAuth2` for securing your API this can also be defined within in 
+you should also look at using `OAuth2` for securing your API this can also be defined within in
 the specification.
 
-**Note** the extra field `x-swagger-router-controller` is very important. It is used by `Connexion` to 
+**Note** the extra field `x-swagger-router-controller` is very important. It is used by `Connexion` to
 map which module (and function) to send requests to. For example a GET request send to `/api/v1/pets`,
-will go to `test_api.web.controllers.pets_controller` and function called `get_pet` (`operation_id`) 
+will go to `test_api.web.controllers.pets_controller` and function called `get_pet` (`operation_id`)
 so it looks like `test_api.web.controllers.pets_controller:get_pet`. Which means we call the function
 in the folder `src/test_api/web/controllers/pets_controller` we call the `get_pet` function.
 
----------------------------------------------------------------------------------------------------
+---
 
 ### Server Stubs
 
 Now we want to generate some server stubs from this specification we can do this by either using the `codegen` tool or
 in the `editor` we can go to `Generate Server > python-flask`. This will download a zip file, after you decompress it.
-We want to copy the `controllers, models, encoder.py, __init__.py and util.py` files into the `web` folder. The models 
+We want to copy the `controllers, models, encoder.py, __init__.py and util.py` files into the `web` folder. The models
 are the classes of objects that we expect as input and output such as a `Pet` class. The controllers contain the actual
 webserver logic. There is one function for every endpoint (and CRUD method) we defined above, there is also one file for
 every tag we defined. In this example we only have one controller file because we only have `tag` called pet. Then in the
 controller we have 4 functions (named after the `operation_id`).
 
 We have to make some changes to the codegen generated files. The imports will be wrong when we move the files. We have to change them from
-`swagger_server`. So for example `controllers/pet_controller.py` and `models/pets.py` would become: 
+`swagger_server`. So for example `controllers/pet_controller.py` and `models/pets.py` would become:
 
 ```python
 #pet_controller.py
@@ -187,7 +189,6 @@ from ..models.pet import Pet  # noqa: E501
 from ..models.pets import Pets  # noqa: E501
 from .. import util
 ```
-
 
 ```python
 #pets.py
@@ -210,14 +211,14 @@ and add a cli library such as `click`. This involves minimal code change.
 
 **Note** Some import maybe unnecessary you can use a linter (such as `flask8`) to help you remove them from the `models`.
 
----------------------------------------------------------------------------------------------------
+---
 
 ### Core Logic
 
 I've created a file called `pets.py` in `core`. In this example we just write and read from a JSON
 file. This isn't the best code I've written but should be enough to show what we're trying to achieve.
-In reality this data would likely be stored in a database but I don't want to overcomplicate this 
-example. As far as you're concerned data is being stored and retrieve from a file as if it were a 
+In reality this data would likely be stored in a database but I don't want to overcomplicate this
+example. As far as you're concerned data is being stored and retrieve from a file as if it were a
 database.
 
 ```python
@@ -233,7 +234,7 @@ def add_pet(pet):
 ...
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### Controllers
 
@@ -263,27 +264,27 @@ def get_pet(pet_id):  # noqa: E501
 ```
 
 As you can see we call our `get_pet()` function from our `core.pets` module. Then if the pets exist
-we turn the dict that is returned, into a Python object of class `Pet` as per `rtype` we defined in 
+we turn the dict that is returned, into a Python object of class `Pet` as per `rtype` we defined in
 our OAS. Connexion will handle converting this object into JSON. One other thing we do is if a
 `KeyError` exception was thrown, that must mean we don't have a pet with that id in the pet store. Say we have the following
 
 ```json
 {
-    "1": {
-        "name": "ginger",
-        "breed": "bengal",
-        "price": 100
-    },
-    "2": {
-        "name": "sam",
-        "breed": "husky",
-        "price": 10
-    },
-    "3": {
-        "name": "guido",
-        "breed": "python",
-        "price": 518
-    }
+  "1": {
+    "name": "ginger",
+    "breed": "bengal",
+    "price": 100
+  },
+  "2": {
+    "name": "sam",
+    "breed": "husky",
+    "price": 10
+  },
+  "3": {
+    "name": "guido",
+    "breed": "python",
+    "price": 518
+  }
 }
 ```
 
@@ -324,13 +325,13 @@ def add_pet(body):  # noqa: E501
     """
     if connexion.request.is_json:
         body = Pet.from_dict(connexion.request.get_json())  # noqa: E501
-    
+
     pets.add_pet(body)
     return {}, 201
 ```
 
 The body variable will be a Python object of class Pet. We can then pass this as an argument
-to our other `add_pet` function in our core folder. As you can see we access attributes 
+to our other `add_pet` function in our core folder. As you can see we access attributes
 because it's an object not a dict i.e. `pets["name"]` vs `pets.name`.
 
 ```python
@@ -348,11 +349,11 @@ def add_pet(pet):
 So Connexion does all the routing and validation for us but Swagger codegen is what converts
 our input and output into Python classes. Connexions only deals with JSON, it will convert
 the JSON into it's equivalent Python object such as lists, strings and dictionary. Swagger
-codegen will take this input (a dictionary) and convert that into a Python class. 
+codegen will take this input (a dictionary) and convert that into a Python class.
 One example of this in the `add_pet` function in the `pets_controller` file. It converts our
 dictionary into a `Pet` object (as shown below). So rather than accessing data using normal
 dictionary notation `body["id"]` we can now use `body.id`.
-`body = Pet.from_dict(connexion.request.get_json())  # noqa: E501`
+`body = Pet.from_dict(connexion.request.get_json()) # noqa: E501`
 
 For Codegen to convert our Python objects back into a dictionary, so that Connexion can then
 convert this into JSON so respond back we use the JSON encoder that codegen provides us
@@ -360,12 +361,12 @@ convert this into JSON so respond back we use the JSON encoder that codegen prov
 for our flask app `flask_app.json_encoder = encoder.JSONEncoder`, usually this is done in the
 app setup (shown below).
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Run a Server
 
-Now that we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn 
-will create our Connexion/Flask app and start the server,  called `run.py` inside of our `test_api` folder.
+Now that we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn
+will create our Connexion/Flask app and start the server, called `run.py` inside of our `test_api` folder.
 
 ```python
 import os
@@ -408,7 +409,7 @@ pip install -r requirements.txt
 FLASK_APP=test_api.wsgi:app FLASK_DEBUG=1 flask run
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Final Thoughts
 
@@ -417,7 +418,7 @@ based of our OAS. So now we are sure our API documentation is accurate. We've al
 some of the boilerplate using Flask, Connexions handles which functions should be called depending on the
 CRUD (Create Read Update Delete) operation and endpoints defined in the OAS.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 

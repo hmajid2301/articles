@@ -1,8 +1,10 @@
 ---
-title: 'Build an Android APK using GitLab for a React Native Application'
-tags: ['React Native', 'CI', 'GitLab', 'Automation', 'Android']
-license: 'public-domain'
-cover_image: https://dev-to-uploads.s3.amazonaws.com/i/a62rixo6cd2hg4dx8sr1.jpg
+title: "Build an Android APK using GitLab for a React Native Application"
+tags: ["ReactNative", "CI", "GitLab", "Android"]
+license: "public-domain"
+cover_image: images/cover.jpg
+date: 20190923T10:00Z
+published: true
 ---
 
 In this article I will show how you can use the GitLab CI with React Native to create a binary which can be published to the
@@ -13,7 +15,7 @@ Google Play Store.
 - [Google Developers Account](https://play.google.com/apps/publish/signup/#EnterDetailsPlace)
 - A working React Native Android project
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Keystore
 
@@ -33,35 +35,35 @@ We no longer need to upload a certificate manually, as long as you "Opt In", to 
 It will keep track of the key you used to upload your very first APK file, then it will expect you to sign all new releases
 of that application using that same key, so don't lose your keystore. To allow Google to sign our app for us do the following;
 
-* Login to [Google Play Console](https://play.google.com/apps/publish)
-* Select your application from the list
-* Select "App Releases"
-* Select a track, for example "Internal test" > "Manage"
-* Select "Create Release"
-* Then where it says `Let Google manage and protect your app signing key (recommended)`, Select "Continue"
+- Login to [Google Play Console](https://play.google.com/apps/publish)
+- Select your application from the list
+- Select "App Releases"
+- Select a track, for example "Internal test" > "Manage"
+- Select "Create Release"
+- Then where it says `Let Google manage and protect your app signing key (recommended)`, Select "Continue"
 
 The signing process works as follows;
 
-* You digitally sign each release using your upload key (upload key being the keystore we just generated) before publishing it on the Play Console.
-* Google Play uses the upload certificate to verify your identity and then re-signs your release using the app signing key for distribution.
+- You digitally sign each release using your upload key (upload key being the keystore we just generated) before publishing it on the Play Console.
+- Google Play uses the upload certificate to verify your identity and then re-signs your release using the app signing key for distribution.
 
-### GitLab 
+### GitLab
 
 Now, let's move on to the relevant keystore information to GitLab CI variables, so we can access them during our CI jobs.
-First, go to your GitLab project; 
+First, go to your GitLab project;
 
-* Settings (side menu) > CI/CD > Variables
-* Add Type: Variable, key: `ANDROID_KEYSTORE_ALIAS` , value: `my-key-alias`
-* Add Type: Variable, key: `ANDROID_KEYSTORE_PASSWORD`, value: (whatever password you used)
-* Add Type: Variable, key: `ANDROID_KEYSTORE_KEY_PASSWORD`, value: (whatever password you used, by default it's the same as the `ANDROID_KEYSTORE_PASSWORD`)
-* Add Type: `File`, key: `ANDROID_KEYSTORE`, value: (copy the contents of `base64-keystore.txt`) 
+- Settings (side menu) > CI/CD > Variables
+- Add Type: Variable, key: `ANDROID_KEYSTORE_ALIAS` , value: `my-key-alias`
+- Add Type: Variable, key: `ANDROID_KEYSTORE_PASSWORD`, value: (whatever password you used)
+- Add Type: Variable, key: `ANDROID_KEYSTORE_KEY_PASSWORD`, value: (whatever password you used, by default it's the same as the `ANDROID_KEYSTORE_PASSWORD`)
+- Add Type: `File`, key: `ANDROID_KEYSTORE`, value: (copy the contents of `base64-keystore.txt`)
 
 Now we have all our keystore values/files on GitLab CI.
 
 **Note** Check the project permissions so only the relevant users can see/edit these values.
 You should keep the keystore file/passwords private, make sure only the relevant users can access them.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## app/build.gradle
 
@@ -102,8 +104,7 @@ file so we don't have to store our keystore values in plain-text within the `app
 **Note**: I have added my `gradle.properties` file to my `.gitignore` file so it doesn't accidentally get committed
 when I am testing out the build process locally. I recommend you do the same.
 
-
----------------------------------------------------------------------------------------------------
+---
 
 ## package.json
 
@@ -111,9 +112,9 @@ Add the following three scripts to your `package.json` file. This is so that we 
 for example instead of having to write out the whole command, in our GitLab CI. Also, the other advantage is
 if the command is used multiple times in our GitLab CI jobs, we only have to edit in a single place.
 
-* build-package: Builds our APK file
-* bundle: Bundles all of our react native code into a single file
-* generate-gradle-properties: Creates a gradle.properties file for us in the `android folder`.
+- build-package: Builds our APK file
+- bundle: Bundles all of our react native code into a single file
+- generate-gradle-properties: Creates a gradle.properties file for us in the `android folder`.
 
 ```json
 {
@@ -146,7 +147,7 @@ MYAPP_RELEASE_KEY_PASSWORD=${ANDROID_KEYSTORE_KEY_PASSWORD}
 EOF
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## .gitlab-ci.yml
 
@@ -155,9 +156,7 @@ Add the following job to your `.gitlab-ci.yml` file, this job will create our AP
 ```yaml
 stages:
   - build
-
-...
-
+---
 build:android:package:
   stage: build
   image: reactnativecommunity/react-native-android
@@ -170,8 +169,7 @@ build:android:package:
     - yarn android-package --no-daemon
   artifacts:
     paths:
-    - ./android/app/build/outputs/
-...
+      - ./android/app/build/outputs/
 ```
 
 Let's break this job down line by line;
@@ -214,7 +212,7 @@ All we have to do is open our `package.json` and edit the `android-package` scri
 
 ![Example GitLab CI job](images/gitlab.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
