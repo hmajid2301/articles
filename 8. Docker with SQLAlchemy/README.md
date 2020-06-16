@@ -308,10 +308,18 @@ docker run -d --name postgres -p 5432:5432 \
            -v db_volume:/var/lib/postgresql postgres:latest
 ```
 
-To start our Flask app (must be in the same folder as `app.py`)
+To start our Flask app 
 
 ```bash
-export FLASK_APP=app.py
+docker-compose up --build
+
+# In a new terminal
+virtualenv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# To load env variables
+export $(xargs < database.conf)
+export FLASK_APP=src/example/app.py
 flask run
 # Running on http://127.0.0.1:5000
 ```
