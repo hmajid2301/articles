@@ -1,6 +1,6 @@
 ---
 title: 'React Native with Firebase Cloud Functions and Gitlab CI'
-tags: ['React Native', 'React', 'Firebase', 'Gitlab']
+tags: ['ReactNative', 'React', 'Firebase', 'Gitlab']
 license: 'public-domain'
 published: true
 date: 20200222T10:00Z

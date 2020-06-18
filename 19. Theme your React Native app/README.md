@@ -1,6 +1,6 @@
 ---
 title: "Auto Toggle Dark Theme on your React Native Application"
-tags: ["React Native", "React"]
+tags: ["ReactNative", "React"]
 license: "public-domain"
 date: 20200125T10:00Z
 published: true

@@ -1,6 +1,6 @@
 ---
 title: "Add adaptive icons to your Android app"
-tags: ["React Native", "Android"]
+tags: ["ReactNative", "Android"]
 license: "public-domain"
 date: 20191109T10:00Z
 published: true
