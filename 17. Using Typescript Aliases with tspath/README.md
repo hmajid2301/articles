@@ -1,11 +1,11 @@
 ---
-title: 'Better Imports with Typescript Aliases, Babel and TSPath'
-tags: ['typescript', 'javascript', 'programming']
-license: 'public-domain'
-cover_image: https://dev-to-uploads.s3.amazonaws.com/i/l1z7llh6g1wn51fhh2hf.png
+title: "Better Imports with Typescript Aliases, Babel and TSPath"
+tags: ["typescript", "javascript", "programming"]
+license: "public-domain"
+date: 20191201T10:00Z
+published: true
+cover_image: "images/cover.jpg"
 ---
-
-https://media.giphy.com/media/xUPGcM9CazM9H5KrEA/giphy.gif
 
 In this article, I will explain how you can use typescript aliases with Babel or TSPath.
 If you have been using TypeScript/JavaScript (TS/JS) and have a nested folder structure,
@@ -20,11 +20,9 @@ import moduleB from "../moduleB";
 These are called relative imports, as we are importing modules using paths relative
 to our current module/file. As you can see, they can sometimes be very ugly and hard to work out
 where the module is we are importing. So sometimes you will use the wrong number of "../" etc.
-There are a few tools we can use to help solve our problem. 
+There are a few tools we can use to help solve our problem.
 
-![Better Imports](images/relative.png)
-
----------------------------------------------------------------------------------------------------
+---
 
 ## Structure
 
@@ -61,7 +59,7 @@ In the examples below let's assume we have a structure which looks something lik
 └── yarn.lock
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## TypeScript Aliases
 
@@ -72,10 +70,10 @@ we don't have to go `../components/Logo/Logo`.)
 
 ```javascript
 // without TS aliases
-import Logo from "../components/Logo"
+import Logo from "../components/Logo";
 
 // with TS aliases
-import Logo from "~/components/Logo"
+import Logo from "~/components/Logo";
 ```
 
 Anytime we use the `~` character in our imports it automatically starts importing from the `src` folder.
@@ -90,17 +88,17 @@ add the following two options
 
 ```json
 {
-    "baseUrl": ".",
-    "paths": {
-      "~/*": ["src/*"]
-    },
+  "baseUrl": ".",
+  "paths": {
+    "~/*": ["src/*"]
+  }
 }
 ```
 
 The baseUrl means we use the root directory (the directory where `tsconfig.json` is), and look for the `src` folder in the
-same directory. 
+same directory.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Babel Module Resolver
 
@@ -163,11 +161,11 @@ If your configuration file is a JSON file.
 The module resolver will now automatically be run every time Babel is run. If you're using React Native,
 this is already done for us.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## TSPath
 
-We cannot always include Babel in our projects, in this case I recommend using 
+We cannot always include Babel in our projects, in this case I recommend using
 [TSPath](https://www.npmjs.com/package/tspath). For example, I had issues getting Babel
 to work with my Firebase Cloud Functions project, so I ended up using TSPath for that.
 
@@ -213,11 +211,11 @@ module.exports = {
 Then in our tests we can do the following, to import our dependencies
 
 ```js
-import AboutList from '~/components/AboutList';
-import {about} from '~/data';
+import AboutList from "~/components/AboutList";
+import { about } from "~/data";
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 

@@ -1,9 +1,10 @@
 ---
-title: 'Auto Toggle Dark Theme on your React Native Application'
-tags: ['React Native', 'React']
-license: 'public-domain'
+title: "Auto Toggle Dark Theme on your React Native Application"
+tags: ["React Native", "React"]
+license: "public-domain"
+date: 20200125T10:00Z
 published: true
-cover_image: https://dev-to-uploads.s3.amazonaws.com/i/haazcmkvayo5uv51gvqr.png
+cover_image: "images/cover.jpg"
 ---
 
 In this article, I will show you how you can change the theme of your app depending on
@@ -16,10 +17,10 @@ To get started we will create a new React Native app by running the following co
 
 - [Source Code](https://gitlab.com/hmajid2301/medium/tree/master/19.%20Theme%20your%20React%20Native%20app/ExampleApp)
 
-*Note*: We are using path aliases so `~` is the same as saying `src/`, this keeps the
+_Note_: We are using path aliases so `~` is the same as saying `src/`, this keeps the
 import paths cleaner. More information [here](https://medium.com/analytics-vidhya/better-imports-with-typescript-aliases-babel-and-tspath-5c3addc7bc9e) #ShamelessPlug.
 
----------------------------------------------------------------------------------------------------
+---
 
 ### AutoTheme.tsx
 
@@ -42,7 +43,7 @@ export default class AutoTheme {
 
   public async shouldToggleDarkTheme() {
     const currentTime = new Date(Date.now());
-    const {sunrise, sunset} = await this.getSunriseAndSunsetTime(currentTime);
+    const { sunrise, sunset } = await this.getSunriseAndSunsetTime(currentTime);
     let toggleTheme = true;
 
     if (sunrise !== null && sunset !== null) {
@@ -172,14 +173,14 @@ later on if we need to get the user's location again.
   }
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### ThemeContext.tsx
 
 Next, let's take a look at the module in charge of actually changing our theme and storing the current
 theme (used by the other components). We will use React's Context, React Contexts can be used to store the
 global state of our application. Such as our current theme, this can then be accessed anywhere in our
-application and also changed anywhere. 
+application and also changed anywhere.
 
 > Context provides a way to pass data through the component tree without having to pass props down manually at every level. - https://reactjs.org/docs/context.html
 
@@ -188,9 +189,9 @@ context. Firstly, we define some types that will be used in our React context fi
 dark theme constants.
 
 ```typescript
-import React, {Context, createContext, useState} from 'react';
+import React, { Context, createContext, useState } from "react";
 
-type ThemeColors = '#17212D' | '#FFF';
+type ThemeColors = "#17212D" | "#FFF";
 
 interface ITheme {
   background: ThemeColors;
@@ -199,14 +200,14 @@ interface ITheme {
 }
 
 const LIGHT_THEME: ITheme = {
-  background: '#FFF' as ThemeColors,
-  color: '#17212D' as ThemeColors,
+  background: "#FFF" as ThemeColors,
+  color: "#17212D" as ThemeColors,
   isDark: false,
 };
 
 const DARK_THEME: ITheme = {
-  background: '#17212D' as ThemeColors,
-  color: '#FFF' as ThemeColors,
+  background: "#17212D" as ThemeColors,
+  color: "#FFF" as ThemeColors,
   isDark: true,
 };
 
@@ -222,7 +223,7 @@ and consumer (`ThemeContext.Provider`);
 - Provider: The component that will provide the value of the context (stored).
 - Consumer: The component that will consume the value
 
-*Note*: We will not use the consumer part in our app because we are accessing the value
+_Note_: We will not use the consumer part in our app because we are accessing the value
 in other ways (React hooks).
 
 ```typescript
@@ -237,7 +238,7 @@ const ThemeContext: Context<IThemeContext> = createContext({
 Now let's define our provider.
 
 ```tsx
-const ThemeProvider: React.FC = ({children}) => {
+const ThemeProvider: React.FC = ({ children }) => {
   const [themeState, setTheme] = useState({
     theme: LIGHT_THEME,
   });
@@ -253,7 +254,8 @@ const ThemeProvider: React.FC = ({children}) => {
       value={{
         changeTheme,
         theme: themeState.theme,
-      }}>
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
@@ -270,44 +272,45 @@ const [themeState, setTheme] = useState({
 });
 ```
 
-Then we define the function that can change our theme, if `isDark` is `true` then the 
+Then we define the function that can change our theme, if `isDark` is `true` then the
 theme becomes dark else it becomes light.
 
 ```tsx
-  const changeTheme = (isDark: boolean) => {
-    setTheme({
-      theme: isDark ? DARK_THEME : LIGHT_THEME,
-    });
-  };
+const changeTheme = (isDark: boolean) => {
+  setTheme({
+    theme: isDark ? DARK_THEME : LIGHT_THEME,
+  });
+};
 ```
 
-Finally, we define the actual component for theme provider, it takes in any React component. This way any component 
+Finally, we define the actual component for theme provider, it takes in any React component. This way any component
 surronded by the provider can access/change the app theme.
 We need to give the provider a function to change the value and the value itself.
 
 ```tsx
-  return (
-    <ThemeContext.Provider
-      value={{ 
-        changeTheme,
-        theme: themeState.theme,
-      }}>
-      {children}
-    </ThemeContext.Provider>
-  );
+return (
+  <ThemeContext.Provider
+    value={{
+      changeTheme,
+      theme: themeState.theme,
+    }}
+  >
+    {children}
+  </ThemeContext.Provider>
+);
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### App.tsx
 
 We use our provider in the main function
 
 ```tsx
-import React from 'react';
+import React from "react";
 
-import {ThemeProvider} from '~/providers/ThemeContext';
-import MainApp from '~/MainApp';
+import { ThemeProvider } from "~/providers/ThemeContext";
+import MainApp from "~/MainApp";
 
 export default class App extends React.Component<{}, {}> {
   public render() {
@@ -320,7 +323,7 @@ export default class App extends React.Component<{}, {}> {
 }
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### MainApp.tsx
 
@@ -376,9 +379,8 @@ to turn on auto-theme and the current theme displayed i.e. light or dark.
 ![Main Page](images/main.png)
 
 The theme is changed using the line `this.context.changeTheme(isDark);` essentially sets the theme for the app.
-We can then do something like `this.context.theme.color` to get the current colour or 
+We can then do something like `this.context.theme.color` to get the current colour or
 `this.context.theme.background` to get the background colour the app should be using.
-
 
 ```typescript
   // Called when the switch is toggled
@@ -397,8 +399,8 @@ We can then do something like `this.context.theme.color` to get the current colo
 
 The other key function is this one, where we listen for when the app goes from background
 to the foreground, if this happens we then call the auto theme module and check if we should
-toggle the theme, say you do this between sunsets. You background the app at 6.58 PM, the 
-sunsets at 7.0 2PM and you foreground the app at 7.04 PM then when the user returns 
+toggle the theme, say you do this between sunsets. You background the app at 6.58 PM, the
+sunsets at 7.0 2PM and you foreground the app at 7.04 PM then when the user returns
 `this.context.changeTheme(true)` will be called like this (true) and then the values
 returned by `this.context.theme` would change to the dark theme.
 
@@ -421,7 +423,7 @@ import {..., AppState} from 'react-native';
   };
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ### Header.tsx
 
@@ -438,26 +440,26 @@ the hooks allow us to access this state without needing to turn our components i
 Though as you have seen we can also access the context within our React classes.
 
 ```tsx
-import {Header as ElementsHeader} from 'react-native-elements';
+import { Header as ElementsHeader } from "react-native-elements";
 
-import logoDark from '~/assets/images/logo-dark.png';
-import logoLight from '~/assets/images/logo-light.png';
-import {ThemeContext} from '~/providers/ThemeContext';
+import logoDark from "~/assets/images/logo-dark.png";
+import logoLight from "~/assets/images/logo-light.png";
+import { ThemeContext } from "~/providers/ThemeContext";
 
 const Header = () => {
-  const {background, color, isDark} = useContext(ThemeContext).theme;
+  const { background, color, isDark } = useContext(ThemeContext).theme;
 
   return (
     <ElementsHeader
-      containerStyle={{backgroundColor: background}}
+      containerStyle={{ backgroundColor: background }}
       centerComponent={
-        <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
-          <Text style={{color}}>Example</Text>
+        <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+          <Text style={{ color }}>Example</Text>
           <Image
             source={isDark ? logoLight : logoDark}
-            style={{height: 25, width: 25}}
+            style={{ height: 25, width: 25 }}
           />
-          <Text style={{color}}>App</Text>
+          <Text style={{ color }}>App</Text>
         </View>
       }
     />
@@ -465,7 +467,7 @@ const Header = () => {
 };
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Run the app
 
@@ -479,7 +481,7 @@ yarn run start
 yarn run android
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Example App
 
@@ -487,7 +489,7 @@ Here is a GIF of the app running.
 
 ![Demo App](images/demo.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 

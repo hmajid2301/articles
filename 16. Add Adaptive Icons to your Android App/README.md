@@ -1,8 +1,10 @@
 ---
-title: 'Add adaptive icons to your Android app'
-tags: ['React Native', 'Android']
-license: 'public-domain'
-cover_image: https://assets.materialup.com/uploads/0a227925-9c0f-4745-b6b4-3b8614026252/attachment.png
+title: "Add adaptive icons to your Android app"
+tags: ["React Native", "Android"]
+license: "public-domain"
+date: 20191109T10:00Z
+published: true
+cover_image: "images/cover.png"
 ---
 
 In this article, we will go over how you can use add the "new" adaptive app icons to your Android app.
@@ -10,7 +12,7 @@ In his article I will be using a React Native project, so the structure of your 
 
 ![Mask](https://developer.android.com/guide/practices/ui_guidelines/images/NB_Icon_Mask_Shapes_Ext_02.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Adaptive Icons
 
@@ -24,13 +26,13 @@ versions of your app icon. You provide two layers, a foreground and the backgrou
 
 To add adaptive icons to your application do the following;
 
-* Open your application in Android Studio (If it's a React Native application make sure to open the `android` folder in Android Studio)
-* Right-click on the `app` folder
-* File > New > Image Asset
-* On the first tab "Foreground Layer" click on `path` and select your icon (resize the icon as required)
-* Select the second tab "Background Layer" select `Asset Type: Color` and select the colour you would like to use
-* Select `Next` (bottom right)
-* Select `Finish`
+- Open your application in Android Studio (If it's a React Native application make sure to open the `android` folder in Android Studio)
+- Right-click on the `app` folder
+- File > New > Image Asset
+- On the first tab "Foreground Layer" click on `path` and select your icon (resize the icon as required)
+- Select the second tab "Background Layer" select `Asset Type: Color` and select the colour you would like to use
+- Select `Next` (bottom right)
+- Select `Finish`
 
 ![Android Studio](images/android-studio.gif)
 
@@ -52,9 +54,9 @@ yarn run android # In another terminal
 
 Then you should see something like the image below instead of the default green Android robot.
 
-![New Icon](images/adaptive-icon.png)
+![New Icon](images/cover.png)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 

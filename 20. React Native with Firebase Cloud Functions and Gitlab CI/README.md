@@ -3,7 +3,9 @@ title: 'React Native with Firebase Cloud Functions and Gitlab CI'
 tags: ['React Native', 'React', 'Firebase', 'Gitlab']
 license: 'public-domain'
 published: true
-cover_image: https://cdn-images-1.medium.com/max/1024/1*0a8UZxHW5C7FVx7aQRFOlg.jpeg
+date: 20200222T10:00Z
+published: true
+cover_image: "images/cover.jpg"
 ---
 
 In this article, we will talk about how you can use React Native with [Firebase Cloud Functions](https://firebase.google.com/docs/functions).
@@ -15,7 +17,7 @@ only do using the GCP GUI, such as increasing the RAM of your cloud function "co
 
 **Note**: We will be using Typescript in this article
 
-## Firebase Cloud Functions 
+## Firebase Cloud Functions
 
 Firebase Cloud Functions can be referred to as serverless or as Functions-as-a-service (FaaS).
 This means we simply deploy our code as a function, the tool (Firebase) installs our dependencies
@@ -49,7 +51,6 @@ Our project structure will look something like this:
 
 This setup will look very similar to the tutorial [available here](https://firebase.google.com/docs/functions/get-started).
 
-
 ### .firebaserc
 
 This file contains some configuration options but for most projects, it will just contain the project name
@@ -73,9 +74,7 @@ as a cloud function. You could do various other actions such as lint your code e
 ```json
 {
   "functions": {
-    "predeploy": [
-      "yarn --cwd \"$RESOURCE_DIR\" run build"
-    ]
+    "predeploy": ["yarn --cwd \"$RESOURCE_DIR\" run build"]
   }
 }
 ```
@@ -89,10 +88,10 @@ We will use Gitlab CI to automatically publish changes to Firebase.
 First, we will need a deploy token as we cannot enter our username and password within GitLab
 CI to do this run `yarn firebase login:ci`. Then log in to your Firebase account after you've done this you will get a deploy token (shown in the terminal), then;
 
-* Open your Gitlab project in a web browser
-* Go to Settings (left-hand sidebar) > CI/CD
-* Variables -> Expand
-* Add a new variable, with Type: Variable, Key: FIREBASE_DEPLOY_TOKEN, Value: `your deploy token here`, and toggle protected and masked as true (blue).
+- Open your Gitlab project in a web browser
+- Go to Settings (left-hand sidebar) > CI/CD
+- Variables -> Expand
+- Add a new variable, with Type: Variable, Key: FIREBASE_DEPLOY_TOKEN, Value: `your deploy token here`, and toggle protected and masked as true (blue).
 
 This now means you can access the token within the Gitlab CI as an environment variable,
 and it will allow us to authenticate with Firebase and push changes to Firebase.
@@ -152,7 +151,7 @@ is deployed to Firebase.
 ```
 
 When we run the `build` script we create a `lib` folder which contains the compiled (JS). Hence the main file
-is `lib/index.js`. The lib folder is created because we specify the `outDir` to be `lib` in the `tsconfig.json`. 
+is `lib/index.js`. The lib folder is created because we specify the `outDir` to be `lib` in the `tsconfig.json`.
 The Firebase Cloud Functions by default uses NodeJS (as stated above this can be changed in the GCP GUI) to run
 our Firebase Cloud Functions, hence our code needs to be compiled to JS from TS before we deploy it.
 
@@ -172,7 +171,7 @@ Now let's take a look at the "business" logic of the application.
 
 This file contains all the core logic for our web service. Here we define
 two endpoints called `hello` and `bye`. As stated earlier this will be the entry point
-into our application. This is the file that will set up and start are Express server/web service within the 
+into our application. This is the file that will set up and start are Express server/web service within the
 Firebase Cloud environment.
 
 ```jsx
@@ -254,7 +253,7 @@ us and automatically runs the middleware before the endpoint function is called.
 We are checking the `Authorization` token sent with the request is validate, by default
 our Firebase Cloud Function endpoints are accessible by anyone. We can restrict
 who has access to them by requiring the client to send a token. As you can see below we do this using Firebase's
-own auth component. 
+own auth component.
 
 **Note**: Don't worry, your users don't need to sign up for you to "authenticate/authorisation" them.
 
@@ -376,10 +375,10 @@ This is the project structure of our React Native app:
 This file contains most of our logic:
 
 ```jsx
-import {ApiResponse, create} from 'apisauce';
-import React from 'react';
-import {Button} from 'react-native';
-import { firebase } from '@react-native-firebase/auth';
+import { ApiResponse, create } from "apisauce";
+import React from "react";
+import { Button } from "react-native";
+import { firebase } from "@react-native-firebase/auth";
 
 const App = () => (
   <Button title="Make Request" onPress={() => makeRequest()}></Button>
@@ -390,25 +389,25 @@ async function makeRequest() {
   const token = await userCredentials.user.getIdToken();
 
   const api = create({
-    baseURL: 'https://us-central1-exampleapp.cloudfunctions.net',
-    headers: {Authorization: `Bearer ${token}`},
+    baseURL: "https://us-central1-exampleapp.cloudfunctions.net",
+    headers: { Authorization: `Bearer ${token}` },
     timeout: 10000,
   });
 
   try {
-    let response: ApiResponse<{hello: string}>;
-    response = await api.post('/hello', {
-      name: 'Haseeb',
+    let response: ApiResponse<{ hello: string }>;
+    response = await api.post("/hello", {
+      name: "Haseeb",
     });
 
-    const {data, ok, status} = response;
+    const { data, ok, status } = response;
     if (ok) {
-      console.log('Success', status, data);
+      console.log("Success", status, data);
     } else {
-      console.log('error', status);
+      console.log("error", status);
     }
   } catch {
-    console.log('Error thrown');
+    console.log("Error thrown");
   }
 }
 
@@ -441,8 +440,8 @@ We use `apisauce` to make HTTP requests, but first we must "create" an API objec
 
 ```jsx
 const api = create({
-  baseURL: 'https://us-central1-exampleapp.cloudfunctions.net',
-  headers: {Authorization: `Bearer ${token}`},
+  baseURL: "https://us-central1-exampleapp.cloudfunctions.net",
+  headers: { Authorization: `Bearer ${token}` },
   timeout: 10000,
 });
 ```
@@ -456,15 +455,15 @@ All of this code is all surrounded by a try catch so if a reject promise is retu
 captured by the `catch`.
 
 ```jsx
-const response: ApiResponse<{hello: string}> = await api.post('/hello', {
-  name: 'Haseeb',
+const response: ApiResponse<{ hello: string }> = await api.post("/hello", {
+  name: "Haseeb",
 });
 
-const {data, ok, status} = response
+const { data, ok, status } = response;
 if (ok) {
-  console.log('Success', status, data);
+  console.log("Success", status, data);
 } else {
-  console.error('error', status);
+  console.error("error", status);
 }
 ```
 
@@ -475,7 +474,6 @@ after a long period of time since the function was called it may well be a few s
 
 That's it! Ee succesfully set up a React Native application to use Cloud Functions we deployed on
 Firebase (with authentication).
-
 
 ## Appendix
 
