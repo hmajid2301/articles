@@ -1,8 +1,8 @@
 ---
 title: "How to use Gitlab CI, Pytest and docker-compose together"
-tags: ["docker", "python", "pytest", "docker-compose"]
+tags: ["docker", "python", "pytest", "dockercompose"]
 license: "public-domain"
-date: 20200620T10:00Z
+date: 20200622T10:00Z
 published: true
 cover_image: "images/cover.jpg"
 ---
