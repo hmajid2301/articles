@@ -1,15 +1,16 @@
 ---
-title: 'DinD with Gitlab CI'
-tags: ['Docker', 'Gitlab', 'CI', 'Gitlab-CI']
-license: 'public-domain'
-published: false
-cover_image: 'images/cover.png'
+title: "DinD with Gitlab CI"
+tags: ["Docker", "Gitlab", "CI"]
+license: "public-domain"
+date: 20200501T10:00Z
+published: true
+cover_image: "images/cover.png"
 ---
 
 Like most developers, we want to be able to automate as many and as much of processes as possible. Pushing Docker
 images to a registry is a task that can easily be automated. In this article, we will cover how you can use
 Gitlab CI to build and publish your Docker images, to the Gitlab registry. However, you can also very easily
-edit this to push your images to DockerHub as well. 
+edit this to push your images to DockerHub as well.
 
 A quick aside on terminology related to Docker:
 
@@ -93,7 +94,7 @@ publish-docker:
   image: docker:dind
   script:
     - dockerd &
-    ... 
+    ...
     - docker push ${CI_REGISTRY_IMAGE}:${VERSION_TAG}
 ```
 
@@ -144,7 +145,7 @@ Finally, we get to the real meat and potatoes of the CI file. The bit of code th
 images to the registry:
 
 ```yaml
-  - export VERSION_TAG=v1.2.3
+- export VERSION_TAG=v1.2.3
 ```
 
 It is often a good idea to tag our images, in this case, I'm using a release name. You could get this from say your
@@ -154,21 +155,21 @@ to parse my `setup.py` for the version number. But this can be whatever you want
 static to make things simpler but in reality, you'll probably want to retrieve it programmatically (the version number).
 
 ```yaml
-  - docker login ${CI_REGISTRY} -u gitlab-ci-token -p ${CI_BUILD_TOKEN}
+- docker login ${CI_REGISTRY} -u gitlab-ci-token -p ${CI_BUILD_TOKEN}
 ```
 
 Then we log in to our Gitlab registry, the environment variables `$CI_REGISTRY` and `CI_BUILD_TOKEN` are predefined
 Gitlab variables that are injected into our environment. You can read more about them
 [here](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html). Since we are pushing to our Gitlab registry
 we can just use the credentials defined within environment i.e. `username=gitlab-ci-token` and password a throwaway
-token. 
+token.
 
 > Note: You can only do this on protected branches/tags.
 
 ```yaml
-  - docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${VERSION_TAG}  .
-  - docker push ${CI_REGISTRY_IMAGE}:latest
-  - docker push ${CI_REGISTRY_IMAGE}:${VERSION_TAG}
+- docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${VERSION_TAG}  .
+- docker push ${CI_REGISTRY_IMAGE}:latest
+- docker push ${CI_REGISTRY_IMAGE}:${VERSION_TAG}
 ```
 
 Finally, we run our normal commands to build and push our images. The place where you can find your images will depend
@@ -181,11 +182,11 @@ registry.gitlab.com/<username>/<project_name>/<tag>
 ### (Optional) Push to DockerHub
 
 ```yaml
-  - docker login -u hmajid2301 -p ${DOCKER_PASSWORD}
-  - export IMAGE_NAME="hmajid2301/example_project"
-  - docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${VERSION_TAG}  .
-  - docker push ${IMAGE_NAME}:latest
-  - docker push ${IMAGE_NAME}:${VERSION_TAG}
+- docker login -u hmajid2301 -p ${DOCKER_PASSWORD}
+- export IMAGE_NAME="hmajid2301/example_project"
+- docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${VERSION_TAG}  .
+- docker push ${IMAGE_NAME}:latest
+- docker push ${IMAGE_NAME}:${VERSION_TAG}
 ```
 
 We can also push our images to DockerHub, with the code above. We need to first login to DockerHub. Then change the

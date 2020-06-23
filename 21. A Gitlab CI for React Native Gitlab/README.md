@@ -1,8 +1,9 @@
 ---
-title: 'A Gitlab CI file for React Native Apps'
-tags: ['React Native', 'Gitlab', 'CI']
+title: "A Gitlab CI file for React Native Apps"
+tags: ["ReactNative", "Gitlab", "CI"]
 published: true
-license: 'public-domain'
+date: 20200223T10:00Z
+license: "public-domain"
 cover_image: https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
 ---
 
@@ -101,12 +102,12 @@ upgrade this to `node 10` or even `node 12` (long term releases of node).
 
 Next, we define all the `stages` of our pipeline, any jobs in the same stage will run
 in parallel (at the same time). If a job in an earlier stage fails the pipeline won't carry
-on to the next and will stop running at the current stage. The stages defined first such 
-as `pre` and `test` run before stages defined later such as  `publish`.
+on to the next and will stop running at the current stage. The stages defined first such
+as `pre` and `test` run before stages defined later such as `publish`.
 Each job **must** be given a `stage`.
 
 Next, we define a `cache`, we will cache the `node_modules` for
-future jobs (in  this pipeline). Gitlab CI injects some
+future jobs (in this pipeline). Gitlab CI injects some
 [predefined environment variables](https://docs.gitlab.com/ee/ci/variables/predefined_variables.html),
 one of them being `CI_COMMIT_REF_SLUG`.
 
@@ -119,14 +120,13 @@ Finally, we define `before_script` which will run before every job unless we spe
 using `yarn` and create a `.env` file, we need the `.env` file for a few our the jobs.
 The `.env` file is used by React Native to set configuration within the app.
 
-
 ```json
 // package.json
 
 {
   "name": "stegappasaurus",
   "scripts": {
-    "generate-dotenv": "sh util/generate-dotenv.sh > .env",
+    "generate-dotenv": "sh util/generate-dotenv.sh > .env"
   }
 }
 ```
@@ -167,7 +167,7 @@ remove labels from the issue if you want such as "Doing".
 This job is only run on the master branch of our project.
 
 Since we don't need to install any dependencies to run the job `before_script: []` is an empty
-list, therefore the default `before_script` defined above won't run in this job.  Also since
+list, therefore the default `before_script` defined above won't run in this job. Also since
 we define a docker image within the job we don't use the default docker image `node:8`.
 
 ```yaml
@@ -308,8 +308,7 @@ I won't do a massive deep dive into this job because I've already written an art
 [here](https://dev.to/hmajid2301/auto-publish-react-native-app-to-android-play-store-using-gitlab-ci-44mc).
 But essentially what happens is we have various variables defined in our project in Gitlab such as our Keystore stored
 in base64 and the Keystore setting such as the username and password.
-To use the tool to auto-publish our app I need to have a `play-store.json` file and because my app uses react-native-firebase`
-I need a `google-services.json` file.
+To use the tool to auto-publish our app I need to have a `play-store.json` file and because my app uses react-native-firebase`I need a`google-services.json` file.
 
 I then generate a `licenses.json` file using the following command `npm-license-crawler -onlyDirectDependencies --omitVersion -json src/data/licenses.json`,
 there is a license view within my application which lists all of the main dependencies so I can properly credit those libraries this task generates that file.
@@ -359,13 +358,13 @@ Where `publish-package.sh` looks like
 echo $CI_COMMIT_TAG
 
 if [[ $CI_COMMIT_TAG == *"alpha"* ]]; then
-    echo "Publishing Package: Alpha" 
+    echo "Publishing Package: Alpha"
     cd android && ./gradlew publish --track alpha
 elif [[ $CI_COMMIT_TAG == *"beta"* ]]; then
-    echo "Publishing Package: Beta" 
+    echo "Publishing Package: Beta"
     cd android && ./gradlew publish --track beta
 elif [[ $CI_COMMIT_TAG == *"release"* ]]; then
-    echo "Publishing Package: Production" 
+    echo "Publishing Package: Production"
     cd android && ./gradlew publish --track production
 else
     echo "Publishing Package: Internal"
@@ -377,7 +376,7 @@ If the git tag is `release/1.0.0` then we will publish this directly onto the pr
 check if the tag contains `alpha` or `beta` if so then we publish it to different tracks.
 
 ```bash
-echo "Publishing Package: Production" 
+echo "Publishing Package: Production"
 cd android && ./gradlew publish --track production
 ```
 

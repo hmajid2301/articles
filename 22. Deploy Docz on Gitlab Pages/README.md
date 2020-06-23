@@ -1,9 +1,10 @@
 ---
-title: 'Deploy Docz on Gitlab Pages'
-tags: ['Docz', 'gitlab', 'ci']
-license: 'public-domain'
+title: "Deploy Docz on Gitlab Pages"
+tags: ["Docz", "gitlab", "ci"]
+license: "public-domain"
+date: 20200328T10:00Z
 published: true
-cover_image: 'images/cover.png'
+cover_image: "images/cover.png"
 ---
 
 In this article I will show you how you can deploy a Docz website on Gitlab pages, using `.gitlab-ci.yml`.
@@ -67,7 +68,7 @@ So our `package.json` looks like:
   "name": "example_app",
   "scripts": {
     "docs-dev": "docz dev",
-    "docs-build": "docz build",
+    "docs-build": "docz build"
   },
   "dependencies": {
     "Docz": "2.2.0",
@@ -77,17 +78,17 @@ So our `package.json` looks like:
 }
 ```
 
-We then need to create our `Doczrc.js` configuration file, like so: 
+We then need to create our `Doczrc.js` configuration file, like so:
 
 ```js
 export default {
-  src: 'docs',
-  description: 'Example Documentation',
-  menu: ['Introduction', 'Contributing'],
+  src: "docs",
+  description: "Example Documentation",
+  menu: ["Introduction", "Contributing"],
   themeConfig: {
-    initialColorMode: 'dark',
+    initialColorMode: "dark",
   },
-}
+};
 ```
 
 We will keep all our `.mdx` files in a folder called `docs` hence `src: 'docs'`. Each file will be shown as a page on
@@ -117,7 +118,7 @@ name: Introduction
 route: /
 ---
 
-# Example 
+# Example
 
 Welcome to this example app, in this app we will show examples.
 ```
@@ -125,7 +126,7 @@ Welcome to this example app, in this app we will show examples.
 > Note: The front matter `name` must match the name we defined in the `Doczrc.js` menu option.
 
 The route defines the path the user will see, i.e. in the `stegappasaurus` example this page will be shown on
-`https://stegappasaurus.haseebmajid.dev/`. 
+`https://stegappasaurus.haseebmajid.dev/`.
 
 Next let's create a second page called `Contributing.mdx`, which looks like:
 
@@ -180,13 +181,13 @@ makes this surprisingly easy to do:
 
 > Note: In this example, I am assuming we are using a subdomain and not the root domain i.e. example_app.haseebmajid.dev not haseebmajid.dev.
 
-* First go to your project on Gitlab
-* Next Settings (Left sidebar) > Pages > New Domain (Top Righthand Corner)
-* Enter the domain name you'd like to use, i.e. example_app.haseebmajid.dev
-* Press `Create New Domain`
-* Copy the `TXT` record to verify ownership.
-* Next go your domain provider, in my case it's [Google](https://domains.google.com)
-* Go to your DNS settings for that domain
+- First go to your project on Gitlab
+- Next Settings (Left sidebar) > Pages > New Domain (Top Righthand Corner)
+- Enter the domain name you'd like to use, i.e. example_app.haseebmajid.dev
+- Press `Create New Domain`
+- Copy the `TXT` record to verify ownership.
+- Next go your domain provider, in my case it's [Google](https://domains.google.com)
+- Go to your DNS settings for that domain
 
 We will now create two DNS records a TXT record which verifies ownership of the domain. Go to settings for "pages"
 which can be found `https://gitlab.com/<username>/<project_name>/pages`. Then copy the data next to

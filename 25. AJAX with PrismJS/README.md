@@ -1,9 +1,10 @@
 ---
-title: 'Make PrismJS editable'
-tags: ['javascript', 'ajax', 'prismjs']
-license: 'public-domain'
-published: false
-cover_image: 'images/cover.jpg'
+title: "Make PrismJS editable"
+tags: ["javascript", "ajax", "prismjs"]
+license: "public-domain"
+date: 20200510T10:00Z
+published: true
+cover_image: "images/cover.jpg"
 ---
 
 In this article, we will go over how you can make PrismJS code blocks editable and force PrismJS to re-render so the code
@@ -18,7 +19,7 @@ and then re-run PrismJS to add syntax highlighting.
 
 ## index.html
 
-So our HTML will look something like this. 
+So our HTML will look something like this.
 
 > Note: When I refer to "code block" I am referring to entire thing including the `pre` and the `code` tags.
 
@@ -42,6 +43,7 @@ So our HTML will look something like this.
 </pre>
 <script src="javascript/prism.js"></script>
 ```
+
 In this file we import the `prism.css` stylesheet, there are many themes you can choose
 from in this example we will use the default theme. We will also import `prism.js`, these are the two files required to use PrismJS.
 
@@ -78,11 +80,7 @@ function onPaste() {
   const dockerCompose = editable.innerText;
   editable.innerHTML = '<code id="yaml" class="language-yaml"></code>';
   const yaml = document.getElementById("yaml");
-  yaml.innerHTML = Prism.highlight(
-    dockerCompose,
-    Prism.languages.yaml,
-    "yaml"
-  );
+  yaml.innerHTML = Prism.highlight(dockerCompose, Prism.languages.yaml, "yaml");
 }
 ```
 
@@ -93,16 +91,12 @@ so just in case we add the `code` tag back in. As this is where PrismJS will ren
 with this new code block. Next we get the `code` tag with id `yaml`.
 
 ```js
-yaml.innerHTML = Prism.highlight(
-    dockerCompose,
-    Prism.languages.yaml,
-    "yaml"
-  );
+yaml.innerHTML = Prism.highlight(dockerCompose, Prism.languages.yaml, "yaml");
 ```
 
 Finally the main part of our code which actually highlights our code. We pass the newly pasted yaml it's stored in `dockerCompose`
 variable. Next we tell Prism what langauge to use `Prism.languages.yaml` (this is the language grammar0 and finally we pass the
-language name in this case yaml. Then we set this as the `innerHTML` of the `code` tag. 
+language name in this case yaml. Then we set this as the `innerHTML` of the `code` tag.
 
 That's it! Now when the user paste's in new yaml code, it'll be automatically syntax highlighted by PrismJS. This process
 can of course, also be used for AJAX content as well. If you make an API request and the API responds with code that needs

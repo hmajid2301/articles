@@ -1,9 +1,10 @@
 ---
-title: 'React Hooks, Context & Local Storage'
-tags: ['react', 'react-hooks', 'react-context']
-license: 'public-domain'
-published: false
-cover_image: 'images/cover.jpg'
+title: "React Hooks, Context & Local Storage"
+tags: ["react", "reacthooks", "reactcontext"]
+license: "public-domain"
+date: 20200405T10:00Z
+published: true
+cover_image: "images/cover.jpg"
 ---
 
 > Photo by Cristian Palmer on Unsplash
@@ -37,7 +38,7 @@ We will use a project structure like so:
 
 ## Getting Started
 
-Our `package.json` file looks like this: 
+Our `package.json` file looks like this:
 
 ```json
 {
@@ -51,12 +52,12 @@ Our `package.json` file looks like this:
     "react-dom": "16.9.0"
   },
   "devdependencies": {
-    "typescript": "3.6.2",
+    "typescript": "3.6.2"
   }
 }
 ```
 
-The example application linked will also be using babel for transpiling our code to Javascript 
+The example application linked will also be using babel for transpiling our code to Javascript
 and Webpack for bundling our code into a single `index.js` file.
 
 ## App
@@ -67,7 +68,7 @@ visit our website it will "restore" their previous setting, such as theme, light
 ### DarkModeProvider.tsx
 
 React Contexts can be used to store the global state of our application. Such as our current theme, this can then be
-accessed anywhere in our application and also changed anywhere.  React contexts provide us with two "sub-components", a
+accessed anywhere in our application and also changed anywhere. React contexts provide us with two "sub-components", a
 provider and, a consumer for that specific React context.
 
 - Provider: The component that will provide the value of the context (stored)
@@ -88,13 +89,13 @@ import React, { Context, createContext, useReducer, useEffect } from "react";
 export const LIGHT_THEME: Theme = {
   background: "#fafafa" as BackgroundColors,
   color: "#000000" as ForegroundColors,
-  isDark: false
+  isDark: false,
 };
 
 export const DARK_THEME: Theme = {
   background: "#333333" as BackgroundColors,
   color: "#fafafa" as ForegroundColors,
-  isDark: true
+  isDark: true,
 };
 
 export type BackgroundColors = "#333333" | "#fafafa";
@@ -122,7 +123,7 @@ const darkModeReducer = (_: any, isDark: boolean) =>
 ```
 
 Next, we will define a reducer. A reducer is a pure function which does not use the state of the
-current app so it cannot have any unintended side-effects. Exactly the same functions we 
+current app so it cannot have any unintended side-effects. Exactly the same functions we
 would define if we were using Redux. In this case, the reducer just returns the `DARK_THEME`
 if the `isDark` argument is `true` else it returns the `LIGHT_THEME`.
 
@@ -151,7 +152,7 @@ const DarkModeProvider: React.FC = ({ children }) => {
     <DarkModeContext.Provider
       value={{
         mode,
-        dispatch
+        dispatch,
       }}
     >
       {children}
@@ -164,13 +165,13 @@ export { DarkModeProvider, DarkModeContext };
 
 The provider is what is used to give other components access to the context. Here you can see
 we use the `useReducer` hook and give it our `darkModeReducer` with the initial value. This
-reducer will then return a `mode` which is the current theme data and a function `dispatch` 
+reducer will then return a `mode` which is the current theme data and a function `dispatch`
 which will be used to update the current theme. Breaking it down a bit further we see:
 
 ```tsx
-  useEffect(() => {
-    localStorage.setItem("DarkMode", JSON.stringify(mode));
-  }, [mode]);
+useEffect(() => {
+  localStorage.setItem("DarkMode", JSON.stringify(mode));
+}, [mode]);
 ```
 
 Next, we define the `useEffect` hook which is called every time the `mode` is changed, by the
@@ -184,7 +185,7 @@ return (
   <DarkModeContext.Provider
     value={{
       mode,
-      dispatch
+      dispatch,
     }}
   >
     {children}
@@ -246,7 +247,7 @@ const MainApp = () => {
       style={{
         background: background,
         color: color,
-        minHeight: "100vh"
+        minHeight: "100vh",
       }}
     >
       <div>Theme is {isDark ? "Dark" : "Light"}</div>
@@ -285,7 +286,7 @@ It then calls the `dispatch` function we have defined in the context to change t
 it is at the moment. So light theme -> dark theme and dark theme -> light theme.
 
 ```tsx
-<button onClick={() => setTheme(theme)}>Change Theme</button>
+<button onClick={() => setTheme(theme)}>Change Theme</button>;
 
 //...
 
