@@ -1,0 +1,18 @@
+import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+
+import Logo from "./Logo";
+
+<Meta title="Logo" component={Logo} />
+
+# Logo
+
+## Accent
+
+You can adjust the accent (tags) color by passing the `accent` prop.
+
+<Preview>
+  <Story name="Accent Colour">
+    <Logo accent="gray-500" color="blue-500" text="Haseeb" />
+    <Logo accent="gray-500" color="black" text="Haseeb" />
+  </Story>
+</Preview>
