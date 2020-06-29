@@ -2,7 +2,7 @@
 title: "How to use Storybooks, Gatsby, Babel, Tailwind, Typescript together"
 tags: ["gatsby", "documentation", "mdx", "storybook"]
 license: "public-domain"
-date: 20290622T10:00Z
+date: 20200629T10:00Z
 published: true
 cover_image: "images/cover.jpg"
 ---
