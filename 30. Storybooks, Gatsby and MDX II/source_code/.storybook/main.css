@@ -1,0 +1,48 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: Inter;
+  font-weight: 900;
+  padding-bottom: 20px;
+}
+
+h1 {
+  font-size: 50px;
+}
+
+h2 {
+  font-size: 35px;
+}
+
+h3 {
+  font-size: 26px;
+}
+
+p code {
+  line-height: 1;
+  margin: 0 2px;
+  padding: 3px 5px;
+  white-space: nowrap;
+  border-radius: 3px;
+  font-size: 13px;
+  border: 1px solid #eeeeee;
+  color: #367ee9;
+  background-color: #f8f8f8;
+}
+
+p a {
+  color: rgb(2, 151, 245);
+}
+
+blockquote {
+  font-size: 1rem;
+  font-family: Consolas, Monaco, Andale Mono, Ubuntu Mono, monospace;
+  margin: 1.5rem 0;
+  border-top: none;
+  border-bottom: none;
+  border-left: #367ee9 0.4rem solid;
+  padding: 1rem;
+}

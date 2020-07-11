@@ -1,0 +1,102 @@
+import {
+  Meta,
+  ColorPalette,
+  ColorItem,
+  Typeset,
+} from "@storybook/addon-docs/blocks";
+
+import { Themes } from "~/styles";
+import { theme } from "~/utils/tailwindConfig";
+
+<Meta title="Introduction" />
+
+# Introduction
+
+This project uses Tailwindcss so a lot of colour props are passed in as CSS classes that
+Tailwind applies styling to i.e. `text-blue-500` to use the primary blue. You can find the
+full colour palette [here](https://tailwindcss.com/docs/customizing-colors/#default-color-palette).
+
+## Colours
+
+### Light Theme
+
+<ColorPalette>
+  <ColorItem
+    title="theme.color.background"
+    subtitle="White"
+    colors={[theme.colors.white]}
+  />
+  <ColorItem
+    title="theme.color.text"
+    subtitle="Black"
+    colors={[theme.colors.black]}
+  />
+  <ColorItem
+    title="theme.color.header"
+    subtitle="Grey"
+    colors={[theme.colors.gray[700]]}
+  />
+</ColorPalette>
+
+### Dark Theme
+
+<ColorPalette>
+  <ColorItem
+    title="theme.color.background"
+    subtitle="White"
+    colors={[theme.colors.gray[900]]}
+  />
+  <ColorItem
+    title="theme.color.text"
+    subtitle="White"
+    colors={[theme.colors.white]}
+  />
+  <ColorItem
+    title="theme.color.header"
+    subtitle="Grey"
+    colors={[theme.colors.gray[200]]}
+  />
+</ColorPalette>
+
+### Shared
+
+<ColorPalette>
+  <ColorItem
+    title="theme.color.primary"
+    subtitle="Blue"
+    colors={[theme.colors.blue[500]]}
+  />
+  <ColorItem
+    title="theme.color.secondary"
+    subtitle="Orange"
+    colors={[theme.colors.orange[500]]}
+  />
+  <ColorItem
+    title="theme.color.tertiary"
+    subtitle="Grey"
+    colors={[theme.colors.gray[500]]}
+  />
+  <ColorItem
+    title="Monochrome"
+    colors={[
+      theme.colors.monochrome[900],
+      theme.colors.monochrome[800],
+      theme.colors.monochrome[700],
+      theme.colors.monochrome[600],
+      theme.colors.monochrome[500],
+      theme.colors.monochrome[400],
+      theme.colors.monochrome[300],
+      theme.colors.monochrome[200],
+      theme.colors.monochrome[100],
+    ]}
+  />
+</ColorPalette>
+
+## Typography
+
+### Header
+
+**Font**: Inter
+**Weight**: 900
+
+<Typeset fontFamily="Inter" fontSizes={[10, 20, 30, 40, 50]} fontWeight={900} />
