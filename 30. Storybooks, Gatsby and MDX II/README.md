@@ -4,7 +4,7 @@ tags: ["gatsby", "documentation", "mdx", "storybook"]
 license: "public-domain"
 date: 20200720T10:00Z
 published: true
-cover_image: "images/cover.jpg"
+cover_image: "images/controls.png"
 ---
 
 This article (sort of) continues on from my previous article
