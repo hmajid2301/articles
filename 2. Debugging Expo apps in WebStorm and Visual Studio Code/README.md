@@ -1,10 +1,12 @@
 ---
-title: 'Debugging React Native apps in WebStorm and Visual Studio Code'
-tags: ['React Native', 'Debugging', 'Visual Studio', 'Webstorm']
-license: 'public-domain'
-date: 20180907T10:00Z
+title: "Debugging React Native apps in WebStorm and Visual Studio Code"
+tags: ["React Native", "Debugging", "Visual Studio", "Webstorm"]
+license: "public-domain"
+slug: "debugging-react-native-apps"
+canonical_url: "https://haseebmajid.dev/blog/debugging-react-native-apps"
+date: "2018-09-07"
 published: true
-cover_image: 'images/cover.png'
+cover_image: "images/cover.png"
 ---
 
 Visual Studio Code and WebStorm are two popular editors for developing React Native/Expo apps. These editors have lots
@@ -23,25 +25,25 @@ I was able to get my debugger running.
 
 ![Debugging](https://media.giphy.com/media/ThOHTmBZlHOQ8/giphy.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Prerequisite
 
-* Have an [Expo](https://expo.io/learn) app
-* Turn on “Debug JS Remotely” on your android device, as shown in Figure 1. In Genymotion you can open the “Developer Menu” menu by pressing CTRL + M. More information [here](http://facebook.github.io/react-native/docs/debugging)
-* Connect to your Android device using ADB
+- Have an [Expo](https://expo.io/learn) app
+- Turn on “Debug JS Remotely” on your android device, as shown in Figure 1. In Genymotion you can open the “Developer Menu” menu by pressing CTRL + M. More information [here](http://facebook.github.io/react-native/docs/debugging)
+- Connect to your Android device using ADB
 
 `adb connect 192.168.101.1 # Replace with your Device IP`
 
 ![Figure 1: Turn on “Debug JS Remotely” on an Android device](images/android-emulator.png)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## WebStrom
 
-* Install and turn on CORS plugin in Chrome, make sure it's the same chrome browser you use in your configuration. (NOTE make sure your aware of the security implication on using CORS, switch the plugin off when your not using it).
-* Open WebStorm and your Expo project
-* Add the following lines of code to your _package.json_ file
+- Install and turn on CORS plugin in Chrome, make sure it's the same chrome browser you use in your configuration. (NOTE make sure your aware of the security implication on using CORS, switch the plugin off when your not using it).
+- Open WebStorm and your Expo project
+- Add the following lines of code to your _package.json_ file
 
 ```json
 "scripts": {
@@ -49,9 +51,9 @@ I was able to get my debugger running.
 }
 ```
 
-* Create a new configuration of type "React Native" with the settings shown in Figure 3. Remember to add a new the "Before launch" configuration and select configuration type "React Native Bundler"
-* Run the configuration you just created in debug mode (SHIFT + F9)
-* Open a terminal window and run
+- Create a new configuration of type "React Native" with the settings shown in Figure 3. Remember to add a new the "Before launch" configuration and select configuration type "React Native Bundler"
+- Run the configuration you just created in debug mode (SHIFT + F9)
+- Open a terminal window and run
 
 `exp android`
 
@@ -59,25 +61,25 @@ I was able to get my debugger running.
 
 ![Figure 3: WebStorm; Starting the Debugger](images/webstorm.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Visual Studio Code
 
-* Open Visual Studio Code and your Expo project
-* Create a new file in your .vscode folder called _settings.json_ and add the following
+- Open Visual Studio Code and your Expo project
+- Create a new file in your .vscode folder called _settings.json_ and add the following
 
 ```json
 {
-    "react-native": {
-        "packager": {
-            "port": 19001
-        }
+  "react-native": {
+    "packager": {
+      "port": 19001
     }
+  }
 }
 ```
 
-* Go to "Debug" window (CTRL + SHIFT + D)
-* When prompted for environment choose "React Native", it should give an _launch.json_ file like this, make sure it contains the following
+- Go to "Debug" window (CTRL + SHIFT + D)
+- When prompted for environment choose "React Native", it should give an _launch.json_ file like this, make sure it contains the following
 
 ```json
 {
@@ -94,25 +96,25 @@ I was able to get my debugger running.
 }
 ```
 
-* Open the integrated terminal (CTRL + `) and run
+- Open the integrated terminal (CTRL + `) and run
 
 `exp start`
 
-* On top of the Debug menu should say "Debug Android" change this to "Attach to packager" and press "Start Debugging"
-* Open another terminal and run
+- On top of the Debug menu should say "Debug Android" change this to "Attach to packager" and press "Start Debugging"
+- Open another terminal and run
 
 `exp android`
 
-* Swap to "Debug Console" tab to see the debugger
+- Swap to "Debug Console" tab to see the debugger
 
 ![Figure 4: Visual Studio Code; Starting the Debugger.](images/visual-studio-code.gif)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
-* [Example source code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
-* GIFs created with [screentogif](https://www.screentogif.com/)
-* ["Debugging create-react-native-app with VSCode"](https://medium.com/r/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D0_MnXPD55-E)
-* ["WebStorm 2018.1 EAP, 181.3263.21: improvements for React Native, extract Vue component"](https://blog.jetbrains.com/webstorm/2018/02/webstorm-2018-1-eap-181-3263/)
-* Icon made by [Monik](https://www.flaticon.com/authors/monkik) from [FlatIcon](https://www.flaticon.com/)and is licensed by [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/)
+- [Example source code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
+- GIFs created with [screentogif](https://www.screentogif.com/)
+- ["Debugging create-react-native-app with VSCode"](https://medium.com/r/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D0_MnXPD55-E)
+- ["WebStorm 2018.1 EAP, 181.3263.21: improvements for React Native, extract Vue component"](https://blog.jetbrains.com/webstorm/2018/02/webstorm-2018-1-eap-181-3263/)
+- Icon made by [Monik](https://www.flaticon.com/authors/monkik) from [FlatIcon](https://www.flaticon.com/)and is licensed by [Creative Commons 3.0](http://creativecommons.org/licenses/by/3.0/)

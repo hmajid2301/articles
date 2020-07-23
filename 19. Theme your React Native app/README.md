@@ -2,7 +2,9 @@
 title: "Auto Toggle Dark Theme on your React Native Application"
 tags: ["ReactNative", "React"]
 license: "public-domain"
-date: 20200125T10:00Z
+slug: "auto-toggle-dark-mode-react-native"
+canonical_url: "https://haseebmajid.dev/blog/auto-toggle-dark-mode-react-native"
+date: "2020-01-25"
 published: true
 cover_image: "images/cover.jpg"
 ---

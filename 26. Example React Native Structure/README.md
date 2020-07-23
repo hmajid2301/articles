@@ -2,7 +2,9 @@
 title: "An example React Native Project Structure"
 tags: ["javascript", "react-native", "project"]
 license: "public-domain"
-date: 20200531T10:00Z
+slug: "react-native-project-structure"
+canonical_url: "https://haseebmajid.dev/blog/react-native-project-structure"
+date: "2020-05-31"
 published: true
 cover_image: "images/cover.jpg"
 ---

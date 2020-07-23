@@ -2,8 +2,10 @@
 title: "How to add your own type definitions to DefinitelyTyped"
 tags: ["javascript", "typescript", "react-native", "expo"]
 license: "public-domain"
+slug: "add-types-to-definitely-typed"
+canonical_url: "https://haseebmajid.dev/blog/add-types-to-definitely-typed"
 cover_image: images/cover.png
-date: 20190419T10:00Z
+date: "2019-04-19"
 published: true
 ---
 

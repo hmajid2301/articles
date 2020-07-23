@@ -2,7 +2,9 @@
 title: "DrawerNavigator, TabNavigator and StackNavigator with React Navigation"
 tags: ["ReactNative", "ReactNavigation", "expo"]
 license: "public-domain"
-date: 20190304T10:00Z
+slug: "drawer-navigation-tab-navigator-stack-navigator-with-react-navigation"
+canonical_url: "https://haseebmajid.dev/blog/drawer-navigation-tab-navigator-stack-navigator-with-react-navigation"
+date: "2019-03-04"
 published: true
 cover_image: "images/cover.jpg"
 ---

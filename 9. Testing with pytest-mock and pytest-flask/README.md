@@ -2,7 +2,9 @@
 title: "Testing with pytest-mock and pytest-flask"
 tags: ["testing", "python", "pytest", "flask"]
 license: "public-domain"
-date: 20181215T10:00Z
+slug: "testing-with-pytest-mock-and-pytest-flask"
+canonical_url: "https://haseebmajid.dev/blog/testing-with-pytest-mock-and-pytest-flask"
+date: "2018-12-15"
 published: true
 cover_image: "images/cover.jpg"
 ---

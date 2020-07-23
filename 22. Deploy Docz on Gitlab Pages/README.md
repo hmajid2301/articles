@@ -2,7 +2,9 @@
 title: "Deploy Docz on Gitlab Pages"
 tags: ["Docz", "gitlab", "ci"]
 license: "public-domain"
-date: 20200328T10:00Z
+slug: "deploy-docz-gitlab-page"
+canonical_url: "https://haseebmajid.dev/blog/deploy-docz-gitlab-page"
+date: "2020-03-28"
 published: true
 cover_image: "images/cover.png"
 ---

@@ -2,7 +2,9 @@
 title: "DinD with Gitlab CI"
 tags: ["Docker", "Gitlab", "CI"]
 license: "public-domain"
-date: 20200501T10:00Z
+slug: "dind-and-gitlab-ci"
+canonical_url: "https://haseebmajid.dev/blog/dind-and-gitlab-ci"
+date: "2020-05-01"
 published: true
 cover_image: "images/cover.png"
 ---

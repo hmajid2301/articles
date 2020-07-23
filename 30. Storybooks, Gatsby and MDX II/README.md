@@ -2,7 +2,9 @@
 title: "How to use Storybooks with MDX"
 tags: ["gatsby", "documentation", "mdx", "storybook"]
 license: "public-domain"
-date: 20200720T10:00Z
+slug: "storybooks-with-mdx"
+canonical_url: "https://haseebmajid.dev/blog/storybooks-with-mdx"
+date: "2020-07-20"
 published: true
 cover_image: "images/controls.png"
 ---

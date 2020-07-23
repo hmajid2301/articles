@@ -2,7 +2,9 @@
 title: "Make PrismJS editable"
 tags: ["javascript", "ajax", "prismjs"]
 license: "public-domain"
-date: 20200510T10:00Z
+slug: "make-prismjs-editable"
+canonical_url: "https://haseebmajid.dev/blog/make-prismjs-editable"
+date: "2020-05-10"
 published: true
 cover_image: "images/cover.jpg"
 ---

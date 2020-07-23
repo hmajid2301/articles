@@ -1,10 +1,12 @@
 ---
-title: 'Inheritance in SQLAlchemy (with Flask)'
-tags: ['Python', 'Orm', 'Sqlalchemy', 'Database']
-license: 'public-domain'
-date: 20181018T10:00Z
+title: "Inheritance in SQLAlchemy (with Flask)"
+tags: ["Python", "Orm", "Sqlalchemy", "Database"]
+license: "public-domain"
+slug: "inheritance-in-sqlalchemy"
+canonical_url: "https://haseebmajid.dev/blog/inheritance-in-sqlalchemy"
+date: "2018-10-18"
 published: true
-cover_image: 'images/cover.jpg'
+cover_image: "images/cover.jpg"
 ---
 
 SQLAlchemy is an Object-relational mapping (ORM) made for the Python programming language. ORMs in theory allow
@@ -16,7 +18,7 @@ becomes a column in an SQL table. The database is made up of multiple models. Ju
 can inherit from other models and share attributes with the parent model. This is very useful if you going to
 have models that will store similar types of data.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## models.py
 
@@ -45,9 +47,9 @@ a table for that model. Our next two models Cats and Dogs inherit all the attrib
 will each have a column called name, price and breed. The main advantage of this is if you ever need to change the
 models you just have to change it in once place. The more models that inherit from the base model.
 
----------------------------------------------------------------------------------------------------
+---
 
-## __init__.py
+## **init**.py
 
 ```python
 from flask import Flask
@@ -69,10 +71,10 @@ models. That's it folks, thanks for reading.
 **Please** note there are other ways to implement inheritance with SQLAlchemy, I personally found this way to be the
 cleanest in terms of code readability.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
-* [Example source code](https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20\(with%20Flask\))
-* [SQLAlchemy](https://www.sqlalchemy.org/)
-* [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)
+- [Example source code](<https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20(with%20Flask)>)
+- [SQLAlchemy](https://www.sqlalchemy.org/)
+- [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)

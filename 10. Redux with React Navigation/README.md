@@ -2,7 +2,9 @@
 title: "Theme your Expo app with Redux and React Navigation"
 tags: ["redux", "react-native", "react-navigation", "expo"]
 license: "public-domain"
-date: 20181223T10:00Z
+slug: "theme-expo-app-with-redux-and-react-navigation"
+canonical_url: "https://haseebmajid.dev/blog/theme-expo-app-with-redux-and-react-navigation"
+date: "2018-12-23"
 published: true
 cover_image: "images/cover.jpg"
 ---

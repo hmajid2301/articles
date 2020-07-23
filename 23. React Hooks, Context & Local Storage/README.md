@@ -2,7 +2,9 @@
 title: "React Hooks, Context & Local Storage"
 tags: ["react", "reacthooks", "reactcontext"]
 license: "public-domain"
-date: 20200405T10:00Z
+slug: "react-hooks-context-and_local-storage"
+canonical_url: "https://haseebmajid.dev/blog/react-hooks-context-and_local-storage"
+date: "2020-04-05"
 published: true
 cover_image: "images/cover.jpg"
 ---

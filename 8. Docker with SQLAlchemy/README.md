@@ -1,10 +1,12 @@
 ---
-title: 'Simple App with Flask, SQLalchemy and Docker'
-tags: ['docker', 'python', 'docker-compose', 'sqlalchemy']
-license: 'public-domain'
-date: 20181124T10:00Z
+title: "Simple App with Flask, SQLalchemy and Docker"
+tags: ["docker", "python", "docker-compose", "sqlalchemy"]
+license: "public-domain"
+slug: "simple-app-flask-sqlalchemy-and-docker"
+canonical_url: "https://haseebmajid.dev/blog/simple-app-flask-sqlalchemy-and-docker"
+date: "2018-11-24"
 published: true
-cover_image: 'images/cover.jpg'
+cover_image: "images/cover.jpg"
 ---
 
 https://media.giphy.com/media/35KpaeAHCl0wt8O8Nc/giphy.gif
@@ -22,10 +24,10 @@ In this example, I will be using Postgres but it should be easy enough to use an
 
 ## Prerequisites
 
-* [Install Docker](https://docs.docker.com/install/)
-* (optional) [Install docker-compose](https://docs.docker.com/compose/install/)
-* Install Python3.6
-* Install the following dependencies, using `pip install -r requirements.txt` (or pip3 instead of pip)
+- [Install Docker](https://docs.docker.com/install/)
+- (optional) [Install docker-compose](https://docs.docker.com/compose/install/)
+- Install Python3.6
+- Install the following dependencies, using `pip install -r requirements.txt` (or pip3 instead of pip)
 
 Where requirements.txt is:
 
@@ -35,9 +37,9 @@ flask-sqlalchemy==2.3.0
 psycopg2==2.7.6.1
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
-## __init__.py
+## **init**.py
 
 ```python
 from flask import Flask
@@ -66,7 +68,7 @@ No application found. Either work inside a view function or push an application 
 
 After pushing our context, we link our `db` to the Flask app with the following line `db.init_app(flask_app)`. We then create all of our tables (in the database) if they don't already exist, using `db.create_all()`. The tables are created using the classes defined in `models.py`.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## config.py
 
@@ -90,7 +92,7 @@ DATABASE_CONNECTION_URI = f'postgresql+psycopg2://{user}:{password}@{host}:{port
 
 **NOTE:** F-strings used for formatting strings (as shown above) can only be used with Python3.6.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## database.conf
 
@@ -109,7 +111,7 @@ where `postgres` is the Docker container name we are connecting to.
 
 **WARNING:** Make sure these are the same values passed to the Flask app and the Postgres database.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## models.py
 
@@ -131,7 +133,7 @@ This module defines our classes which then become tables within our database. Fo
 
 The `db` variable is imported from here by the `__init__.py` file, that's how the `db.create_all()` function knows which classes/tables to create in the database.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## app.py
 
@@ -190,12 +192,12 @@ def edit(cat_id):
 This is a simple Flask file, which creates our app by calling `create_app()` function from `__init__.py` module.
 Then it defines four functions for our four routes for the "RESTful" API:
 
-* GET: Get information about all the cats
-* POST: Add a new cat
-* DELETE: Remove a cat
-* PATCH: Edit a cat's price
+- GET: Get information about all the cats
+- POST: Add a new cat
+- DELETE: Remove a cat
+- PATCH: Edit a cat's price
 
----------------------------------------------------------------------------------------------------
+---
 
 ## database.py
 
@@ -236,10 +238,10 @@ library we use to interact with the database. It also means that if for some rea
 
 The `app.py` module calls functions in this file to interact with database.
 
-* GET - `get_all()`
-* POST - `add_instance()`
-* DELETE - `delete_instance()`
-* PUT - `edit_instance()`
+- GET - `get_all()`
+- POST - `add_instance()`
+- DELETE - `delete_instance()`
+- PUT - `edit_instance()`
 
 Some functions use this special keyword called `**kwargs`, kwargs (keyword arguments) could be called anything but it's best practice to call it kwargs. This allows
 the caller of the function to pass in an arbitrary number of keyword arguments.
@@ -249,19 +251,19 @@ Let's take a look at the `add_instance()` function as an example. The function i
 **NOTE:** The `kwargs` just stores the arguments as a dictionary, the `**` operator unpacks our dictionary
 and passes them as keyword arguments.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## docker-compose.yml
 
 ```yaml
-version: '3.5'
+version: "3.5"
 services:
   database:
     container_name: postgres
     image: postgres:latest
     env_file: database.conf
     ports:
-      - 5432:5432  
+      - 5432:5432
     volumes:
       - db_volume:/var/lib/postgresql
 
@@ -289,7 +291,7 @@ We then map the host port 5432 to the guest Docker container port 5432, this is 
 
 Finally, we mount a volume so that our data is persistent, without this when the database Docker container is killed you would lose all of your data. By mounting `db_volume` even when you kill the container, like when you want to update the Postgres image, your data will persist.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Running our application
 
@@ -308,7 +310,7 @@ docker run -d --name postgres -p 5432:5432 \
            -v db_volume:/var/lib/postgresql postgres:latest
 ```
 
-To start our Flask app 
+To start our Flask app
 
 ```bash
 docker-compose up --build
@@ -332,11 +334,11 @@ curl -XPOST -H "Content-type: application/json" -d \
 '127.0.0.1:5000/add'
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
-* [Example source code](https://github.com/hmajid2301/medium/tree/master/8.%20Docker%20with%20SQLAlchemy)
-* [Code images made with carbon](https://carbon.now.sh)
-* [Postman](https://www.getpostman.com/)
-* [Insomnia](https://insomnia.rest/)
+- [Example source code](https://github.com/hmajid2301/medium/tree/master/8.%20Docker%20with%20SQLAlchemy)
+- [Code images made with carbon](https://carbon.now.sh)
+- [Postman](https://www.getpostman.com/)
+- [Insomnia](https://insomnia.rest/)

@@ -2,7 +2,9 @@
 title: "Testing & Mocking a Connexion/Flask Application with Pytest"
 tags: ["testing", "python", "flask", "pytest"]
 license: "public-domain"
-date: 20200609T10:00Z
+slug: "testing-mocking-connexion-flask-app-pytest"
+canonical_url: "https://haseebmajid.dev/blog/testing-mocking-connexion-flask-app-pytest"
+date: "2020-06-09"
 published: true
 cover_image: "images/cover.jpg"
 ---

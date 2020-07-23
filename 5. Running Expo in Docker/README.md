@@ -1,10 +1,12 @@
 ---
-title: 'Running Expo/React Native in Docker'
-tags: ['Docker', 'React Native', 'Expo', 'Docker Compose']
-license: 'public-domain'
-date: 20181031T10:00Z
+title: "Running Expo/React Native in Docker"
+tags: ["Docker", "React Native", "Expo", "Docker Compose"]
+license: "public-domain"
+slug: "running-react-native-in-docker"
+canonical_url: "https://haseebmajid.dev/blog/running-react-native-in-docker"
+date: "2018-10-31"
 published: true
-cover_image: 'images/cover.jpg'
+cover_image: "images/cover.jpg"
 ---
 
 ![Original Image: https://maraaverick.rbind.io/2017/11/docker-izing-your-work-in-r/ and https://tutuappapkdownload.com/expo-apk/](images/docker-nyan.gif)
@@ -18,15 +20,15 @@ detailed post about how to connect two VMs together
 it might as well be running on the host machine (Windows). Also in this example, I will be testing
 this on an Android device.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Prerequisites
 
-* [Install Docker](https://docs.docker.com/install/)
-* (optional) [Install docker-compose](https://docs.docker.com/compose/install/)
-* Android device/emulator to test on
+- [Install Docker](https://docs.docker.com/install/)
+- (optional) [Install docker-compose](https://docs.docker.com/compose/install/)
+- Android device/emulator to test on
 
----------------------------------------------------------------------------------------------------
+---
 
 ## package.json
 
@@ -51,7 +53,7 @@ this on an Android device.
 The _package.json_ file I will be using the following example is a very barebones file, just including the minimum
 packages required to run Expo.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Dockerfile
 
@@ -134,13 +136,13 @@ CMD adb connect $ADB_IP && \
 
 ![Figure 1: Could not connect error 😢](images/error-emulator.png)
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Running Docker
 
 This command runs when the Docker Image is first to run, every other command is used to build to the image itself. This
-uses an environment variable passed into the Docker container and connects to the Android device at $ADB_IP. Then run
-the **android** command in _package.json_. Then you can simply run the following commands to build and start your Docker container.
+uses an environment variable passed into the Docker container and connects to the Android device at \$ADB*IP. Then run
+the **android** command in \_package.json*. Then you can simply run the following commands to build and start your Docker container.
 
 ```bash
 docker build -t expo-android .
@@ -148,15 +150,15 @@ docker run -e ADB_IP=192.168.112.101 \
             -e REACT_NATIVE_PACKAGER_HOSTNAME=192.168.1.1 \
             -p 19000:19000 \
             -p 19001:19001 \
-            expo-android 
+            expo-android
 ```
 
-* -t is used to name the image (expo-android)
-* . tells Docker where the Dockerfile is (in the current directory)
-* --env sets environment used by Docker container when it starts to run (REACT_NATIVE_PACKAGER_HOSTNAME andADB_IP are overwritten using these new values)
-* -p publishes ports, in this example, it maps port 19000 on the host to port 19000 on the Docker container (and also 19001), as we need to access port 19000 and 19001 so that Expo (expo-cli) can connect to our Android device.
+- -t is used to name the image (expo-android)
+- . tells Docker where the Dockerfile is (in the current directory)
+- --env sets environment used by Docker container when it starts to run (REACT_NATIVE_PACKAGER_HOSTNAME andADB_IP are overwritten using these new values)
+- -p publishes ports, in this example, it maps port 19000 on the host to port 19000 on the Docker container (and also 19001), as we need to access port 19000 and 19001 so that Expo (expo-cli) can connect to our Android device.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## docker-compose.yml
 
@@ -190,21 +192,21 @@ Docker container again.
 docker-compose up --build -d
 ```
 
----------------------------------------------------------------------------------------------------
+---
 
 ## .env
 
 ![.env](images/.env.png)
 
-An example _.env_ file used to pass environment variables (using docker-compose) to the Docker container.
+An example *.env* file used to pass environment variables (using docker-compose) to the Docker container.
 
----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
-* [Example source code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
-* [Code images made with Carbon](https://carbon.now.sh/)
-* [Docker explained](https://medium.freecodecamp.org/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b)
-* [GitHub issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
-* [Genymotion emulator](https://www.genymotion.com/)
-* [GIF overlay creator (Nyan Docker)](https://ezgif.com/overlay)
+- [Example source code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
+- [Code images made with Carbon](https://carbon.now.sh/)
+- [Docker explained](https://medium.freecodecamp.org/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b)
+- [GitHub issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
+- [Genymotion emulator](https://www.genymotion.com/)
+- [GIF overlay creator (Nyan Docker)](https://ezgif.com/overlay)

@@ -2,7 +2,9 @@
 title: "Better Imports with Typescript Aliases, Babel and TSPath"
 tags: ["typescript", "javascript", "programming"]
 license: "public-domain"
-date: 20191201T10:00Z
+slug: "better-imports-with-babel-tspath"
+canonical_url: "https://haseebmajid.dev/blog/better-imports-with-babel-tspath"
+date: "2019-12-01"
 published: true
 cover_image: "images/cover.jpg"
 ---

@@ -2,7 +2,9 @@
 title: "Add adaptive icons to your Android app"
 tags: ["ReactNative", "Android"]
 license: "public-domain"
-date: 20191109T10:00Z
+slug: "auto-publish-react-native-to-android-store-with-gitlab-ci"
+canonical_url: "https://haseebmajid.dev/blog/auto-publish-react-native-to-android-store-with-gitlab-ci"
+date: "2019-11-09"
 published: true
 cover_image: "images/cover.png"
 ---

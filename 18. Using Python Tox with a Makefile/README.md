@@ -1,8 +1,10 @@
 ---
-title: 'Using Tox with a Makefile to Automate Python related tasks'
-tags: ['Python', 'Tox', 'Makefile', 'automation']
-license: 'public-domain'
-date: 20200113T10:00Z
+title: "Using Tox with a Makefile to Automate Python related tasks"
+tags: ["Python", "Tox", "Makefile", "automation"]
+license: "public-domain"
+slug: "using-tox-and-makefile-automation"
+canonical_url: "https://haseebmajid.dev/blog/using-tox-and-makefile-automation"
+date: "2020-01-13"
 published: true
 cover_image: "images/cover.jpg"
 ---
@@ -10,7 +12,7 @@ cover_image: "images/cover.jpg"
 In this article, we will go over how we can use a makefile and tox to automate various Python related command line (CLI) tools.
 This article assumes you are running bash (or equivalent).
 
-----------------------------------------------------------------------------------------------------
+---
 
 ## Tox
 
@@ -74,14 +76,14 @@ We can test our against using different versions of Python as well such as Pytho
 both. So if we wanted to run pytest against python3.6 we could do it like so `tox -e py36` and equally python3.7 as `tox -e py37`
 (given the same configuration file as above). Some common tools Tox is used in conjunction with include;
 
-* [Black](https://github.com/psf/black)
-* [Isort](https://github.com/timothycrosley/isort)
-* [Pytest](https://github.com/timothycrosley/isort)
-* [Flake8](https://github.com/PyCQA/flake8)
-* [Bumpversion](https://github.com/peritus/bumpversion)
-* [Twine](https://github.com/pypa/twine)
+- [Black](https://github.com/psf/black)
+- [Isort](https://github.com/timothycrosley/isort)
+- [Pytest](https://github.com/timothycrosley/isort)
+- [Flake8](https://github.com/PyCQA/flake8)
+- [Bumpversion](https://github.com/peritus/bumpversion)
+- [Twine](https://github.com/pypa/twine)
 
-----------------------------------------------------------------------------------------------------
+---
 
 ## Makefile
 
@@ -122,11 +124,11 @@ clean:
 	@rm -f .coverage.*
 ```
 
-That's is a simple introduction how you can use a `Makefile` and `Tox` in conjunction to automate various 
-tedious tasks. 
+That's is a simple introduction how you can use a `Makefile` and `Tox` in conjunction to automate various
+tedious tasks.
 
-----------------------------------------------------------------------------------------------------
+---
 
 ## Appendix
 
-* [Example Project](https://gitlab.com/gitlab-automation-toolkit/gitlab-auto-release/tree/abfdd70e1dae8bacf7dfd999a76711ca052ce23e)
+- [Example Project](https://gitlab.com/gitlab-automation-toolkit/gitlab-auto-release/tree/abfdd70e1dae8bacf7dfd999a76711ca052ce23e)

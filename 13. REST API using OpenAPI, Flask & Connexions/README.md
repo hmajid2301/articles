@@ -1,9 +1,11 @@
 ---
 title: "Implementing a Simple REST API using OpenAPI, Flask & Connexions"
-tags: ["flask",  "openapi", "python", "connexion"]
+tags: ["flask", "openapi", "python", "connexion"]
 license: "public-domain"
+slug: "rest-api-openapi-flask-connexion"
+canonical_url: "https://haseebmajid.dev/blog/rest-api-openapi-flask-connexion"
 cover_image: images/cover.jpg
-date: 20190816T10:00Z
+date: "2019-08-16"
 published: true
 ---
 
