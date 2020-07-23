@@ -1,0 +1,11 @@
+image: ubuntu:20.04
+
+stages:
+  - build
+
+rebuild:netlify:
+  stage: build
+  only:
+    - master
+  script:
+    - curl -X POST -d {} ${BUILD_HOOK_URL}/?trigger_title=${CI_COMMIT_SHA}
