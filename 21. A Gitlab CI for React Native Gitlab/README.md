@@ -6,7 +6,7 @@ slug: "gitlab-ci-for-react-native"
 canonical_url: "https://haseebmajid.dev/blog/gitlab-ci-for-react-native"
 date: "2020-02-23"
 license: "public-domain"
-cover_image: https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
+cover_image: images/cover_image.png
 ---
 
 > Info: Cover image from https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
