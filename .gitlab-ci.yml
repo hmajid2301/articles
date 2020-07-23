@@ -1,10 +1,9 @@
-image: ubuntu:20.04
-
 stages:
   - build
 
 rebuild:netlify:
   stage: build
+  image: curlimages/curl
   only:
     - master
   script:
