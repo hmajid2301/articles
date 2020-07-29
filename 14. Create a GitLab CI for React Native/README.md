@@ -1,6 +1,6 @@
 ---
 title: "Build an Android APK using GitLab for a React Native Application"
-tags: ["ReactNative", "CI", "GitLab", "Android"]
+tags: ["react-native", "ci", "gitlab", "android"]
 license: "public-domain"
 slug: "build-android-apk-with-gitlab-ci-for-react-native"
 canonical_url: "https://haseebmajid.dev/blog/build-android-apk-with-gitlab-ci-for-react-native"

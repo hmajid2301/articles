@@ -1,6 +1,6 @@
 ---
 title: "DinD with Gitlab CI"
-tags: ["Docker", "Gitlab", "CI"]
+tags: ["docker", "gitlab", "ci"]
 license: "public-domain"
 slug: "dind-and-gitlab-ci"
 canonical_url: "https://haseebmajid.dev/blog/dind-and-gitlab-ci"

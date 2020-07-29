@@ -1,6 +1,6 @@
 ---
 title: "React Native/Expo with VirtualBox and Genymotion"
-tags: ["Android", "React Native", "Virtualbox", "Expo"]
+tags: ["android", "react-native", "virtualbox", "expo"]
 license: "public-domain"
 slug: "react-native-with-virtualbox"
 canonical_url: "https://haseebmajid.dev/blog/react-native-with-virtualbox"

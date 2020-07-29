@@ -1,6 +1,6 @@
 ---
 title: "Debug React Native WebView"
-tags: ["React Native", "Expo", "Chrome", "Mobile App Development"]
+tags: ["react-native", "expo", "chrome"]
 license: "public-domain"
 slug: "debug-react-native-webview"
 canonical_url: "https://haseebmajid.dev/blog/debug-react-native-webview"

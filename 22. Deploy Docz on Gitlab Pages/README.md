@@ -1,6 +1,6 @@
 ---
 title: "Deploy Docz on Gitlab Pages"
-tags: ["Docz", "gitlab", "ci"]
+tags: ["docz", "gitlab", "ci"]
 license: "public-domain"
 slug: "deploy-docz-gitlab-page"
 canonical_url: "https://haseebmajid.dev/blog/deploy-docz-gitlab-page"

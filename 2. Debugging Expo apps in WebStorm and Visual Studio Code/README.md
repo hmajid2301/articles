@@ -1,6 +1,6 @@
 ---
 title: "Debugging React Native apps in WebStorm and Visual Studio Code"
-tags: ["React Native", "Debugging", "Visual Studio", "Webstorm"]
+tags: ["react-native", "debugging", "visual-studio", "webstorm"]
 license: "public-domain"
 slug: "debugging-react-native-apps"
 canonical_url: "https://haseebmajid.dev/blog/debugging-react-native-apps"

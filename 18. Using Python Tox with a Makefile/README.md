@@ -1,6 +1,6 @@
 ---
 title: "Using Tox with a Makefile to Automate Python related tasks"
-tags: ["Python", "Tox", "Makefile", "automation"]
+tags: ["python", "tox", "makefile", "automation"]
 license: "public-domain"
 slug: "using-tox-and-makefile-automation"
 canonical_url: "https://haseebmajid.dev/blog/using-tox-and-makefile-automation"

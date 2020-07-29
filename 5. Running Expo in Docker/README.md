@@ -1,6 +1,6 @@
 ---
 title: "Running Expo/React Native in Docker"
-tags: ["Docker", "React Native", "Expo", "Docker Compose"]
+tags: ["docker", "react-native", "expo", "docker-compose"]
 license: "public-domain"
 slug: "running-react-native-in-docker"
 canonical_url: "https://haseebmajid.dev/blog/running-react-native-in-docker"

@@ -1,6 +1,6 @@
 ---
 title: "A Gitlab CI file for React Native Apps"
-tags: ["ReactNative", "Gitlab", "CI"]
+tags: ["react-native", "gitlab", "ci"]
 published: true
 slug: "gitlab-ci-for-react-native"
 canonical_url: "https://haseebmajid.dev/blog/gitlab-ci-for-react-native"

@@ -1,6 +1,6 @@
 ---
 title: "Inheritance in SQLAlchemy (with Flask)"
-tags: ["Python", "Orm", "Sqlalchemy", "Database"]
+tags: ["python", "orm", "sqlalchemy", "database"]
 license: "public-domain"
 slug: "inheritance-in-sqlalchemy"
 canonical_url: "https://haseebmajid.dev/blog/inheritance-in-sqlalchemy"

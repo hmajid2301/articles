@@ -1,6 +1,6 @@
 ---
 title: "React Native with Firebase Cloud Functions and Gitlab CI"
-tags: ["ReactNative", "React", "Firebase", "Gitlab"]
+tags: ["react-native", "react", "firebase", "gitlab"]
 license: "public-domain"
 slug: "react-native-firebase-functions-and-gitlab-ci"
 canonical_url: "https://haseebmajid.dev/blog/react-native-firebase-functions-and-gitlab-ci"

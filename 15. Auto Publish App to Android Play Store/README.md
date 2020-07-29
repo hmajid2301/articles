@@ -1,6 +1,6 @@
 ---
 title: "Auto Publish React Native App to Android Play Store using GitLab CI"
-tags: ["ReactNative", "CI", "GitLab", "Android"]
+tags: ["react-native", "ci", "gitlab", "android"]
 license: "public-domain"
 slug: "auto-publish-react-native-to-android-store-with-gitlab-ci"
 canonical_url: "https://haseebmajid.dev/blog/auto-publish-react-native-to-android-store-with-gitlab-ci"

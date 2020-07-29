@@ -1,6 +1,6 @@
 ---
 title: "DrawerNavigator, TabNavigator and StackNavigator with React Navigation"
-tags: ["ReactNative", "ReactNavigation", "expo"]
+tags: ["react-native", "react-navigation", "expo"]
 license: "public-domain"
 slug: "drawer-navigation-tab-navigator-stack-navigator-with-react-navigation"
 canonical_url: "https://haseebmajid.dev/blog/drawer-navigation-tab-navigator-stack-navigator-with-react-navigation"
