@@ -4,7 +4,7 @@ tags: ["gatsby", "documentation", "tailwindcss", "css"]
 license: "public-domain"
 slug: "tailwindcss-with-css-variables"
 canonical_url: "https://haseebmajid.dev/blog/tailwindcss-with-css-variables"
-date: "2020-08-5"
+date: "2020-08-05"
 published: true
 cover_image: "images/cover.jpg"
 ---
