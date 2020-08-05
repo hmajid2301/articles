@@ -6,7 +6,7 @@ slug: "storybooks-with-mdx"
 canonical_url: "https://haseebmajid.dev/blog/storybooks-with-mdx"
 date: "2020-07-20"
 published: true
-cover_image: "images/controls.png"
+cover_image: "images/cover.jpg"
 ---
 
 This article (sort of) continues on from my previous article
