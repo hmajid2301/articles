@@ -28,7 +28,8 @@ First, we need to edit our TailwindCSS file so it looks something like this:
 @tailwind utilities;
 
 .root,
-#root {
+#root,
+#docs-root {
   --primary: #367ee9;
   --secondary: #a0aec0;
   --accent: #718096;
