@@ -1,5 +1,5 @@
 ---
-title: "Using Multiple Docker Containers to Setup Nginx, Flask and Postgres"
+title: "Using Multiple Docker Containers to Setup Nginx, Flask and Postgres"
 tags: ["docker", "python", "docker-compose", "flask"]
 license: "public-domain"
 slug: "docker-containers-to-setup-nginx-flask-and-postgres"
