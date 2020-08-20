@@ -1,10 +1,10 @@
 stages:
   - build
 
-rebuild:netlify:
+rebuild:portfolio-site:
   stage: build
   image: curlimages/curl
   only:
     - master
   script:
-    - curl -X POST -d {} ${BUILD_HOOK_URL}/?trigger_title=${CI_COMMIT_SHA}
+    - "curl -X POST -F token=${TRIGGER_TOKEN} -F ref=master https://gitlab.com/api/v4/projects/19260161/trigger/pipeline"
