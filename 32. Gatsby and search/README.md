@@ -224,27 +224,7 @@ module.exports = () => ({
 We will create all of the components in the following `src/components` folder.
 First, let's create the `Input.jsx` component for the text input, which looks something like this:
 
-```jsx
-import React from "react";
-import tw from "twin.macro";
-
-const Input = React.forwardRef(
-  ({ className, label, onChange, placeholder = "", value }, ref) => (
-    <TextInput
-      ref={ref}
-      aria-label={label}
-      className={`bg-background text-header placeholder-main ${className}`}
-      onChange={onChange}
-      placeholder={placeholder}
-      type="text"
-      value={value}
-    />
-  )
-);
-
-const TextInput = tw.input`inline px-2 h-full w-full text-left inline text-lg transition duration-300`;
-
-export default Input;
+```jsx:title=Input.jsx file=./source_code/src/components/Input.jsx
 ```
 
 Since we are using `twin.macro` we can use syntax like ` const TextInput = tw.input`` `. Hence we can use the name `TextInput`.
