@@ -15,8 +15,6 @@ code within the WebView isn’t so obvious.
 
 ![Figure 1: Chrome Inspect for the WebView](images/webview-dev-tools.png)
 
----
-
 ## Option 1: Chrome Inspect
 
 - Start your Expo/React Native app\*.
@@ -38,8 +36,6 @@ Alternatively you can access this page using the React Native Debugger page in c
 - Hit the Inspect button the first item (this will be the latest)
 - Now you explore the WebView like a normal web page
 
----
-
 ## Debugging
 
 So to the closest way to debug the WebView I have found is to use console.log statements that will appear in the
@@ -48,8 +44,6 @@ from the WebView. You can only view them by exploring DevTools for Remote device
 use breakpoints in WebViews but still this is better than nothing.
 
 ![Figure 3: Open DevTools for Remote devices](images/devtools.gif)
-
----
 
 ## Appendix
 

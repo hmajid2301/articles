@@ -3,13 +3,11 @@ title: "Running Expo/React Native in Docker"
 tags: ["docker", "react-native", "expo", "docker-compose"]
 license: "public-domain"
 slug: "running-react-native-in-docker"
-canonical_url: "https://haseebmajid.dev/blog/running-react-native-in-docker"
+canonical_url: "https://haseebmajid.dev/blog/running-react-native-in-docker/"
 date: "2018-10-31"
 published: true
 cover_image: "images/cover.jpg"
 ---
-
-![Original Image: https://maraaverick.rbind.io/2017/11/docker-izing-your-work-in-r/ and https://tutuappapkdownload.com/expo-apk/](images/docker-nyan.gif)
 
 Running Expo/React Native in a Docker container can sometimes cause issues. In this example, I will be running
 Docker 🐳 within a guest VM (Ubuntu) which will run on my host machine (Windows). My host machine will also
@@ -20,7 +18,7 @@ detailed post about how to connect two VMs together
 it might as well be running on the host machine (Windows). Also in this example, I will be testing
 this on an Android device.
 
----
+![Original Image: https://maraaverick.rbind.io/2017/11/docker-izing-your-work-in-r/ and https://tutuappapkdownload.com/expo-apk/](images/docker-nyan.gif)
 
 ## Prerequisites
 
@@ -28,53 +26,17 @@ this on an Android device.
 - (optional) [Install docker-compose](https://docs.docker.com/compose/install/)
 - Android device/emulator to test on
 
----
+## Docker
 
-## package.json
+```json:title=package.json file=./source_code/package.json
 
-```json
-{
-  "main": "node_modules/expo/AppEntry.js",
-  "private": true,
-  "scripts": {
-    "android": "expo-cli start --android",
-    "ios": "expo-cli start --ios",
-    "start": "expo-cli start"
-  },
-  "dependencies": {
-    "expo": "30.0.0",
-    "expo-cli": "2.2.4",
-    "react": "16.3.1",
-    "react-native": "https://github.com/expo/react-native/archive/sdk-30.0.0.tar.gz"
-  }
-}
 ```
 
-The _package.json_ file I will be using the following example is a very barebones file, just including the minimum
+The `package.json` file I will be using the following example is a very barebones file, just including the minimum
 packages required to run Expo.
 
----
+```docker:title=Dockerfile file=./source_code/Dockerfile
 
-## Dockerfile
-
-```docker
-FROM node:latest
-LABEL version=1.2.1
-
-ENV ADB_IP="192.168.1.1"
-ENV REACT_NATIVE_PACKAGER_HOSTNAME="192.255.255.255"
-
-EXPOSE 19000
-EXPOSE 19001
-
-RUN apt-get update && \
-    apt-get install android-tools-adb
-WORKDIR /app
-
-COPY package.json yarn.lock app.json ./
-RUN yarn --network-timeout 100000
-CMD adb connect $ADB_IP && \
-        yarn run android
 ```
 
 `FROM node:latest`
@@ -125,8 +87,8 @@ COPY package.json yarn.lock app.json ./
 RUN yarn --network-timeout 100000
 ```
 
-Copy some important files from host to Docker container. The _package.json_ and _yarn.lock_ are used to install
-the dependencies and _app.json_ is required by expo as a bare minimum.
+Copy some important files from host to Docker container. The `package.json` and `yarn.lock` are used to install
+the dependencies and `app.json` is required by expo as a bare minimum.
 
 ```text
 CMD adb connect $ADB_IP && \
@@ -135,8 +97,6 @@ CMD adb connect $ADB_IP && \
 ```
 
 ![Figure 1: Could not connect error 😢](images/error-emulator.png)
-
----
 
 ## Running Docker
 
@@ -158,25 +118,8 @@ docker run -e ADB_IP=192.168.112.101 \
 - --env sets environment used by Docker container when it starts to run (REACT_NATIVE_PACKAGER_HOSTNAME andADB_IP are overwritten using these new values)
 - -p publishes ports, in this example, it maps port 19000 on the host to port 19000 on the Docker container (and also 19001), as we need to access port 19000 and 19001 so that Expo (expo-cli) can connect to our Android device.
 
----
+```yaml:title=docker-compose.yml file=./source_code/docker-compose.yml
 
-## docker-compose.yml
-
-```yaml
-version: "3.5"
-
-services:
-  expo_android:
-    container_name: expo_android
-    build:
-      context: .
-      dockerfile: Dockerfile
-    env_file: .env
-    ports:
-      - 19000:19000
-      - 19001:19001
-    volumes:
-      - ${PWD}/:/app/
 ```
 
 Since expo is being used to build mobile phone applications Docker isn't going to be used in production. I prefer to use
@@ -192,20 +135,17 @@ Docker container again.
 docker-compose up --build -d
 ```
 
----
+### Environment Variables
 
-## .env
+```conf:title=.env file=./source_code/.env
 
-![.env](images/.env.png)
+```
 
-An example *.env* file used to pass environment variables (using docker-compose) to the Docker container.
-
----
+An example `.env` file used to pass environment variables (using docker-compose) to the Docker container.
 
 ## Appendix
 
-- [Example source code](https://github.com/hmajid2301/medium/tree/master/Running%20Expo%20in%20Docker)
-- [Code images made with Carbon](https://carbon.now.sh/)
+- [Example source code](https://gitlab.com/hmajid2301/articles/-/tree/master/5.%20Running%20Expo%20in%20Docker/source_code)
 - [Docker explained](https://medium.freecodecamp.org/a-beginner-friendly-introduction-to-containers-vms-and-docker-79a9e3e119b)
 - [GitHub issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
 - [Genymotion emulator](https://www.genymotion.com/)

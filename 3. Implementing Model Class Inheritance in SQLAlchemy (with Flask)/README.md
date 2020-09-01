@@ -3,7 +3,7 @@ title: "Inheritance in SQLAlchemy (with Flask)"
 tags: ["python", "orm", "sqlalchemy", "database"]
 license: "public-domain"
 slug: "inheritance-in-sqlalchemy"
-canonical_url: "https://haseebmajid.dev/blog/inheritance-in-sqlalchemy"
+canonical_url: "https://haseebmajid.dev/blog/inheritance-in-sqlalchemy/"
 date: "2018-10-18"
 published: true
 cover_image: "images/cover.jpg"
@@ -18,28 +18,8 @@ becomes a column in an SQL table. The database is made up of multiple models. Ju
 can inherit from other models and share attributes with the parent model. This is very useful if you going to
 have models that will store similar types of data.
 
----
+```python:title=models.py file=./source_code/example/models.py
 
-## models.py
-
-```python
-import flask_sqlalchemy
-
-db = flask_sqlalchemy
-
-class Pets(db.Model):
-    __abstract__ = True
-    name = db.Column(db.String(100))
-    price = db.Column(db.Integer)
-    breed = db.Column(db.String(100))
-
-class Cats(Pets):
-    __tablename__ = 'cats'
-    id = db.Column(db.Integer, primary_key=True)
-
-class Dogs(Pets):
-    __tablename__ = 'dogs'
-    id = db.Column(db.Integer, primary_key=True)
 ```
 
 Taking a look at the _models.py_ module, we define an abstract class called Pets. Which means SQLAlchemy will not create
@@ -47,25 +27,11 @@ a table for that model. Our next two models Cats and Dogs inherit all the attrib
 will each have a column called name, price and breed. The main advantage of this is if you ever need to change the
 models you just have to change it in once place. The more models that inherit from the base model.
 
----
+```python:title=__init__.py file=./source_code/example/__init__.py
 
-## **init**.py
-
-```python
-from flask import Flask
-
-from .models import db
-
-uri = "mysql+pymysql://user:password@localhost:3306/test"
-app.config['SQLALCHEMY_DATABASE_URI'] = uri
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.app_context().push()
-
-db.init_app(app)
-db.create_all(
 ```
 
-Above is an example _\_\_init\_\_.py_ file to initialise the database and create all the database tables from the
+Above is an example `__init__.py` file to initialise the database and create all the database tables from the
 models. That's it folks, thanks for reading.
 
 **Please** note there are other ways to implement inheritance with SQLAlchemy, I personally found this way to be the
@@ -75,6 +41,6 @@ cleanest in terms of code readability.
 
 ## Appendix
 
-- [Example source code](<https://github.com/hmajid2301/medium/tree/master/Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20(with%20Flask)>)
+- [Example source code](<https://gitlab.com/hmajid2301/articles/-/tree/master/3.%20Implementing%20Model%20Class%20Inheritance%20in%20SQLAlchemy%20(with%20Flask)/source_code/example>)
 - [SQLAlchemy](https://www.sqlalchemy.org/)
 - [flask-sqlalchemy](http://flask-sqlalchemy.pocoo.org/2.3/)

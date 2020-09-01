@@ -3,7 +3,7 @@ title: "Debugging React Native apps in WebStorm and Visual Studio Code"
 tags: ["react-native", "debugging", "visual-studio", "webstorm"]
 license: "public-domain"
 slug: "debugging-react-native-apps"
-canonical_url: "https://haseebmajid.dev/blog/debugging-react-native-apps"
+canonical_url: "https://haseebmajid.dev/blog/debugging-react-native-apps/"
 date: "2018-09-07"
 published: true
 cover_image: "images/cover.png"
@@ -25,8 +25,6 @@ I was able to get my debugger running.
 
 ![Debugging](https://media.giphy.com/media/ThOHTmBZlHOQ8/giphy.gif)
 
----
-
 ## Prerequisite
 
 - Have an [Expo](https://expo.io/learn) app
@@ -36,8 +34,6 @@ I was able to get my debugger running.
 `adb connect 192.168.101.1 # Replace with your Device IP`
 
 ![Figure 1: Turn on “Debug JS Remotely” on an Android device](images/android-emulator.png)
-
----
 
 ## WebStrom
 
@@ -61,14 +57,12 @@ I was able to get my debugger running.
 
 ![Figure 3: WebStorm; Starting the Debugger](images/webstorm.gif)
 
----
-
 ## Visual Studio Code
 
 - Open Visual Studio Code and your Expo project
-- Create a new file in your .vscode folder called _settings.json_ and add the following
+- Create a new file in your .vscode folder called `settings.json` and add the following
 
-```json
+```json:title=settings.json
 {
   "react-native": {
     "packager": {
@@ -79,9 +73,9 @@ I was able to get my debugger running.
 ```
 
 - Go to "Debug" window (CTRL + SHIFT + D)
-- When prompted for environment choose "React Native", it should give an _launch.json_ file like this, make sure it contains the following
+- When prompted for environment choose "React Native", it should give an `launch.json` file like this, make sure it contains the following:
 
-```json
+```json:title=launch.json
 {
     [
         {
@@ -109,11 +103,8 @@ I was able to get my debugger running.
 
 ![Figure 4: Visual Studio Code; Starting the Debugger.](images/visual-studio-code.gif)
 
----
-
 ## Appendix
 
-- [Example source code](https://github.com/hmajid2301/medium/tree/master/Debugging%20Expo%20apps%20in%20WebStorm%20and%20Visual%20Studio%20Code)
 - GIFs created with [screentogif](https://www.screentogif.com/)
 - ["Debugging create-react-native-app with VSCode"](https://medium.com/r/?url=https%3A%2F%2Fwww.youtube.com%2Fwatch%3Fv%3D0_MnXPD55-E)
 - ["WebStorm 2018.1 EAP, 181.3263.21: improvements for React Native, extract Vue component"](https://blog.jetbrains.com/webstorm/2018/02/webstorm-2018-1-eap-181-3263/)
