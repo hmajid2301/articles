@@ -1,5 +1,5 @@
 ---
-title: "Add gitlab-auto-mr to your Gitlab flow"
+title: "How to auto create MRs in Gitlab"
 tags: ["gitlab", "python", "ci", "showdev"]
 license: "public-domain"
 slug: "gitlab-auto-mr-with-gitlab"
@@ -7,6 +7,7 @@ canonical_url: "https://haseebmajid.dev/blog/gitlab-auto-mr-with-gitlab/"
 date: "2020-08-31"
 published: true
 cover_image: "images/cover.png"
+series: gitlab-workflow
 ---
 
 In this article, we will go over how we can use the `gitlab-auto-mr` CLI script I wrote to help automate your Gitlab
