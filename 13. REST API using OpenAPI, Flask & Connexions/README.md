@@ -408,7 +408,7 @@ cd medium/13.\ REST\ API\ using\ OpenAPI\,\ Flask\ \&\ Connexions/source_code/te
 virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-FLASK_APP=test_api.wsgi:app FLASK_DEBUG=1 flask run
+FLASK_APP=./src/test_api/run.py FLASK_DEBUG=1 flask run
 ```
 
 ---
