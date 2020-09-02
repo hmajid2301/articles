@@ -6,7 +6,7 @@ slug: "debugging-react-native-apps"
 canonical_url: "https://haseebmajid.dev/blog/debugging-react-native-apps/"
 date: "2018-09-07"
 published: true
-cover_image: "images/cover.png"
+cover_image: "images/cover.jpg"
 ---
 
 Visual Studio Code and WebStorm are two popular editors for developing React Native/Expo apps. These editors have lots
