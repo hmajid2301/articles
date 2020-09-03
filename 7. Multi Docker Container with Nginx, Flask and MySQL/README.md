@@ -36,13 +36,13 @@ as you can see which container is cauing the error.
 
 The first Docker container called Nginx will be the main gateway into our application it will be used as a proxy server. It will receive HTTP requests and forward them onto our Python application.
 
-```dockerfile:title=Dockerfile file=./source_code/docker/nginx/Dockerfile
+```dockerfile:title=docker/nginx/Dockerfile file=./source_code/docker/nginx/Dockerfile
 
 ```
 
 This is a very simple dockerfile that takes uses the latest Nginx docker image. It then removes the default configuration and adds our configuration.
 
-```conf:title=example.conf file=./source_code/docker/nginx/example.conf
+```conf:title=docker/nginx/example.conf file=./source_code/docker/nginx/example.conf
 
 ```
 
@@ -54,7 +54,7 @@ This is a simple Nginx configuration file which listens for traffic on port 80 (
 
 The second Docker container will contain our Python application running on a uWSGI server. The uWSGI server is a web application server based on the WSGI specification will allow Python to communicate with web servers. In this case, it essentially acts as middleware between Nginx and Flask translating requests between them. So essentially uWSGI receives an HTTP request from Nginx and translates into something Flask can understand. This container stores all the core Python code required for this simple API.
 
-```dockerfile:title=Dockerfile file=./source_code/docker/flask/Dockerfile
+```dockerfile:title=docker/flask/Dockerfile file=./source_code/docker/flask/Dockerfile
 
 ```
 
@@ -75,7 +75,7 @@ In theory, you could simply copy and install the requirements.txt and copy all t
 
 **Note**: The environment variables POSTGRES\_ should be the same values as defined in database.conf.
 
-```ini:title=uwsgi.ini file=./source_code/docker/flask/uwsgi.ini
+```ini:title=docker/flask/uwsgi.ini file=./source_code/docker/flask/uwsgi.ini
 
 ```
 
@@ -85,7 +85,7 @@ This is the configuration file used by the uWSGI server. This is where we define
 
 The Postgres image is simpler the latest Postgres image from Docker hub, then we pass some environment variables to it to configure it.
 
-```conf:title=database.conf file=./source_code/docker/database.conf
+```conf:title=docker/database.conf file=./source_code/docker/database.conf
 
 ```
 

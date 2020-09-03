@@ -150,3 +150,4 @@ An example `.env` file used to pass environment variables (using docker-compose
 - [GitHub issue around could not connect errors](https://github.com/react-community/create-react-native-app/issues/81)
 - [Genymotion emulator](https://www.genymotion.com/)
 - [GIF overlay creator (Nyan Docker)](https://ezgif.com/overlay)
+- React logo from [here](https://seeklogo.com/vector-logo/273845/react)

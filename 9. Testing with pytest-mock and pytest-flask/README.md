@@ -72,7 +72,7 @@ mocker.patch("example.database.get_all", return_value={})
 
 What this bit of code is doing is any time the any of the mocked functions are called, say `init_app` we mock it so it will always return true. We have to give it the "full path" to the function, it's the same as if you had to import the function itself.
 
-```python:title=text_example.py file=./source_code/tests/test_example.py
+```python:title=tests/test_example.py file=./source_code/tests/test_example.py
 
 ```
 

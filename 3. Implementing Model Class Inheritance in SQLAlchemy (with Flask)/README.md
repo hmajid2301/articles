@@ -18,7 +18,7 @@ becomes a column in an SQL table. The database is made up of multiple models. Ju
 can inherit from other models and share attributes with the parent model. This is very useful if you going to
 have models that will store similar types of data.
 
-```python:title=models.py file=./source_code/example/models.py
+```python:title=example/models.py file=./source_code/example/models.py
 
 ```
 
@@ -27,7 +27,7 @@ a table for that model. Our next two models Cats and Dogs inherit all the attrib
 will each have a column called name, price and breed. The main advantage of this is if you ever need to change the
 models you just have to change it in once place. The more models that inherit from the base model.
 
-```python:title=__init__.py file=./source_code/example/__init__.py
+```python:title=example/__init__.py file=./source_code/example/__init__.py
 
 ```
 

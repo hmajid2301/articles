@@ -33,7 +33,7 @@ flask-sqlalchemy==2.3.0
 psycopg2==2.7.6.1
 ```
 
-```python:title=__init__.py file=./source_code/src/example/__init__.py
+```python:title=src/example/__init__.py file=./source_code/src/example/__init__.py
 
 ```
 
@@ -47,7 +47,7 @@ No application found. Either work inside a view function or push an application 
 
 After pushing our context, we link our `db` to the Flask app with the following line `db.init_app(flask_app)`. We then create all of our tables (in the database) if they don't already exist, using `db.create_all()`. The tables are created using the classes defined in `models.py`.
 
-```python:title=config.py file=./source_code/src/example/config.py
+```python:title=src/example/config.py file=./source_code/src/example/config.py
 
 ```
 
@@ -70,7 +70,7 @@ where `postgres` is the Docker container name we are connecting to.
 
 **WARNING:** Make sure these are the same values passed to the Flask app and the Postgres database.
 
-```python:title=models.py file=./source_code/src/example/models.py
+```python:title=src/example/models.py file=./source_code/src/example/models.py
 
 ```
 
@@ -78,7 +78,7 @@ This module defines our classes which then become tables within our database. Fo
 
 The `db` variable is imported from here by the `__init__.py` file, that's how the `db.create_all()` function knows which classes/tables to create in the database.
 
-```python:title=app.py file=./source_code/src/example/app.py
+```python:title=src/example/app.py file=./source_code/src/example/app.py
 
 ```
 
@@ -92,7 +92,7 @@ Then it defines four functions for our four routes for the "RESTful" API:
 
 ## database.py
 
-```python:title=database.py file=./source_code/src/example/database.py
+```python:title=src/example/database.py file=./source_code/src/example/database.py
 
 ```
 

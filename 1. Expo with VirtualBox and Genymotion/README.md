@@ -6,7 +6,7 @@ slug: "react-native-with-virtualbox"
 canonical_url: "https://haseebmajid.dev/blog/react-native-with-virtualbox"
 date: "2018-09-03"
 published: true
-cover_image: "images/cover.png"
+cover_image: "images/cover.jpg"
 ---
 
 My home PC runs Windows for various conveniences, such as gaming. However, for development, I run an Ubuntu virtual

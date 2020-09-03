@@ -3,8 +3,8 @@ title: "How to add your own type definitions to DefinitelyTyped"
 tags: ["javascript", "typescript", "react-native", "expo"]
 license: "public-domain"
 slug: "add-types-to-definitely-typed"
-canonical_url: "https://haseebmajid.dev/blog/add-types-to-definitely-typed"
-cover_image: images/cover.png
+canonical_url: "https://haseebmajid.dev/blog/add-types-to-definitely-typed/"
+cover_image: images/cover.jpg
 date: "2019-04-19"
 published: true
 ---
@@ -43,8 +43,6 @@ add = (x: number, y: number) => {
 };
 ```
 
----
-
 ## Definitely Typed
 
 When using JS libraries not written in TS we need a file which stores the type definitions of functions
@@ -80,8 +78,6 @@ npm install
 npm npx dts-gen --dt --name react-native-canvas --template module
 ```
 
----
-
 ## tsconfig.json
 
 You should now have four auto-generated files, we can leave `tslint.json` as it is. Since this a
@@ -108,8 +104,6 @@ plenty of React Native examples to take a look at. The `tsconfig` now looks like
   "files": ["index.d.ts", "react-native-canvas-tests.tsx"]
 }
 ```
-
----
 
 ## index.d.ts
 
@@ -260,8 +254,6 @@ Again this class is very similar to the classes defined above except some of the
 `closePath: CanvasRenderingContext2D["closePath"]`. This is because `closePath` shares the same definition
 as closePath in `CanvasRenderingContext2D`, which is defined as `closePath: () => void`. So rather than define
 it twice we just copy the definition in `CanvasRenderingContext2D`.
-
----
 
 ## react-native-canvas-tests.jsx
 

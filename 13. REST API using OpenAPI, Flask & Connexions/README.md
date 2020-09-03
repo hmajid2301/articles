@@ -3,13 +3,11 @@ title: "Implementing a Simple REST API using OpenAPI, Flask & Connexions"
 tags: ["flask", "openapi", "python", "connexion"]
 license: "public-domain"
 slug: "rest-api-openapi-flask-connexion"
-canonical_url: "https://haseebmajid.dev/blog/rest-api-openapi-flask-connexion"
+canonical_url: "https://haseebmajid.dev/blog/rest-api-openapi-flask-connexion/"
 cover_image: images/cover.jpg
 date: "2019-08-16"
 published: true
 ---
-
-![We will need to use Swagger.](https://giphy.com/gifs/hqUGOeVeCARiUKavT7/html5)
 
 RESTful APIs are very popular at the moment and Python is a great language to develop
 web APIs with. In this article we will go over a documentation first approach to building APIs.
@@ -23,8 +21,6 @@ One of the main problems you'll find with using openapi is that every time you u
 you have to update your documentation or your openapi yaml/json file. Now what happens if you
 forget? Now your API is different to what's documented which can be a real pain for your users.
 The aim of this approach is that you update your specification file first.
-
----
 
 ## Tools/Libraries
 
@@ -54,8 +50,6 @@ So this article is written using OAS2. However everything in this article should
 to OAS2 and AOS3.
 
 ![Swagger UI](https://synaptiklabs.com/wp-content/uploads/2019/02/javaee-swagger-screen-1.png)
-
----
 
 ## API
 
@@ -103,59 +97,8 @@ Now we have to define our specification. We will be using OAS version 2 because 
 at the moment cannot generate models for flask for OAS version 3. Now I've created a very simple
 specification for an imaginary pet store.
 
-```yaml
-# openapi/specification.yml
-swagger: "2.0"
-info:
-  version: "1.0.0"
-  title: "Pet Store"
-basePath: "/api/v1"
-tags:
-  - name: "pet"
-schemes:
-  - "https"
-consumes:
-  - "application/json"
-produces:
-  - "application/json"
-paths:
-  /pet/{pet_id}:
-    get:
-      tags:
-        - "pet"
-      summary: "Get a pet in the store"
-      operationId: "get_pet"
-      parameters:
-        - name: "pet_id"
-          in: "path"
-          description: "The id of the pet to retrieve"
-          required: true
-          type: "string"
-      responses:
-        200:
-          description: "Successfully retrived pet"
-          schema:
-            $ref: "#/definitions/Pet"
-        404:
-          description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
-    delete:
-      tags:
-        - "pet"
-      summary: "Remove a pet in the store"
-      operationId: "remove_pet"
-      parameters:
-        - name: "pet_id"
-          in: "path"
-          description: "The id of the pet to remove from the store"
-          required: true
-          type: "string"
-      responses:
-        202:
-          description: "Successfully deleted pet"
-        404:
-          description: "Pet doesn't exist"
-      x-swagger-router-controller: "test_api.web.controllers.pets_controller"
+```yaml:title=openapi/specification.yml file=./source_code/test-api/openapi/specification.yml
+
 ```
 
 The specification defines several endpoints for our API. Essentially I've defined one endpoint
@@ -170,8 +113,6 @@ will go to `test_api.web.controllers.pets_controller` and function called `get_p
 so it looks like `test_api.web.controllers.pets_controller:get_pet`. Which means we call the function
 in the folder `src/test_api/web/controllers/pets_controller` we call the `get_pet` function.
 
----
-
 ### Server Stubs
 
 Now we want to generate some server stubs from this specification we can do this by either using the `codegen` tool or
@@ -185,18 +126,12 @@ controller we have 4 functions (named after the `operation_id`).
 We have to make some changes to the codegen generated files. The imports will be wrong when we move the files. We have to change them from
 `swagger_server`. So for example `controllers/pet_controller.py` and `models/pets.py` would become:
 
-```python
-#pet_controller.py
-from ..models.pet import Pet  # noqa: E501
-from ..models.pets import Pets  # noqa: E501
-from .. import util
+```python:title=src/test_api/web/controllers/pets_controller.py file=./source_code/test-api/src/test_api/web/controllers/pets_controller.py
+
 ```
 
-```python
-#pets.py
-from .base_model_ import Model
-from .pet import Pet  # noqa: F401,E501
-from .. import util
+```python:title=src/test_api/core/pets.py file=./source_code/test-api/src/test_api/core/pets.py
+
 ```
 
 In this case I'm using relative imports but you could also use absolute imports. For example `..models.patch_request` would
@@ -212,8 +147,6 @@ adds a nice layer of abstraction, let's say tomorrow you wanted to turn into a c
 and add a cli library such as `click`. This involves minimal code change.
 
 **Note** Some import maybe unnecessary you can use a linter (such as `flask8`) to help you remove them from the `models`.
-
----
 
 ### Core Logic
 
@@ -235,8 +168,6 @@ def add_pet(pet):
 
 ...
 ```
-
----
 
 ### Controllers
 
@@ -270,24 +201,8 @@ we turn the dict that is returned, into a Python object of class `Pet` as per `r
 our OAS. Connexion will handle converting this object into JSON. One other thing we do is if a
 `KeyError` exception was thrown, that must mean we don't have a pet with that id in the pet store. Say we have the following
 
-```json
-{
-  "1": {
-    "name": "ginger",
-    "breed": "bengal",
-    "price": 100
-  },
-  "2": {
-    "name": "sam",
-    "breed": "husky",
-    "price": 10
-  },
-  "3": {
-    "name": "guido",
-    "breed": "python",
-    "price": 518
-  }
-}
+```json:title=src/test-api/core/pets.json file=./source_code/test-api/src/test-api/core/pets.json
+
 ```
 
 If we try to retrieve a pet of id 4, Python will throw a KeyError saying this doesn't exist (when we load
@@ -363,32 +278,13 @@ convert this into JSON so respond back we use the JSON encoder that codegen prov
 for our flask app `flask_app.json_encoder = encoder.JSONEncoder`, usually this is done in the
 app setup (shown below).
 
----
-
 ## Run a Server
 
 Now that we have our code how do we actually start up our web application so we can test it. To do this we will create a file which in turn
 will create our Connexion/Flask app and start the server, called `run.py` inside of our `test_api` folder.
 
-```python
-import os
+```python:title=src/test_api/run.py file=./source_code/test-api/src/test_api/run.py
 
-import connexion
-
-from .web import encoder
-
-
-def create_app():
-    abs_file_path = os.path.abspath(os.path.dirname(__file__))
-    openapi_path = os.path.join(abs_file_path, "../", "../", "openapi")
-    app = connexion.FlaskApp(
-        __name__, specification_dir=openapi_path, options={"swagger_ui": False, "serve_spec": False}
-    )
-    app.add_api("specification.yml", strict_validation=True)
-    flask_app = app.app
-    flask_app.json_encoder = encoder.JSONEncoder
-
-    return flask_app
 ```
 
 You can run the application like a normal flask app from the project root(running from folder where `openapi/` and `src/` exist.)
@@ -411,8 +307,6 @@ pip install -r requirements.txt
 FLASK_APP=./src/test_api/run.py FLASK_DEBUG=1 flask run
 ```
 
----
-
 ## Final Thoughts
 
 So as you can see we've built an web API using Connexion and Flask, where all our code is generated
@@ -420,11 +314,9 @@ based of our OAS. So now we are sure our API documentation is accurate. We've al
 some of the boilerplate using Flask, Connexions handles which functions should be called depending on the
 CRUD (Create Read Update Delete) operation and endpoints defined in the OAS.
 
----
-
 ## Appendix
 
-- [Source Code](https://github.com/hmajid2301/medium/tree/master/13.%20REST%20API%20using%20OpenAPI,%20Flask%20&%20Connexions/source_code)
+- [Source Code](https://gitlab.com/hmajid2301/articles/-/tree/master/13.%20REST%20API%20using%20OpenAPI%2C%20Flask%20%26%20Connexions/source_code/test-api)
 - [OpenAPI](https://swagger.io/docs/specification/about/)
 - [Swagger Codegen](https://github.com/swagger-api/swagger-codegen)
 - [Swagger Editor](https://editor.swagger.io/)

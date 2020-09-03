@@ -95,7 +95,7 @@ Here we define our two colours that will be used as themes, red and blue. I have
 
 ### reducers
 
-```js:title=Theme.js file=./source_code/src/reducers/Theme.js
+```js:title=src/reducers/Theme.js file=./source_code/src/reducers/Theme.js
 
 ```
 
@@ -106,7 +106,7 @@ In this example if the action is `TOGGLE_THEME`, we get the colour name from the
 statement we swap the colours over. So if the current colour is red we update the state (`colorData`) to be
 blue.
 
-```js:title=index.js file=./source_code/src/reducers/index.js
+```js:title=src/reducers/index.js file=./source_code/src/reducers/index.js
 
 ```
 
@@ -122,7 +122,7 @@ export const TOGGLE_THEME = "TOGGLE_THEME";
 This file defines all the actions we can dispatch to our store. In this example, we only need one action to
 toggle our theme.
 
-```js:title=index.js file=./source_code/src/actions/index.js
+```js:title=src/actions/index.js file=./source_code/src/actions/index.js
 
 ```
 
@@ -131,7 +131,7 @@ theme as input and passes it as our payload, hence to access the name of the col
 
 ### store
 
-```js:title=index.js file=./source_code/src/store/index.js
+```js:title=src/store/index.js file=./source_code/src/store/index.js
 
 ```
 
@@ -148,7 +148,7 @@ set the store props to our `store/index.js` file. The `<CustomTabNavigator>` con
 
 ### components
 
-```js:title=CustomTabNavigator.js file=./source_code/src/components/CustomTabNavigator.js
+```js:title=src/components/CustomTabNavigator.js file=./source_code/src/components/CustomTabNavigator.js
 
 ```
 
@@ -183,7 +183,7 @@ const commonTabOptions = (color) => ({
 tabBarOptions: commonTabOptions(COLORS.red.hexCode);
 ```
 
-```js:title=ToggleTheme.js file=./source_code/src/components/ToggleTheme.js
+```js:title=src/components/ToggleTheme.js file=./source_code/src/components/ToggleTheme.js
 
 ```
 
@@ -219,7 +219,7 @@ button is pressed it will dispatch an action to toggle the theme.
 
 ### PageA
 
-```jsx:title=PageA.js file=./source_code/src/screens/PageA.js
+```jsx:title=src/screens/PageA.js file=./source_code/src/screens/PageA.js
 
 ```
 
