@@ -72,7 +72,7 @@ Home: {
 After we've defined our three pages we then define a custom Drawer Navigator `contentComponent: CustomDrawerNavigator`.
 This is a component we make ourselves and can style it however we wish.
 
-```jsx:title=src/components/CustomerDrawerNavigator/CustomDrawerNavigator.js file=./source_code/src/components/CustomerDrawerNavigator/CustomDrawerNavigator.js
+```jsx:title=src/components/CustomerDrawerNavigator/CustomDrawerNavigator.js file=./source_code/src/components/CustomDrawerNavigator/CustomDrawerNavigator.js
 
 ```
 
