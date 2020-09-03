@@ -201,7 +201,7 @@ we turn the dict that is returned, into a Python object of class `Pet` as per `r
 our OAS. Connexion will handle converting this object into JSON. One other thing we do is if a
 `KeyError` exception was thrown, that must mean we don't have a pet with that id in the pet store. Say we have the following
 
-```json:title=src/test-api/core/pets.json file=./source_code/test-api/src/test-api/core/pets.json
+```json:title=src/test-api/core/pets.json file=./source_code/test-api/src/test_api/core/pets.json
 
 ```
 

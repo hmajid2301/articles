@@ -7,6 +7,7 @@ canonical_url: "https://haseebmajid.dev/blog/auto-publish-react-native-to-androi
 cover_image: images/cover.jpg
 date: "2019-10-09"
 published: true
+file_path: 15. Auto Publish App to Android Play Store/README.md
 ---
 
 In this article, I will show you how can automate the publishing of your AAB/APK to the `Google Play Console`.
