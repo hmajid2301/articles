@@ -3,7 +3,7 @@ title: "Using Tox with a Makefile to Automate Python related tasks"
 tags: ["python", "tox", "makefile", "automation"]
 license: "public-domain"
 slug: "using-tox-and-makefile-automation"
-canonical_url: "https://haseebmajid.dev/blog/using-tox-and-makefile-automation"
+canonical_url: "https://haseebmajid.dev/blog/using-tox-and-makefile-automation/"
 date: "2020-01-13"
 published: true
 cover_image: "images/cover.jpg"
@@ -11,8 +11,6 @@ cover_image: "images/cover.jpg"
 
 In this article, we will go over how we can use a makefile and tox to automate various Python related command line (CLI) tools.
 This article assumes you are running bash (or equivalent).
-
----
 
 ## Tox
 
@@ -83,8 +81,6 @@ both. So if we wanted to run pytest against python3.6 we could do it like so `to
 - [Bumpversion](https://github.com/peritus/bumpversion)
 - [Twine](https://github.com/pypa/twine)
 
----
-
 ## Makefile
 
 Makefiles are often used in C/C++ programs to compile the code/generate binaries etc. Used to automate (often long-winded) tasks.
@@ -126,8 +122,6 @@ clean:
 
 That's is a simple introduction how you can use a `Makefile` and `Tox` in conjunction to automate various
 tedious tasks.
-
----
 
 ## Appendix
 

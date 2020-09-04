@@ -3,7 +3,7 @@ title: "Auto Toggle Dark Theme on your React Native Application"
 tags: ["react-native", "react"]
 license: "public-domain"
 slug: "auto-toggle-dark-mode-react-native"
-canonical_url: "https://haseebmajid.dev/blog/auto-toggle-dark-mode-react-native"
+canonical_url: "https://haseebmajid.dev/blog/auto-toggle-dark-mode-react-native/"
 date: "2020-01-25"
 published: true
 cover_image: "images/cover.jpg"
@@ -20,11 +20,9 @@ To get started we will create a new React Native app by running the following co
 - [Source Code](https://gitlab.com/hmajid2301/medium/tree/master/19.%20Theme%20your%20React%20Native%20app/ExampleApp)
 
 _Note_: We are using path aliases so `~` is the same as saying `src/`, this keeps the
-import paths cleaner. More information [here](https://medium.com/analytics-vidhya/better-imports-with-typescript-aliases-babel-and-tspath-5c3addc7bc9e) #ShamelessPlug.
+import paths cleaner. More information [here](/blog/better-imports-with-babel-tspath/) #ShamelessPlug.
 
----
-
-### AutoTheme.tsx
+### Auto Theme
 
 First, let's create the module which will contain the core logic for this app.
 This module will be used to determine if we should toggle the dark theme on or off.
@@ -39,7 +37,7 @@ use those and replace the old values with these new values.
 
 The AutoTheme is a class, let's take a look at the main function of the class
 
-```typescript
+```ts:title=src/actions/AutoTheme.tsx
 export default class AutoTheme {
   private static oneDay = 24 * 60 * 60 * 1000;
 
@@ -83,7 +81,7 @@ Sometimes with the sunset-sunrise library, it will show you the sunrise for the 
 If this is the case we simply remove a day from the sunrise date, so we're always
 comparing the sunrise/sunset and current time on the same day.
 
-```typescript
+```ts:title=src/actions/AutoTheme.tsx
   private async getSunriseAndSunsetTime(currentTime: Date) {
     const {latitude, longitude} = await this.getLatitudeLongitude();
     let sunrise = getSunrise(latitude, longitude, currentTime);
@@ -100,7 +98,7 @@ As stated above we get the latitude-longitude data either from local storage (as
 or we get completely new latitude-longitude data from the users's current location.
 We check if the stored location is older than a day and if it is we get the user's current location.
 
-```typescript
+```ts:title=src/actions/AutoTheme.tsx
   private async getLatitudeLongitude() {
     const currentDate = new Date(Date.now());
     const lastQueried = await AsyncStorage.getItem('@LastQueriedLocation');
@@ -129,7 +127,7 @@ The final function is used to get the user's current location (latitude and long
 current location in local storage (async storage), alongside the current date. This date is used to check
 later on if we need to get the user's location again.
 
-```typescript
+```ts:title=src/actions/AutoTheme.tsx
   private async getNewLatitudeLongitude(currentDate: Date) {
     let latitude;
     let longitude;
@@ -175,9 +173,7 @@ later on if we need to get the user's location again.
   }
 ```
 
----
-
-### ThemeContext.tsx
+### Theme Context
 
 Next, let's take a look at the module in charge of actually changing our theme and storing the current
 theme (used by the other components). We will use React's Context, React Contexts can be used to store the
@@ -190,7 +186,7 @@ In our case, we don't want to have to pass the Theme to every component as a pro
 context. Firstly, we define some types that will be used in our React context file, such as the light and
 dark theme constants.
 
-```typescript
+```ts:title=src/providers/ThemeContext.tsx
 import React, { Context, createContext, useState } from "react";
 
 type ThemeColors = "#17212D" | "#FFF";
@@ -228,7 +224,7 @@ and consumer (`ThemeContext.Provider`);
 _Note_: We will not use the consumer part in our app because we are accessing the value
 in other ways (React hooks).
 
-```typescript
+```ts:title=src/providers/ThemeContext.tsx
 const ThemeContext: Context<IThemeContext> = createContext({
   changeTheme: (_: boolean) => {
     return;
@@ -239,7 +235,7 @@ const ThemeContext: Context<IThemeContext> = createContext({
 
 Now let's define our provider.
 
-```tsx
+```tsx:title=src/providers/ThemeContext.tsx
 const ThemeProvider: React.FC = ({ children }) => {
   const [themeState, setTheme] = useState({
     theme: LIGHT_THEME,
@@ -268,7 +264,7 @@ The `useState` function is a React hook, which returns the current state `themeS
 to change the state `setTheme`, in this case, we can pass theme (light theme as default) so that the state
 can only be a theme object, cannot change it to say 0.
 
-```tsx
+```tsx:title=src/providers/ThemeContext.tsx
 const [themeState, setTheme] = useState({
   theme: LIGHT_THEME,
 });
@@ -277,7 +273,7 @@ const [themeState, setTheme] = useState({
 Then we define the function that can change our theme, if `isDark` is `true` then the
 theme becomes dark else it becomes light.
 
-```tsx
+```tsx:title=src/providers/ThemeContext.tsx
 const changeTheme = (isDark: boolean) => {
   setTheme({
     theme: isDark ? DARK_THEME : LIGHT_THEME,
@@ -289,7 +285,7 @@ Finally, we define the actual component for theme provider, it takes in any Reac
 surronded by the provider can access/change the app theme.
 We need to give the provider a function to change the value and the value itself.
 
-```tsx
+```tsx:title=src/providers/ThemeContext.tsx
 return (
   <ThemeContext.Provider
     value={{
@@ -302,13 +298,11 @@ return (
 );
 ```
 
----
-
-### App.tsx
+### App
 
 We use our provider in the main function
 
-```tsx
+```tsx:title=App.tsx
 import React from "react";
 
 import { ThemeProvider } from "~/providers/ThemeContext";
@@ -325,16 +319,14 @@ export default class App extends React.Component<{}, {}> {
 }
 ```
 
----
-
-### MainApp.tsx
+### Main App
 
 Now we have the logic to determine if we should change to a dark theme, depending on the time of day.
 But how/when do we call this auto theme module, well this is done through the `MainApp.tsx` module.
 Below is a very simple page, with a logo (that changes depending on the theme) a switch
 to turn on auto-theme and the current theme displayed i.e. light or dark.
 
-```tsx
+```tsx:title=src/MainApp.tsx
   // Access Theme context within this React class.
   public static contextType = ThemeContext;
   public context!: React.ContextType<typeof ThemeContext>;
@@ -384,7 +376,7 @@ The theme is changed using the line `this.context.changeTheme(isDark);` essentia
 We can then do something like `this.context.theme.color` to get the current colour or
 `this.context.theme.background` to get the background colour the app should be using.
 
-```typescript
+```tsx:title=src/MainApp.tsx
   // Called when the switch is toggled
   private autoTheme = async (value: boolean) => {
     this.setState({autoTheme: value});
@@ -406,7 +398,7 @@ sunsets at 7.0 2PM and you foreground the app at 7.04 PM then when the user retu
 `this.context.changeTheme(true)` will be called like this (true) and then the values
 returned by `this.context.theme` would change to the dark theme.
 
-```typescript
+```tsx:title=src/MainApp.tsx
 import {..., AppState} from 'react-native';
 
   public async componentDidMount() {
@@ -425,9 +417,7 @@ import {..., AppState} from 'react-native';
   };
 ```
 
----
-
-### Header.tsx
+### Header
 
 We have a single component in the MainApp page, which is a header, the header
 will change logos depending on what the current theme is (again using context).
@@ -441,7 +431,7 @@ The context allows us have a global state throughout our app and
 the hooks allow us to access this state without needing to turn our components into a class.
 Though as you have seen we can also access the context within our React classes.
 
-```tsx
+```tsx:title=src/components/Header.tsx
 import { Header as ElementsHeader } from "react-native-elements";
 
 import logoDark from "~/assets/images/logo-dark.png";
@@ -469,13 +459,11 @@ const Header = () => {
 };
 ```
 
----
-
 ## Run the app
 
 ```bash
-git clone git@gitlab.com:hmajid2301/medium.git
-cd "medium/19. Theme your React Native app/ExampleApp"
+git clone git@gitlab.com:hmajid2301/articles.git
+cd "articles/19. Theme your React Native app/ExampleApp"
 yarn
 yarn run start
 
@@ -483,15 +471,11 @@ yarn run start
 yarn run android
 ```
 
----
-
 ## Example App
 
 Here is a GIF of the app running.
 
 ![Demo App](images/demo.gif)
-
----
 
 ## Appendix
 

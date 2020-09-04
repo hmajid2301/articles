@@ -299,8 +299,8 @@ Related to this article there is an example project which you can take a look at
 Voila we have built a Flask web service with Connexion and OpenAPI.
 
 ```bash
-git clone https://gitlab.com/hmajid2301/medium.git
-cd medium/13.\ REST\ API\ using\ OpenAPI\,\ Flask\ \&\ Connexions/source_code/test-api
+git clone https://gitlab.com/hmajid2301/articles.git
+cd articles/13.\ REST\ API\ using\ OpenAPI\,\ Flask\ \&\ Connexions/source_code/test-api
 virtualenv .venv
 source .venv/bin/activate
 pip install -r requirements.txt

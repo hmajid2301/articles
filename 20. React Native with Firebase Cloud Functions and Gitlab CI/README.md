@@ -3,7 +3,7 @@ title: "React Native with Firebase Cloud Functions and Gitlab CI"
 tags: ["react-native", "react", "firebase", "gitlab"]
 license: "public-domain"
 slug: "react-native-firebase-functions-and-gitlab-ci"
-canonical_url: "https://haseebmajid.dev/blog/react-native-firebase-functions-and-gitlab-ci"
+canonical_url: "https://haseebmajid.dev/blog/react-native-firebase-functions-and-gitlab-ci/"
 date: "2020-02-22"
 published: true
 cover_image: "images/cover.jpg"
@@ -36,7 +36,7 @@ Let's now take a look at a simple app we will deploy to Firebase Cloud Functions
 
 Our project structure will look something like this:
 
-```
+```text
 ├── firebase.json
 ├── .firebaserc
 ├── functions
@@ -52,35 +52,27 @@ Our project structure will look something like this:
 
 This setup will look very similar to the tutorial [available here](https://firebase.google.com/docs/functions/get-started).
 
-### .firebaserc
+![Firebase Pizza](images/firebase.gif)
+
+### Firebase Misc Files
 
 This file contains some configuration options but for most projects, it will just contain the project name
 (the one we want to publish our changes to on Firebase, as we could be working on multiple projects).
 
-```json
-{
-  "projects": {
-    "default": "ExampleProject"
-  }
-}
-```
+```json:title=firebase/.firebaserc file=./source_code/firebase/.firebaserc
 
-### firebase.json
+```
 
 This file is important as it defines the actions that will happen before we deploy a new version
 of the cloud functions. In this case, we run `yarn run build`, within the `functions` folder.
 It compiles our TypeScript (TS) into regular JavaScript (JS) so that it can be run
 as a cloud function. You could do various other actions such as lint your code etc.
 
-```json
-{
-  "functions": {
-    "predeploy": ["yarn --cwd \"$RESOURCE_DIR\" run build"]
-  }
-}
+```json:title=firebase/firebase.json file=./source_code/firebase/firebase.json
+
 ```
 
-### .gitlab-ci.yaml
+### Gitlab CI
 
 Now you're probably wondering how do we get our Cloud Functions from our dev machine (computer) to the Firebase servers.
 We run the `deploy` script command. Now we could do this every time we make a change, however, I prefer to automate this process.
@@ -97,20 +89,8 @@ CI to do this run `yarn firebase login:ci`. Then log in to your Firebase account
 This now means you can access the token within the Gitlab CI as an environment variable,
 and it will allow us to authenticate with Firebase and push changes to Firebase.
 
-```yaml
-image: node:8
+```yaml:title=firebase/.gitlab-ci.yml file=./source_code/firebase/.gitlab-ci.yml
 
-stages:
-  - publish
-
-publish:firebase:functions:
-  stage: publish
-  only:
-    - master
-  script:
-    - cd functions
-    - yarn
-    - yarn run deploy -m "Pipeline $CI_PIPELINE_ID, build $CI_BUILD_ID" --non-interactive --token $FIREBASE_DEPLOY_TOKEN
 ```
 
 The CI file we've defined means every time we commit onto the master branch it will trigger
@@ -130,13 +110,11 @@ run the `predeploy` commands, which will transpile our code from TS -> JS.
 
 This folder contains our (Express) web service, i.e. it has our actual code.
 
-#### package.json
-
 The `package.json` file is used to install all of our dependencies inside the serverless environment.
 It also defines the `build` script that will be used in the pre-deploy process before the code
 is deployed to Firebase.
 
-```json
+```json:title=firebase/functions/package.json
 {
   ...
   "main": "lib/index.js",
@@ -156,7 +134,7 @@ is `lib/index.js`. The lib folder is created because we specify the `outDir` to 
 The Firebase Cloud Functions by default uses NodeJS (as stated above this can be changed in the GCP GUI) to run
 our Firebase Cloud Functions, hence our code needs to be compiled to JS from TS before we deploy it.
 
-```json
+```json:title=firebase/functions/tsconfig.json
 {
   "compilerOptions": {
     ...
@@ -168,41 +146,13 @@ our Firebase Cloud Functions, hence our code needs to be compiled to JS from TS 
 
 Now let's take a look at the "business" logic of the application.
 
-#### index.ts
-
 This file contains all the core logic for our web service. Here we define
 two endpoints called `hello` and `bye`. As stated earlier this will be the entry point
 into our application. This is the file that will set up and start are Express server/web service within the
 Firebase Cloud environment.
 
-```jsx
-import express from "express";
-import { initializeApp } from "firebase-admin";
-import { https } from "firebase-functions";
+```ts:title=firebase/functions/index.ts file=./source_code/firebase/functions/index.ts
 
-import { ValidateToken } from "./middleware";
-
-initializeApp();
-const app = express();
-
-app.use(express.json());
-app.use(ValidateToken);
-
-app.post("/hello", hello);
-app.post("/bye", bye);
-export const api = https.onRequest(app);
-
-function hello(request: express.Request, response: express.Response) {
-  const body = request.body;
-  const name = body.name;
-  response.status(200).json({ hello: `Hello ${name}` });
-}
-
-function bye(request: express.Request, response: express.Response) {
-  const body = request.body;
-  const name = body.name;
-  response.status(200).json({ bye: `Bye ${name}` });
-}
 ```
 
 Breaking down the file first, we set up our web service. We tell it to use the JSON
@@ -226,7 +176,7 @@ We split out `hello` and `bye` into separate functions as it's a bit easier to r
 we could also split this out into separate files if the logic gets more complicated,
 but in this example, it's simple enough to leave it all in this single file.
 
-```js
+```ts:title=firebase/functions/index.ts
 app.post("/hello", hello);
 app.post("/bye", bye);
 
@@ -260,37 +210,8 @@ own auth component.
 
 ##### ValidateToken.ts
 
-```jsx
-import * as express from "express";
-import { auth } from "firebase-admin";
+```tsx:title=firebase/functions/middleware/ValidateToken.ts file=./source_code/firebase/functions/middleware/ValidateToken.ts
 
-const ValidateToken = (
-  request: express.Request,
-  response: express.Response,
-  next: express.NextFunction
-) => {
-  let token;
-  if (
-    request.headers.authorization &&
-    request.headers.authorization.startsWith("Bearer ")
-  ) {
-    token = request.headers.authorization.split("Bearer ")[1];
-  } else {
-    response.status(403).json({ code: "unauthorized" });
-    return;
-  }
-
-  auth()
-    .verifyIdToken(token)
-    .then(() => {
-      return next();
-    })
-    .catch(() => {
-      response.status(403).json({ code: "unauthorized" });
-    });
-};
-
-export default ValidateToken;
 ```
 
 Breaking down the file, first we check if the request header contains the `Authorization` parameter
@@ -298,7 +219,7 @@ and that parameter has a form similar to
 [`Bearer $TOKEN`](https://swagger.io/docs/specification/authentication/bearer-authentication/).
 If not, we return a `403` [HTTP error](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status).
 
-```jsx
+```tsx:title=firebase/functions/middleware/ValidateToken.ts
 if (
   request.headers.authorization &&
   request.headers.authorization.startsWith("Bearer ")
@@ -312,7 +233,7 @@ if (
 
 Then we use Firebase admin to verify if the token is valid. If so, we pass the request on with the `next()` function.
 
-```jsx
+```tsx:title=firebase/functions/middleware/ValidateToken.ts
 auth()
   .verifyIdToken(token)
   .then(() => {
@@ -323,14 +244,10 @@ auth()
   });
 ```
 
-##### index.ts
-
 Finally we have an `index.ts` to make for cleaner import/export.
 
-```jsx
-import ValidateToken from "./ValidateToken";
+```tsx:title=firebase/functions/middleware/index.ts file=./source_code/firebase/functions/middleware/index.ts
 
-export { ValidateToken };
 ```
 
 ## React Native
@@ -344,7 +261,7 @@ I created a new app using the following command:
 
 This is the project structure of our React Native app:
 
-```
+```text
 .
 └── ExampleApp
     ├── android
@@ -371,53 +288,15 @@ This is the project structure of our React Native app:
     └── yarn.lock
 ```
 
-### App.tsx
-
 This file contains most of our logic:
 
-```jsx
-import { ApiResponse, create } from "apisauce";
-import React from "react";
-import { Button } from "react-native";
-import { firebase } from "@react-native-firebase/auth";
+```tsx:title=react_native/ExampleApp/App.tsx file=./source_code/react_native/ExampleApp/App.tsx
 
-const App = () => (
-  <Button title="Make Request" onPress={() => makeRequest()}></Button>
-);
-
-async function makeRequest() {
-  const userCredentials = await firebase.auth().signInAnonymously();
-  const token = await userCredentials.user.getIdToken();
-
-  const api = create({
-    baseURL: "https://us-central1-exampleapp.cloudfunctions.net",
-    headers: { Authorization: `Bearer ${token}` },
-    timeout: 10000,
-  });
-
-  try {
-    let response: ApiResponse<{ hello: string }>;
-    response = await api.post("/hello", {
-      name: "Haseeb",
-    });
-
-    const { data, ok, status } = response;
-    if (ok) {
-      console.log("Success", status, data);
-    } else {
-      console.log("error", status);
-    }
-  } catch {
-    console.log("Error thrown");
-  }
-}
-
-export default App;
 ```
 
 The main page will have a single button which when pressed will make a request to our Firebase Cloud Functions.
 
-```jsx
+```tsx:title=react_native/ExampleApp/App.tsx
 const App = () => (
   <Button title="Make Request" onPress={() => makeRequest()}></Button>
 );
@@ -430,7 +309,7 @@ if you set up the authentication middleware in the firebase functions. You can u
 started with the library.
 The following allows any user of our app to get a token we can send with our HTTP request.
 
-```jsx
+```tsx:title=react_native/ExampleApp/App.tsx
 const userCredentials = await firebase.auth().signInAnonymously();
 const token = await userCredentials.user.getIdToken();
 ```
@@ -439,7 +318,7 @@ We use `apisauce` to make HTTP requests, but first we must "create" an API objec
 
 **NOTE**: Remember to replace `baseURL` with your URL.
 
-```jsx
+```tsx:title=react_native/ExampleApp/App.tsx
 const api = create({
   baseURL: "https://us-central1-exampleapp.cloudfunctions.net",
   headers: { Authorization: `Bearer ${token}` },
@@ -455,7 +334,7 @@ useful than that but this is just a simple example.
 All of this code is all surrounded by a try catch so if a reject promise is returned, it will be
 captured by the `catch`.
 
-```jsx
+```tsx:title=react_native/ExampleApp/App.tsx
 const response: ApiResponse<{ hello: string }> = await api.post("/hello", {
   name: "Haseeb",
 });

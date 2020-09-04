@@ -2,19 +2,17 @@
 title: "Add adaptive icons to your Android app"
 tags: ["react-native", "android"]
 license: "public-domain"
-slug: "auto-publish-react-native-to-android-store-with-gitlab-ci"
-canonical_url: "https://haseebmajid.dev/blog/auto-publish-react-native-to-android-store-with-gitlab-ci"
+slug: "add-adaptive-android-icons"
+canonical_url: "https://haseebmajid.dev/blog/add-adaptive-android-icons/"
 date: "2019-11-09"
 published: true
-cover_image: "images/cover.png"
+cover_image: "images/cover.jpg"
 ---
 
 In this article, we will go over how you can use add the "new" adaptive app icons to your Android app.
 In his article I will be using a React Native project, so the structure of your Android app may vary.
 
 ![Mask](https://developer.android.com/guide/practices/ui_guidelines/images/NB_Icon_Mask_Shapes_Ext_02.gif)
-
----
 
 ## Adaptive Icons
 
@@ -43,7 +41,7 @@ You can find the new files in `android/app/src/main/res` sub-folders
 ### Test
 
 You can test it works, if you're using the example source code found
-[here](https://github.com/hmajid2301/medium/tree/master/16.%20Add%20Adaptive%20Icons%20to%20your%20Android%20App).
+[here](https://gitlab.com/hmajid2301/articles/-/tree/master/16.%20Add%20Adaptive%20Icons%20to%20your%20Android%20App/source_code/adaptive_icons).
 
 Run the following commands
 
@@ -58,10 +56,8 @@ Then you should see something like the image below instead of the default green 
 
 ![New Icon](images/cover.png)
 
----
-
 ## Appendix
 
-- [Example source code](https://github.com/hmajid2301/medium/tree/master/16.%20Add%20Adaptive%20Icons%20to%20your%20Android%20App)
+- [Example source code](https://gitlab.com/hmajid2301/articles/-/tree/master/16.%20Add%20Adaptive%20Icons%20to%20your%20Android%20App/source_code/adaptive_icons)
 - [Android Asset Studio](https://romannurik.github.io/AndroidAssetStudio/index.html)
 - [Cover Photo from UpLabs](https://www.uplabs.com/posts/adaptive-icons-for-android-o)

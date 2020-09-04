@@ -3,7 +3,7 @@ title: "Better Imports with Typescript Aliases, Babel and TSPath"
 tags: ["typescript", "javascript", "programming"]
 license: "public-domain"
 slug: "better-imports-with-babel-tspath"
-canonical_url: "https://haseebmajid.dev/blog/better-imports-with-babel-tspath"
+canonical_url: "https://haseebmajid.dev/blog/better-imports-with-babel-tspath/"
 date: "2019-12-01"
 published: true
 cover_image: "images/cover.jpg"
@@ -14,7 +14,7 @@ If you have been using TypeScript/JavaScript (TS/JS) and have a nested folder st
 you may well be used to seeing imports like so (using es6 style imports). This is sometimes
 referred to as **path hell** and is a very common occurrence as your project grows in size.
 
-```javascript
+```js
 import moduleA from "../../../moduleA";
 import moduleB from "../moduleB";
 ```
@@ -23,8 +23,6 @@ These are called relative imports, as we are importing modules using paths relat
 to our current module/file. As you can see, they can sometimes be very ugly and hard to work out
 where the module is we are importing. So sometimes you will use the wrong number of "../" etc.
 There are a few tools we can use to help solve our problem.
-
----
 
 ## Structure
 
@@ -61,8 +59,6 @@ In the examples below let's assume we have a structure which looks something lik
 └── yarn.lock
 ```
 
----
-
 ## TypeScript Aliases
 
 In TS there is an option we can set in our config file `tsconfig.json`, referred to as TS aliases.
@@ -70,7 +66,7 @@ Let's take a look at an example to see what it can do. Let's say we're in the `H
 to import Logo at the moment we would do something like (in this case index.ts, exports the Logo hence
 we don't have to go `../components/Logo/Logo`.)
 
-```javascript
+```js
 // without TS aliases
 import Logo from "../components/Logo";
 
@@ -100,8 +96,6 @@ add the following two options
 The baseUrl means we use the root directory (the directory where `tsconfig.json` is), and look for the `src` folder in the
 same directory.
 
----
-
 ## Babel Module Resolver
 
 Now if you start to use `~` in your imports, you shouldn't see TS raise any issues/problems. However, if you
@@ -126,7 +120,7 @@ You can also place your configuration in the `package.json` file using the `babe
 
 If your configuration file is a JS file (ends in `.js`)
 
-```javascript
+```js
 module.exports = {
   ...
   plugins: [
@@ -162,8 +156,6 @@ If your configuration file is a JSON file.
 
 The module resolver will now automatically be run every time Babel is run. If you're using React Native,
 this is already done for us.
-
----
 
 ## TSPath
 
@@ -216,8 +208,6 @@ Then in our tests we can do the following, to import our dependencies
 import AboutList from "~/components/AboutList";
 import { about } from "~/data";
 ```
-
----
 
 ## Appendix
 
