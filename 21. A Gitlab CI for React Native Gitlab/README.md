@@ -3,13 +3,11 @@ title: "A Gitlab CI file for React Native Apps"
 tags: ["react-native", "gitlab", "ci"]
 published: true
 slug: "gitlab-ci-for-react-native"
-canonical_url: "https://haseebmajid.dev/blog/gitlab-ci-for-react-native"
+canonical_url: "https://haseebmajid.dev/blog/gitlab-ci-for-react-native/"
 date: "2020-02-23"
 license: "public-domain"
-cover_image: images/cover_image.png
+cover_image: images/cover_image.jpg
 ---
-
-> Info: Cover image from https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png
 
 A bit of backstory when I first started developing React Native applications (apps), I found there weren't
 any good example of Gitlab CI files. So in this article, I will show you an example `.gitlab-ci.yml`
@@ -122,9 +120,7 @@ Finally, we define `before_script` which will run before every job unless we spe
 using `yarn` and create a `.env` file, we need the `.env` file for a few our the jobs.
 The `.env` file is used by React Native to set configuration within the app.
 
-```json
-// package.json
-
+```json:title=package.json
 {
   "name": "stegappasaurus",
   "scripts": {
@@ -136,9 +132,7 @@ The `.env` file is used by React Native to set configuration within the app.
 Where `BUGSNAG_API_KEY` and `CAT_API_KEY` are environment variables which are injected by
 Gitlab [more information here](https://docs.gitlab.com/ee/ci/variables/).
 
-```bash
-# util/generate-dotenv.sh
-
+```bash:title=util/generate-dotenv.sh
 #!/usr/bin/env bash
 
 cat  << EOF
@@ -206,9 +200,7 @@ create:merge-request:
 
 Where the template could look something like this.
 
-```markdown
-<!-- merge_request.md -->
-
+```markdown:title=.gitlab/merge_request_templates/merge_request.md
 # Description
 
 <!-- please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->
@@ -318,7 +310,7 @@ there is a license view within my application which lists all of the main depend
 I then generate a `gradle.propeties` file using `sh util/generate-gradle-properties.sh > android/gradle.properties`.
 Very similar to the `.env` the script we looked at above. Where the file looks something like:
 
-```bash
+```bash:title=util/generate-gradle-properties.sh
 #!/usr/bin/env bash
 
 cat  << EOF
@@ -336,7 +328,7 @@ This means we can reference the variables for the keystore within our `build.gra
 the values and once again this file is generated from CI variables stored on the project itself. For example the
 `app/build.gradle` I have the following defined.
 
-```groovy
+```groovy:title=android/app/build.gradle
 android {
     signingConfigs {
         release {
@@ -354,7 +346,7 @@ android {
 We then publish the application using `publish-package` script which runs `yarn run bundle && bash util/publish-package.sh`.
 Where `publish-package.sh` looks like
 
-```bash
+```bash:title=util/publish-package.sh
 #!/usr/bin/env bash
 
 echo $CI_COMMIT_TAG
@@ -489,3 +481,4 @@ your React Native projects.
 ## Appendix
 
 - [Example Project](https://gitlab.com/hmajid2301/stegappasaurus)
+- [Cover image](https://about.gitlab.com/images/ci/ci-cd-test-deploy-illustration_2x.png)

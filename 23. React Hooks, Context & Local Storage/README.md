@@ -9,13 +9,13 @@ published: true
 cover_image: "images/cover.jpg"
 ---
 
-> Photo by Cristian Palmer on Unsplash
-
 In this article, I will show how you can use React Context with React Hooks to store global state across a React app,
 then store that state in local storage. This can be used for example to store light vs dark theme, then whenever the
 user visits your website again they will have the same theme they last selected. Which leads to an improved experience.
 
 ## Structure
+
+> Note: We will be using typescript
 
 We will use a project structure like so:
 
@@ -34,15 +34,13 @@ We will use a project structure like so:
 └── yarn.lock
 ```
 
-> Note: We will be using typescript
-
 > Note: This application was based on [saltyshiomix's template](https://github.com/saltyshiomix/webpack-typescript-react-starter)
 
 ## Getting Started
 
 Our `package.json` file looks like this:
 
-```json
+```json:title=package.json
 {
   "name": "ExampleApp",
   "version": "1.0.0",
@@ -85,41 +83,15 @@ First, let's create our React context that will store the current theme the user
 give us a function that other components can use to update the theme. Finally, after any change has been made
 it will update the local storage with the users latest settings.
 
-```tsx
-import React, { Context, createContext, useReducer, useEffect } from "react";
+```tsx:title=./src/providers/DarkModeProvider.tsx file=./source_code/providers/DarkModeProvider.tsx
 
-export const LIGHT_THEME: Theme = {
-  background: "#fafafa" as BackgroundColors,
-  color: "#000000" as ForegroundColors,
-  isDark: false,
-};
-
-export const DARK_THEME: Theme = {
-  background: "#333333" as BackgroundColors,
-  color: "#fafafa" as ForegroundColors,
-  isDark: true,
-};
-
-export type BackgroundColors = "#333333" | "#fafafa";
-export type ForegroundColors = "#000000" | "#fafafa";
-
-export interface Theme {
-  background: BackgroundColors;
-  color: ForegroundColors;
-  isDark: boolean;
-}
-
-interface DarkModeContext {
-  mode: Theme;
-  dispatch: React.Dispatch<any>;
-}
 ```
 
 Next, we will import all of the modules we will need to use then. We will define our two different themes `LIGHT_THEME`
 and `DARK_THEME`. Then finally because we are using Typescript we will define types for the Themes and the context we
 will use.
 
-```tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx
 const darkModeReducer = (_: any, isDark: boolean) =>
   isDark ? DARK_THEME : LIGHT_THEME;
 ```
@@ -129,7 +101,7 @@ current app so it cannot have any unintended side-effects. Exactly the same func
 would define if we were using Redux. In this case, the reducer just returns the `DARK_THEME`
 if the `isDark` argument is `true` else it returns the `LIGHT_THEME`.
 
-```tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx
 const DarkModeContext: Context<DarkModeContext> = createContext(
   {} as DarkModeContext
 );
@@ -142,7 +114,7 @@ After this, we create our React context called `DarkModeContext` and we give it 
 (we don't really mind too much). We then define the default value. It tries to check the value
 stored in `localstorage`. If there is none, then we use the `LIGHT_THEME`. After which we define the provider.
 
-```tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx
 const DarkModeProvider: React.FC = ({ children }) => {
   const [mode, dispatch] = useReducer(darkModeReducer, initialState);
 
@@ -170,7 +142,7 @@ we use the `useReducer` hook and give it our `darkModeReducer` with the initial 
 reducer will then return a `mode` which is the current theme data and a function `dispatch`
 which will be used to update the current theme. Breaking it down a bit further we see:
 
-```tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx
 useEffect(() => {
   localStorage.setItem("DarkMode", JSON.stringify(mode));
 }, [mode]);
@@ -182,7 +154,7 @@ stores the current theme into the user's local storage under the key `DarkMode`.
 this was changed from light -> dark and then the user comes back to the site, the initial value
 we would get from `localstorage.getItem("DarkMode")` would not, of course, be the dark theme.
 
-```tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx
 return (
   <DarkModeContext.Provider
     value={{
@@ -202,7 +174,7 @@ Finally, we create the Provider component we will export, the `mode` is the them
 components can use and `dispatch` is the function other components can use to change the current
 theme. As long as they are a child of the `DarkModeProvider` hence the `{children}` which will be a prop.
 
-### App.tsx
+### App
 
 Our "Main" app page we will import the Provider that will export from our providers folder.
 This means any component that is a child of this will be able to access and update the current
@@ -210,7 +182,7 @@ theme, we will see how to do that later on.
 
 > Warning: The provider needs to be in a separate component to those that access the React Hook. Hence we import the `MainApp` component rather than including all of the `MainApp.tsx` in `App.tsx`.
 
-```tsx
+```tsx:title=src/App.tsx file=./source_code/src/App.tsx
 import React from "react";
 
 import { DarkModeProvider } from "~/providers/DarkModeProvider";
@@ -227,43 +199,14 @@ const App = () => {
 export default App;
 ```
 
-> Note: The module resolver allows us to refer to src/ folder as ~ in our imports. I wrote a whole article about how you can use it [here](https://gitlab.com/hmajid2301/articles/-/blob/master/17.%20Using%20Typescript%20Aliases%20with%20tspath/README.md) (#ShamelessPlug)
-
-### MainApp.tsx
+> Note: The module resolver allows us to refer to src/ folder as ~ in our imports. I wrote a whole article about how you can use it [here](/blog/better-imports-with-babel-tspath/) (#ShamelessPlug)
 
 Now the MainApp is a very basic page: it contains a single button which is used to toggle our theme
 for dark to light and vice versa. Here we use React hooks with React context to be able to update and retrieve
 the theme.
 
-```tsx
-import React, { useContext } from "react";
+```tsx:title=src/views/MainApp.tsx file=./source_code/src/views/MainApp.tsx
 
-import { DarkModeContext } from "~/providers/DarkModeProvider";
-
-const MainApp = () => {
-  const theme = useContext(DarkModeContext);
-  const { background, color, isDark } = theme.mode;
-
-  return (
-    <div
-      style={{
-        background: background,
-        color: color,
-        minHeight: "100vh",
-      }}
-    >
-      <div>Theme is {isDark ? "Dark" : "Light"}</div>
-      <button onClick={() => setTheme(theme)}>Change Theme</button>
-    </div>
-  );
-};
-
-const setTheme = (darkMode: DarkModeContext) => {
-  const isDark = darkMode.mode.isDark;
-  darkMode.dispatch(!isDark);
-};
-
-export default MainApp;
 ```
 
 #### useContext
@@ -272,7 +215,7 @@ The `useContext` is an example of a React Hook. It allows users to access a spec
 component, a component which is not a class. The context has a mode property which stores the current theme we should
 display light or dark. Such as `background` and `color`.
 
-```tsx
+```tsx:title=src/views/MainApp.tsx
 const theme = useContext(DarkModeContext);
 const { background, color, isDark } = theme.mode;
 ```
@@ -287,7 +230,7 @@ has an `onClick` event. The `setTheme` function gets the current theme from the 
 It then calls the `dispatch` function we have defined in the context to change to the theme to the opposite
 it is at the moment. So light theme -> dark theme and dark theme -> light theme.
 
-```tsx
+```tsx:title=src/views/MainApp.tsx
 <button onClick={() => setTheme(theme)}>Change Theme</button>;
 
 //...
@@ -305,3 +248,4 @@ they set last time, such as dark mode instead of the light mode.
 ## Appendix
 
 - [Source Code](https://gitlab.com/hmajid2301/articles/-/blob/master/23.%20React%20Hooks%2C%20Context%20%26%20Local%20Storage/source_code)
+- Photo by [Cristian Palmer](https://unsplash.com/@cristianpalmer) on Unsplash

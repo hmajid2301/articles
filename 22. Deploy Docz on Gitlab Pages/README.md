@@ -6,7 +6,7 @@ slug: "deploy-docz-gitlab-page"
 canonical_url: "https://haseebmajid.dev/blog/deploy-docz-gitlab-page"
 date: "2020-03-28"
 published: true
-cover_image: "images/cover.png"
+cover_image: "images/cover.jpg"
 ---
 
 In this article I will show you how you can deploy a Docz website on Gitlab pages, using `.gitlab-ci.yml`.
@@ -65,7 +65,7 @@ npm install Docz
 
 So our `package.json` looks like:
 
-```json
+```json:title=package.json
 {
   "name": "example_app",
   "scripts": {
@@ -82,7 +82,7 @@ So our `package.json` looks like:
 
 We then need to create our `Doczrc.js` configuration file, like so:
 
-```js
+```js:title=Doczrc.js
 export default {
   src: "docs",
   description: "Example Documentation",
@@ -114,7 +114,7 @@ Ok, now let's add our actual "pages" to our Docz website. First create a new fol
 Then we will create our first page called `Introduction.mdx` (this name doesn't matter so much), where the page's contents
 look something like:
 
-```md
+```md:title=Introduction.mdx
 ---
 name: Introduction
 route: /
@@ -132,7 +132,7 @@ The route defines the path the user will see, i.e. in the `stegappasaurus` examp
 
 Next let's create a second page called `Contributing.mdx`, which looks like:
 
-```md
+```md:title=Contributing.mdx
 ---
 name: Contributing
 route: /contributing
@@ -159,7 +159,7 @@ Well first we need to add a job titled `pages` to our `.gitlab-ci.yml` file, the
 static assets in a folder called `public` and make that an `artifact` of this job. This will tell Gitlab CI, that we
 want to publish this "website" to Gitlab Pages. Here is an example of what it may look like:
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 pages:
   only:
     - master
