@@ -19,13 +19,11 @@ project of mine, [composersiation](composerisation.haseebmajid.dev/) #ShamelessP
 to paste in their own (docker-compose) yaml files. So let's take a look how we can let a user to first edit a code block
 and then re-run PrismJS to add syntax highlighting.
 
-## index.html
-
 So our HTML will look something like this.
 
 > Note: When I refer to "code block" I am referring to entire thing including the `pre` and the `code` tags.
 
-```html
+```html:title=index.html
 <head>
   <link
     rel="stylesheet"
@@ -49,7 +47,7 @@ So our HTML will look something like this.
 In this file we import the `prism.css` stylesheet, there are many themes you can choose
 from in this example we will use the default theme. We will also import `prism.js`, these are the two files required to use PrismJS.
 
-```html
+```html:title=index.html
 <pre
   onPaste="setTimeout(function() {onPaste();}, 0)"
   id="editable"
@@ -76,7 +74,7 @@ the paste.
 Now the user can paste directly into the code block. How do we force a re-render ? Let's take a look at `onPaste` function which
 is called everytime the user paste's into our code block.
 
-```js
+```js:title=index.html
 function onPaste() {
   const editable = document.getElementById("editable");
   const dockerCompose = editable.innerText;
@@ -92,7 +90,7 @@ so just in case we add the `code` tag back in. As this is where PrismJS will ren
 `editable.innerHTML = '<code id="yaml" class="language-yaml"></code>';`, this code replaces all the "children" of the `pre` tag
 with this new code block. Next we get the `code` tag with id `yaml`.
 
-```js
+```js:title=index.html
 yaml.innerHTML = Prism.highlight(dockerCompose, Prism.languages.yaml, "yaml");
 ```
 
@@ -108,4 +106,5 @@ to be syntax highlighted.
 
 ## Appendix
 
+- - [Source Code](https://gitlab.com/hmajid2301/articles/-/blob/master/25.%20AJAX%20with%20PrismJS/source_code)
 - [Example Project](https://composerisation.haseebmajid.dev/#yaml)

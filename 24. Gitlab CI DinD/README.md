@@ -3,10 +3,10 @@ title: "DinD with Gitlab CI"
 tags: ["docker", "gitlab", "ci"]
 license: "public-domain"
 slug: "dind-and-gitlab-ci"
-canonical_url: "https://haseebmajid.dev/blog/dind-and-gitlab-ci"
+canonical_url: "https://haseebmajid.dev/blog/dind-and-gitlab-ci/"
 date: "2020-05-01"
 published: true
-cover_image: "images/cover.png"
+cover_image: "images/cover.jpg"
 ---
 
 Like most developers, we want to be able to automate as many and as much of processes as possible. Pushing Docker
@@ -24,7 +24,7 @@ A quick aside on terminology related to Docker:
 
 Here is an example `.gitlab-ci.yml` file which can be used to build and push your Docker images to the Gitlab registry.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 variables:
   DOCKER_DRIVER: overlay2
 
@@ -49,7 +49,7 @@ publish-docker:
 
 The code above may be a bit confusing, it might be a lot to take in. So now we will break it down line by line.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 variables:
   DOCKER_DRIVER: overlay2
 ```
@@ -70,7 +70,7 @@ random-job:
 
 > Note we could just as easily define `variables` just within our job as well like you see in the example above.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 services:
   - docker:dind
 ```
@@ -90,7 +90,7 @@ The `dockerd` command starts the Docker daemon as a client, so we can then commu
 It would achieve the same outcome. I think the service approach is a bit cleaner but as already stated either approach
 would work.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 publish-docker:
   stage: publish
   image: docker:dind
@@ -104,7 +104,7 @@ publish-docker:
 
 > Note: There are several other ways we could also build/push our images. This is the [recommended approach](https://gitlab.com/gitlab-examples/docker/blob/master/.gitlab-ci.yml).
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 stages:
   - publish
 ```
@@ -114,7 +114,7 @@ determine when a job will be run in our CI pipeline. If two jobs have the same s
 The stages defined earlier will run first so order does matter. However in this example, we only have one stage and
 one job so this isn't super important, more just something to keep in mind.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 publish-docker:
   stage: publish
   ...
@@ -123,7 +123,7 @@ publish-docker:
 Now we define our job, where `publish-docker` is the name of our job on `Gitlab CI` pipeline. We then define
 what `stage` the job should run in, in this case, this job will run during the `publish` stage.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 publish-docker:
   ...
   image: docker
@@ -134,7 +134,7 @@ Then we define what Docker image to use in this job. In this job, we will use th
 image has all the commands we need to `build` and `push` our Docker images. It will act as the client making
 requests to the `dind` daemon.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 script:
   - export VERSION_TAG=v1.2.3
   - docker login ${CI_REGISTRY} -u gitlab-ci-token -p ${CI_BUILD_TOKEN}
@@ -146,7 +146,7 @@ script:
 Finally, we get to the real meat and potatoes of the CI file. The bit of code that builds and pushes are Docker
 images to the registry:
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 - export VERSION_TAG=v1.2.3
 ```
 
@@ -156,7 +156,7 @@ It is often a good idea to tag our images, in this case, I'm using a release nam
 to parse my `setup.py` for the version number. But this can be whatever you want it to be. Here we have just kept it
 static to make things simpler but in reality, you'll probably want to retrieve it programmatically (the version number).
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 - docker login ${CI_REGISTRY} -u gitlab-ci-token -p ${CI_BUILD_TOKEN}
 ```
 
@@ -168,7 +168,7 @@ token.
 
 > Note: You can only do this on protected branches/tags.
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 - docker build -t ${CI_REGISTRY_IMAGE}:latest -t ${CI_REGISTRY_IMAGE}:${VERSION_TAG}  .
 - docker push ${CI_REGISTRY_IMAGE}:latest
 - docker push ${CI_REGISTRY_IMAGE}:${VERSION_TAG}
@@ -183,7 +183,7 @@ registry.gitlab.com/<username>/<project_name>/<tag>
 
 ### (Optional) Push to DockerHub
 
-```yaml
+```yaml:title=.gitlab-ci.yml
 - docker login -u hmajid2301 -p ${DOCKER_PASSWORD}
 - export IMAGE_NAME="hmajid2301/example_project"
 - docker build -t ${IMAGE_NAME}:latest -t ${IMAGE_NAME}:${VERSION_TAG}  .
@@ -196,6 +196,6 @@ name of our image `<username>/<project_name>`.
 
 ## Appendix
 
-- [Good SO Post](https://stackoverflow.com/questions/47280922/role-of-docker-in-docker-dind-service-in-gitlab-ci)
+- A good [Stackoverflow Post](https://stackoverflow.com/questions/47280922/role-of-docker-in-docker-dind-service-in-gitlab-ci)
 - [Gitlab CI Docs](https://docs.gitlab.com/ee/ci/docker/using_docker_build.html)
 - [Gitlab Example](https://gitlab.com/gitlab-examples/docker/blob/master/.gitlab-ci.yml)
