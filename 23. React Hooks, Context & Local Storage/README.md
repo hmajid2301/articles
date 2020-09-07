@@ -83,7 +83,7 @@ First, let's create our React context that will store the current theme the user
 give us a function that other components can use to update the theme. Finally, after any change has been made
 it will update the local storage with the users latest settings.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx file=./source_code/providers/DarkModeProvider.tsx
+```tsx:title=./src/providers/DarkModeProvider.tsx file=./source_code/src/providers/DarkModeProvider.tsx
 
 ```
 
