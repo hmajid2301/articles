@@ -293,6 +293,16 @@ You can run the application like a normal flask app from the project root(runnin
 FLASK_APP=./src/test_api/run.py FLASK_DEBUG=1 flask run
 ```
 
+## Turn on Swagger UI
+
+You can also access Swagger UI from within Connexion. We can access it `http://127.0.0.1:5000/api/v1/ui/`. To do this we need to update `run.py` so it looks like this:
+
+```python:title=src/test_api/run.py
+app = connexion.FlaskApp(
+    __name__, specification_dir=openapi_path, options={"swagger_ui": True, "serve_spec": True}
+)
+```
+
 ### Example Project
 
 Related to this article there is an example project which you can take a look at, to get it running do the following.
