@@ -16,8 +16,8 @@ one we go over how to create a web service using Connexions, the same web servic
 In the second article I introduce how you can use `pytest-mock` and `pytest-flask` to test a Flask web
 service.
 
-- [Implementing a Simple REST API using OpenAPI, Flask & Connexions](https://medium.com/@hmajid2301/implementing-a-simple-rest-api-using-openapi-flask-connexions-1bdd01ca916)
-- [Testing with pytest-mock and pytest-flask](https://medium.com/@hmajid2301/testing-with-pytest-mock-and-pytest-flask-13cd968e1f24)
+- [Implementing a Simple REST API using OpenAPI, Flask & Connexions](/blog/rest-api-openapi-flask-connexion/)
+- [Testing with pytest-mock and pytest-flask](/blog/testing-with-pytest-mock-and-pytest-flask/)
 
 The example app we will be writing tests for is a very simple CRUD API managing a pet store. It allows us
 to add pets, remove pets, update pets and query pets we have in the store.
@@ -60,7 +60,7 @@ You can find the source code here. Our project structure looks like this:
 
 Here is our controller module called `web/controller/pets_controller.py`. This is where connexion routes are requests to:
 
-```python
+```python:title=test_api/web/controllers/pets_controller.py
 import connexion
 import six
 
@@ -94,7 +94,7 @@ Connexion uses the open API specification `openapi/specification.yml`, to work o
 for the path `/pet/{pet_id}`. It uses the `operationId` alongside the `x-swagger-router-controller` to determine
 the function to call in the `pets_controller.py` module.
 
-```yaml
+```yaml:title=openapi/specification.yml
 /pet/{pet_id}:
   get:
     tags:
@@ -133,38 +133,7 @@ The `conftest.py` file is automatically run by pytest and allows our test module
 in this file. One of the best features of Pytest is fixtures. Fixture are functions that have re-usable bits of code we
 can run in our unit tests, such as static data used by tests.
 
-```python
-import os
-import json
-
-import pytest
-
-from test_api.run import create_app
-
-
-@pytest.fixture(scope="session")
-def app():
-    abs_file_path = os.path.abspath(os.path.dirname(__file__))
-    openapi_path = os.path.join(abs_file_path, "../", "openapi")
-    os.environ["SPEC_PATH"] = openapi_path
-
-    app = create_app()
-    return app
-
-
-@pytest.fixture(scope="session", autouse=True)
-def clean_up():
-    yield
-    default_pets = {
-        "1": {"name": "ginger", "breed": "bengal", "price": 100},
-        "2": {"name": "sam", "breed": "husky", "price": 10},
-        "3": {"name": "guido", "breed": "python", "price": 518},
-    }
-
-    abs_file_path = os.path.abspath(os.path.dirname(__file__))
-    json_path = os.path.join(abs_file_path, "../", "test_api", "core", "pets.json")
-    with open(json_path, "w") as pet_store:
-        json.dump(default_pets, pet_store, indent=4)
+```python:title=tests/conftest.py file=./source_code/tests/conftest.py
 
 ```
 
@@ -178,30 +147,8 @@ Essentially we don't need to start/stop a server before/after our tests.
 By giving it the `scope=session` the fixture will be created once before all of our tests run. Our `run.py` file looks
 like this:
 
-```python
-import os
+```python:title=test_api/run.py file=./source_code/test_api/run.py
 
-import connexion
-
-from .web import encoder
-
-
-def create_app():
-    if "SPEC_PATH" in os.environ:
-        openapi_path = os.environ["SPEC_PATH"]
-    else:
-        abs_file_path = os.path.abspath(os.path.dirname(__file__))
-        openapi_path = os.path.join(abs_file_path, "../", "../", "openapi")
-    app = connexion.FlaskApp(
-        __name__,
-        specification_dir=openapi_path,
-        options={"swagger_ui": False, "serve_spec": False},
-    )
-    app.add_api("specification.yml", strict_validation=True)
-    flask_app = app.app
-    flask_app.json_encoder = encoder.JSONEncoder
-
-    return flask_app
 ```
 
 The `create_app` function creates our web application and returns a Flask object. Remember the Connexion library is
@@ -210,7 +157,7 @@ article above to get more details about how it works.
 
 #### clean_up()
 
-```python
+```python:title=tests/conftest.py
 @pytest.fixture(scope="session", autouse=True)
 def clean_up():
     yield
@@ -239,7 +186,7 @@ contents of the JSON file which acts as a data store (like a database), to its d
 Now we have gone over the setup required for our tests, let's take a look at how we can test our
 code. So our first test looks like:
 
-```python
+```python:title=tests/test_pets_controller.py
 def test_get_all_pets(client):
     url = "/api/v1/pet"
     expected_json = [
@@ -264,7 +211,7 @@ what we expect to be in the pet store `assert response.json == expected_json`.
 
 The next test we have looks like this:
 
-```python
+```python:title=tests/test_pets_controller.py
 @pytest.mark.parametrize(
     "pet_data, expected_status, expected_data",
     [
@@ -311,7 +258,7 @@ A very nice feature of Pytest and one I use heavily.
 
 The final test we have in this file looks like:
 
-```python
+```python:title=tests/test_pets_controller.py
 def test_add_pet_fail_json(client, mocker):
     pet_data = {"name": "Yolo", "breed": "shorthair", "price": 100}
     url = "/api/v1/pet"
@@ -326,7 +273,7 @@ The `mocker` is just a simple wrapper around the `unittest.mock` module. The mai
 the mock on exists for the duration of that test. Mocking is often used when unit testing and we cannot
 rely on external dependencies such as database connections or another web service.
 
-```python
+```python:title=test_api/web/controllers/pets_controller.py
 def add_pet(body):  # noqa: E501
     # ...
     if connexion.request.is_json:
@@ -365,4 +312,4 @@ web service.
 
 ## Appendix
 
-- [Source Code](https://github.com/hmajid2301/medium/tree/master/27.%20Mocking%20in%20Flask%20with%20Pytest/source_code)
+- [Source Code](https://gitlab.com/hmajid2301/articles/tree/master/27.%20Mocking%20in%20Flask%20with%20Pytest/source_code)

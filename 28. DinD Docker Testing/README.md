@@ -18,14 +18,12 @@ go over how you start docker containers using docker-compose from within Gitlab 
 The diagram above is a visualisation of what we are trying to achieve. We want to spawn Docker containers using docker-compose
 from within our job. The spawning and destruction of these Docker containers will be done via our Python code. We can achieve
 this by using dind (Docker in Docker). I have written a previous article on this topic which you can read more about
-[here](https://medium.com/@hmajid2301/dind-with-gitlab-ci-3d588ab9321d). This article assumes you already somewhat familiar
+[here](/blog/dind-and-gitlab-ci/blog/dind-and-gitlab-ci/). This article assumes you already somewhat familiar
 with Docker, docker-compose and Pytest.
-
-## docker-compose.yml
 
 This compose file will be used to start our Docker containers.
 
-```yaml
+```yaml:title=docker-compose.yml
 version: "3"
 
 services:
@@ -40,7 +38,7 @@ services:
     command: ["tail", "-f", "/dev/null"]
 ```
 
-## .gitlab-ci.yml
+## Gitlab CI
 
 Next, we have our `.gitlab-ci.yml` file, this file is used to tell Gitlab CI what our CI jobs should do.
 In this example, we have one job called `test:integration` which will run our integration tests. But before we do that
@@ -51,26 +49,18 @@ start/stop our Docker images within CI. The docker:dind (dind = Docker in Docker
 the docker image. The difference being the dind image starts a Docker daemon. In this example, the job will
 use the docker image as the client and connect to the daemon running in this container.
 
-```yaml
-services:
-  - docker:dind
+```yaml:title=.gitlab-ci.yml file=./source_code/.gitlab-ci.yml
 
-tests:integration:
-  stage: test
-  image: hmajid2301/dind-docker-compose
-  script:
-    - pip install pytest lovely-pytest-docker
-    - pytest -s tests/test_integration.py
 ```
 
 The job itself is very simple, it uses a container which already comes with `docker` and `docker-compose`. Next we
 install the dependencies we need for our tests. Then it runs our tests.
 
-## test_integration.py
+## Tests
 
 Now onto our actual tests file. It looks more complicated than it is:
 
-```py
+```python:title=tests/test_integration.py
 import docker as docker_py
 import pytest
 
@@ -146,7 +136,7 @@ in our `docker-compose` file. This is the same as running `docker-compose up --b
 `yield` command works I won't go over in this article, all you have to know is that everything after the yield will only
 be run after all of our tests. In this case we teardown our containers (stop them). This is the same as running `docker-compose down`.
 
-```py
+```python:title=tests/test_integration.py
 import docker as docker_py
 import pytest
 
@@ -173,7 +163,7 @@ This helps our tests file stay more DRY (do not repeat yourself). You may well w
 more than one file. Also whilst we are on this topic, we may want to move our fixture to `conftest.py`, again to allow
 other files to use the same fixture we have defined here. But to keep this example simpler we will leave it here.
 
-```py
+```python:title=tests/test_integration.py
 def kill_container(container_name):
     container = get_container(container_name)
     container.kill()
@@ -203,7 +193,7 @@ Our final test starts `container1` and checks that it is running and the number 
 is back to 2. After this final test has completed then the `setup` fixture will run its `docker_compose.shutdown()`
 command.
 
-```py
+```python:title=tests/test_integration.py
 def test_two_containers():
     containers = docker_client.containers.list()
     assert len(containers) == 2
@@ -230,4 +220,4 @@ and `postgres` and you wanted to run your tests within the `flask` container. Bu
 
 ## Appendix
 
-- [Source Code](https://github.com/hmajid2301/medium/tree/master/28.%20DinD%20Docker%20Testing/source_code)
+- [Source Code](https://gitlab.com/hmajid2301/articles/tree/master/28.%20DinD%20Docker%20Testing/source_code)

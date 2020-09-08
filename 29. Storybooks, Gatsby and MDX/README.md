@@ -9,8 +9,6 @@ published: true
 cover_image: "images/cover.jpg"
 ---
 
-> Cover image from, [World Vector Logo](https://worldvectorlogo.com/downloaded/storybook-1)
-
 Recently I started to re-design my website, I decided to use this as an opportunity to learn some new technologies
 such as Gatsby, Tailwind. I also decided to try using Storybook. For this said project I used MDX to create my
 Storybook stories. In this article, I will show you how you can create Storybooks stories, for a Gatsby project
@@ -63,87 +61,37 @@ vim gatsby-browser.js
 We need to update the `gatsby-config.js` file to add support for both typescript and PostCSS. Tailwind is written in PostCSS
 so we need to include that in our gatsby file. You can either replace the default `gatsby-config.js` or update the plugins.
 
-```js
-// gatsby-config.js
-const plugins = ["gatsby-plugin-typescript", "gatsby-plugin-postcss"];
+```js:title=gatsby-config.js file=./source_code/gatsby-config.js
 
-module.exports = {
-  plugins,
-};
 ```
 
 Next we add a `postcss.config.js` file as per the Tailwind instructions found
 [here](https://tailwindcss.com/docs/installation#webpack-encore).
 
-```js
-// postcss.config.js
-const tailwindcss = require("tailwindcss");
+```js:title=postcss.config.js file=./source_code/postcss.config.js
 
-module.exports = () => ({
-  plugins: [tailwindcss],
-});
 ```
 
 Finally, we create a `tailwind.config.js` file. Here we can add new colours, overwrite existing colours and extend the
 configuration such as adding news fonts (`Inter`). This file will get merged with the default config by Tailwind.
 
-```js
-// tailwind.config.js
-module.exports = {
-  theme: {
-    extend: {
-      colors: {
-        blue: {
-          100: "#EBF2FD",
-          200: "#CDDFFA",
-          300: "#AFCBF6",
-          400: "#72A5F0",
-          500: "#367EE9",
-          600: "#3171D2",
-          700: "#204C8C",
-          800: "#183969",
-          900: "#102646",
-        },
-        monochrome: {
-          900: "#333",
-          800: "#444",
-          700: "#666",
-          600: "#999",
-          500: "#ddd",
-          400: "#eee",
-          300: "#f3f3f3",
-          200: "#f8f8f8",
-          100: "#fff",
-        },
-      },
-      fontFamily: {
-        header: ["Inter"],
-      },
-    },
-  },
-  variants: {},
-};
+```js:title=tailwind.config.js file=./source_code/tailwind.config.js
+
 ```
 
 Next, to add the Tailwind styles or our app we need to create a CSS file, you can call this file whatever you want,
 you just need to make sure it gets imported in such a place it can be used by any of your components.
 
-```css
-# src/styles/globals.css
+```css:title=src/styles/global.css file=./source_code/src/styles/global.css
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 ```
 
 One place we can import this is in the `gatsby-brower.js` file. It should be empty, add the import shown below.
 We will add babel later on in the app, which will allow us to use imports in the style we've just described.
 In this example, we will use the `~` to mean `src`.
 
-```js
-// gatsby-browser.js
+```js:title=gatsby-browser.js file=./source_code/gatsby-browser.js
 
-import "~/styles/globals.css";
 ```
 
 ### Typescript
@@ -159,8 +107,7 @@ We will add some extra libraries that will be used by Storybooks to parse our Ty
 Like all Typescript projects, we need to include a `tsconfig.json` file. Note we add the `"paths"` so we can
 have cleaner imports, this will be used alongside Babel.
 
-```json
-// tsconfig.json
+```json:title=tsconfig.json file=./source_code/tsconfig.json
 {
   "compileOnSave": false,
   "compilerOptions": {
@@ -204,9 +151,9 @@ more about it [here](https://www.gatsbyjs.org/docs/babel/). The main reason we w
 imports. So we can use `~` instead of `src` in imports. So we can do `import "~/styles/globals.css";` instead of
 `import "../../../styles/globals.css"'`.
 
-> [You can read more about it here, I wrote a previous article on this topic.](https://medium.com/analytics-vidhya/better-imports-with-typescript-aliases-babel-and-tspath-5c3addc7bc9e)
+> [You can read more about it here, I wrote a previous article on this topic.](/blog/better-imports-with-babel-tspath/)
 
-```json
+```json:title=.babelrc file=./source_code/.babelrc
 {
   "env": {},
   "plugins": [
@@ -256,88 +203,29 @@ vim webpack.config.js
 Next, we will update the `main.js` file. This will tell Storybook where to look for the stories, in this case in the `src` folder
 any file called `x.stories.mdx` or `x.stories.tsx`.
 
-```js
-// .storybook/main.js
-module.exports = {
-  stories: ["../src/**/*.stories.@(tsx|mdx)"],
-  addons: ["@storybook/addon-essentials", "@storybook/preset-typescript"],
-};
+```js:title=.storybook/main.js file=./source_code/.storybook/main.js
+
 ```
 
 Next, lets update the preview file. Here is typically you can define global parameters and decorators. Again
 will see more of this in the next article.
 
-```js
-// .storybook/preview.js
-import React from "react";
+```js:title=.storybook/preview.js file=./source_code/.storybook/preview.js
 
-import { action } from "@storybook/addon-actions";
-import { configure } from "@storybook/react";
-
-import "../src/styles/globals.css";
-
-configure(require.context("../src", true, /\.stories\.mdx$/), module);
-
-global.___loader = {
-  enqueue: () => {},
-  hovering: () => {},
-};
-global.__PATH_PREFIX__ = "";
-window.___navigate = (pathname) => {
-  action("NavigateTo:")(pathname);
-};
 ```
 
 If we want to use any custom fonts, such as google fonts or other styles within our Tailwind, we need to
 define them here.
 
-```html
-<!--  .storybook/preview-html.html  -->
-<link
-  href="https://fonts.googleapis.com/css2?family=Inter:wght@600,900&display=swap"
-  rel="stylesheet"
-/>
+```html:title=.storybook/preview-head.html file=./source_code/.storybook/preview-head.html
+
 ```
 
 Storybook uses webpack, so if we want to add extra webpack options, we do that here. This allows us to use
 things like Babel and PostCSS loader.
 
-```js
-// .storybook/webpack.config.js
+```js:title=.storybook/webpack.config.js file=./source_code/.storybook/webpack.config.js
 
-module.exports = ({ config }) => {
-  config.module.rules[0].use[0].loader = require.resolve("babel-loader");
-  config.module.rules[0].use[0].options.presets = [
-    require.resolve("@babel/preset-react"),
-    require.resolve("@babel/preset-env"),
-  ];
-
-  config.module.rules.push({
-    test: /\.(ts|tsx)$/,
-    loader: require.resolve("babel-loader"),
-    options: {
-      presets: [["react-app", { flow: false, typescript: true }]],
-      plugins: [],
-    },
-  });
-
-  config.module.rules.push({
-    test: /\.css$/,
-    use: [
-      {
-        loader: "postcss-loader",
-        options: {
-          sourceMap: true,
-          config: {
-            path: "./.storybook/",
-          },
-        },
-      },
-    ],
-  });
-
-  return config;
-};
 ```
 
 ### Component
@@ -347,58 +235,15 @@ In that folder let's create the following files:
 
 > Note the comments in the Props will be the comments shown in our story later, if you use the correct addons for Storybook. We will go over this in the next article.
 
-```tsx
-// src/components/Logo/Logo.tsx
-import React from "react";
-import tw from "twin.macro";
+```tsx:title=src/components/Logo/Logo.tsx file=./source_code/src/components/Logo/Logo.tsx
 
-export interface Props {
-  /** The colour of the opening and closing tags. */
-  accent?: string;
-  /** The colour of main text. */
-  color?: string;
-  /** The colour when you hover over the logo. */
-  hoverColor?: string;
-  /** The main text of the logo for example, your name. */
-  text: string;
-  /** The size of the main text  */
-  size?: "xs" | "sm" | "lg" | "xl" | "2xl" | "3xl" | "4xl";
-}
-
-const Logo = ({
-  accent = "black",
-  color = "black",
-  hoverColor = "blue-500",
-  text,
-  size = "2xl",
-}: Props) => (
-  <LogoContainer
-    className={`hover:text-${hoverColor} text-${color} lg:text-${size}
-    md:text-xl sm:text-md text-sm`}
-  >
-    <Tag className={`text-${accent}`} data-testid="OpeningTag">
-      &lt;
-    </Tag>
-    {text}
-    <Tag className={`text-${accent}`} data-testid="ClosingTag">
-      /&gt;
-    </Tag>
-  </LogoContainer>
-);
-
-const LogoContainer = tw.div`cursor-pointer font-header font-black tracking-wide `;
-
-const Tag = tw.span``;
-
-export default Logo;
 ```
 
 This index file makes it easier to import the component from other files. As we don't have to do
 `import {Logo} from "src/components/Logo/Logo.ts` we can use `import {Logo} from "src/components/Logo`.
 
-```tsx
-// src/components/Logo/index.ts
-export { default as Logo } from "./Logo";
+```tsx:title=src/components/Logo/index.ts file=./source_code/src/components/Logo/index.ts
+
 ```
 
 #### Storybook
@@ -407,31 +252,14 @@ Now we have set everything up but do we create a story for our component. First,
 You could keep this in another folder like storybooks/ or keep it in the same folder as your component, it's all personal preference.
 Some people will also have all unit tests in the same folder `src/components/Logo/`.
 
-```md
-import { Meta, Story, Preview, Props } from "@storybook/addon-docs/blocks";
+```md:title=src/components/Logo/Logo.stories.mdx file=./source_code/src/components/Logo/Logo.stories.mdx
 
-import Logo from "./Logo";
-
-<Meta title="Logo" component={Logo} />
-
-# Logo
-
-## Accent
-
-You can adjust the accent (tags) color by passing the `accent` prop.
-
-<Preview>
-  <Story name="Accent Colour">
-    <Logo accent="gray-500" color="blue-500" text="Haseeb" />
-    <Logo accent="gray-500" color="black" text="Haseeb" />
-  </Story>
-</Preview>
 ```
 
 Add the following to your `package.json` to the "scripts" section. We need to pass it the `NODE_ENV=test`
 environment variable, else the Gatsby Babel plugin will complain.
 
-```json
+```json:title=package.json
 "storybook": "NODE_ENV=test start-storybook -p 6006",
 "build-storybook": "NODE_ENV=test build-storybook"
 ```
@@ -449,3 +277,4 @@ That's it! We managed to get Storybook to work with Gatsby. Where Gatsby is usin
 - [Source Code](https://gitlab.com/hmajid2301/medium/tree/master/29.%20Storybooks,%20Gatsby%20and%20MDX/source_code)
 - [Example Project](https://gitlab.com/hmajid2301/personal-site/-/tree/e415420744b2a8f49eddaf2d3058b23c70f46638/.storybook)
 - [Example Storybook](https://storybook.haseebmajid.dev/)
+- Cover image from, [World Vector Logo](https://worldvectorlogo.com/downloaded/storybook-1)
