@@ -82,7 +82,7 @@ configuration such as adding news fonts (`Inter`). This file will get merged wit
 Next, to add the Tailwind styles or our app we need to create a CSS file, you can call this file whatever you want,
 you just need to make sure it gets imported in such a place it can be used by any of your components.
 
-```css:title=src/styles/global.css file=./source_code/src/styles/global.css
+```css:title=src/styles/globals.css file=./source_code/src/styles/globals.css
 
 ```
 
