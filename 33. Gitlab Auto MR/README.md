@@ -66,7 +66,7 @@ You can read more about [this here](https://www.atlassian.com/continuous-deliver
 I created a simple CLI script, that I run during on Gitlab CI, which will auto-create merge requests every time you create a new branch.
 So you could have something like this:
 
-```yml
+```yml:title=.gitlab-ci.yml
 stages:
   - pre
 
@@ -101,7 +101,7 @@ Next, we append all of our new merge requests with WIP, set by the `-c WIP` argu
 specify a merge request template to use by passing the `-d` and giving it the path to a file. In this example
 `.gitlab/merge_request_templates/merge_request.md` looks like this:
 
-```md
+```md:title=.gitlab/merge_request_templates/merge_request.md
 # Description
 
 <!-- please include a summary of the change and which issue is fixed. Please also include relevant motivation and context. List any dependencies that are required for this change. -->

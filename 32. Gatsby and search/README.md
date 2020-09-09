@@ -39,7 +39,7 @@ gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 The search component will use the data within our markdown and index it, so that the client can search with this
 data later. In this example I will assume your markdown files look something like the example below:
 
-```md
+```md:title=content/blog/hello-world/index.md
 ---
 title: Hello World
 date: "2015-05-01"
@@ -70,7 +70,7 @@ integrating it into our site very easy. First install the following plugin and t
 
 Then open your `gatsby-config.js` and add the following:
 
-```js
+```js:title=gatsby-config.js
 {
     resolve: `@gatsby-contrib/gatsby-plugin-elasticlunr-search`,
     options: {
@@ -187,7 +187,7 @@ npx tailwindcss init
 
 Then add the following to your `gatsby-config.js`:
 
-```js
+```js:title=gatsby-config.js
 plugins: [`gatsby-plugin-postcss`, `gatsby-plugin-emotion`],
 ```
 
@@ -207,13 +207,13 @@ vim main.css
 
 Then add the following line to `gatsby-browser.js`:
 
-```js
+```js:title=gatsby-browser.js
 import "./src/main.css";
 ```
 
 Finally create a new file `postcss.config.js` and add the following:
 
-```js
+```js:title=postcss.config.js
 module.exports = () => ({
   plugins: [require("tailwindcss")],
 });
@@ -245,123 +245,27 @@ those words in the title (A, blog or post).
 
 > Note: Again you can extend this to include perhaps a description of the blog post (first 160 characters) etc. We are just keeping it simple for this example.
 
-```jsx
-import { Link } from "gatsby";
-import React from "react";
-import Highlighter from "react-highlight-words";
-import tw from "twin.macro";
+```jsx:title=src/components/SearchItem.jsx file=./source_code/src/components/SearchItem.jsx
 
-const SearchItem = ({ path, title, query }) => (
-  <SearchItemContainer>
-    <SearchTitle>
-      <Link
-        className="hover:text-white hover:bg-blue-500 hover:p-1 rounded"
-        to={path}
-      >
-        <Highlighter
-          autoEscape
-          highlightStyle={{ backgroundColor: "#ffd54f" }}
-          searchWords={query.split(" ")}
-          textToHighlight={title}
-        />
-      </Link>
-    </SearchTitle>
-    <ReadMore className="hover:text-blue-500 text-lg py-2" type="button">
-      <Link to={path}>Read More</Link>
-    </ReadMore>
-  </SearchItemContainer>
-);
-
-const SearchItemContainer = tw.div`my-10`;
-
-const SearchTitle = tw.h2`text-2xl font-semibold`;
-
-const ReadMore = tw.button`hover:text-blue-500 text-lg py-2`;
-
-export default SearchItem;
 ```
 
 Next, we have a component we will call `SearchItems.jsx`, which will be a list of the search results and look
 something like:
 
-```jsx
-import React from "react";
+```jsx:title=src/components/SearchItems.jsx file=./source_code/src/components/SearchItems.jsx
 
-import SearchItem from "./SearchItem";
-
-const SearchItems = ({ results, query }) => (
-  <ul>
-    {results.map((page) => (
-      <li key={page.id}>
-        <SearchItem path={`${page.path}`} query={query} title={page.title} />
-      </li>
-    ))}
-  </ul>
-);
-
-export default SearchItems;
 ```
 
 Now onto the main component, the component that will actually work out the results to show
 to the client. We will call this component `Search.jsx`:
 
-```jsx
-import { Index } from "elasticlunr";
-import React, { useState, useEffect } from "react";
-import tw from "twin.macro";
+```jsx:title=src/components/Search.jsx file=./source_code/src/components/Search.jsx
 
-import Input from "./Input";
-import SearchItems from "./SearchItems";
-
-const Search = ({ searchIndex }) => {
-  const index = Index.load(searchIndex);
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState([]);
-  const searchInput = React.createRef();
-
-  useEffect(() => {
-    searchResults("react");
-    searchInput.current.focus();
-  }, []);
-
-  function searchResults(searchQuery) {
-    const res = index.search(searchQuery, { expand: true }).map(({ ref }) => {
-      return index.documentStore.getDoc(ref);
-    });
-    setResults(res);
-  }
-
-  return (
-    <SearchContainer>
-      <SearchInputContainer>
-        <Input
-          ref={searchInput}
-          className="px-2"
-          label="Search"
-          onChange={(event) => {
-            const searchQuery = event.target.value;
-            setQuery(searchQuery);
-            searchResults(searchQuery);
-          }}
-          placeholder="Search"
-          value={query}
-        />
-      </SearchInputContainer>
-      <SearchItems query={query} results={results} />
-    </SearchContainer>
-  );
-};
-
-const SearchContainer = tw.div`max-w-screen-md mx-auto pt-8`;
-
-const SearchInputContainer = tw.div`flex w-full text-left h-12 text-lg focus-within:shadow-outline my-8`;
-
-export default Search;
 ```
 
 Let's break this down:
 
-```jsx
+```jsx:title=src/components/Search.jsx
 const index = Index.load(searchIndex);
 const [query, setQuery] = useState("");
 const [results, setResults] = useState([]);
@@ -371,7 +275,7 @@ const searchInput = React.createRef();
 The first part will be used to store some variables we need later on. Like storing the current query the client has
 typed into the search, the current search results and a reference to the search input so we can focus into it.
 
-```jsx
+```jsx:title=src/components/Search.jsx
 useEffect(() => {
   searchResults("blog");
   searchInput.current.focus();
@@ -382,7 +286,7 @@ Next, the `useEffect` hook is called as soon as the component mounts, so as soon
 into the `searchInput` component `searchInput.current.focus()` and we pre-fill the search with any blog post with
 `"blog"` in it's title/tags `searchResults("blog")`.
 
-```jsx
+```jsx:title=src/components/Search.jsx
 function searchResults(searchQuery) {
   const res = index.search(searchQuery, { expand: true }).map(({ ref }) => {
     return index.documentStore.getDoc(ref);
@@ -395,7 +299,7 @@ This is the actual function which gets our search results. It makes the query wi
 stores the results in out state hook variable `result` using the set function `setResults(res)`. The first part
 of the function does most of the heavy lifting returning a list of possible results to show to the client.
 
-```jsx
+```jsx:title=src/components/Search.jsx
 <Input
   ref={searchInput}
   className="px-2"
@@ -422,78 +326,14 @@ This is then shown to the client using our SearchItems component defined above l
 
 Finally, we have a "`SearchBar.tsx`", this is the component we will use to tie everything together.
 
-```jsx
-import styled from "@emotion/styled";
-import { graphql, StaticQuery } from "gatsby";
-import React, { useState } from "react";
-import tw from "twin.macro";
+```jsx:title=src/components/SearchBar.jsx file=./source_code/src/components/SearchBar.jsx
 
-import Search from "./Search";
-
-const SearchBar = () => {
-  const [showSearch, setShowSearch] = useState(false);
-
-  function hideSearch(event) {
-    if (event.target.placeholder !== "Search") {
-      setShowSearch(false);
-    }
-  }
-
-  return (
-    <SearchComponent>
-      <h1
-        className="hover:cursor-pointer text-orange-800 text-2xl my-10"
-        onClick={() => setShowSearch(!showSearch)}
-      >
-        Search
-      </h1>
-
-      <SearchOverlay
-        onClick={(e) => hideSearch(e)}
-        onKeyPress={(e) => hideSearch(e)}
-        role="presentation"
-        showSearch={showSearch}
-      >
-        <StaticQuery
-          query={graphql`
-            query SearchIndexQuery {
-              siteSearchIndex {
-                index
-              }
-            }
-          `}
-          render={(data) => (
-            <SearchContainer>
-              {showSearch && (
-                <Search searchIndex={data.siteSearchIndex.index} />
-              )}
-            </SearchContainer>
-          )}
-        />
-      </SearchOverlay>
-    </SearchComponent>
-  );
-};
-
-const SearchComponent = tw.div`flex-grow flex`;
-
-const SearchContainer = tw.div`overflow-y-scroll h-screen w-full`;
-
-const SearchOverlay = styled.div`
-  opacity: ${(props) => (props.showSearch ? 1 : 0)};
-  display: ${(props) => (props.showSearch ? "flex" : "none")};
-  transition: opacity 150ms linear 0s;
-  background: rgba(255, 255, 255, 0.9);
-  ${tw`fixed inset-0 bg-opacity-50 z-50 m-0 items-center justify-center h-screen w-screen`};
-`;
-
-export default SearchBar;
 ```
 
 Normally I would use a search icon which when pressed would show the search overlay. However to keep things simple we
 will just use the text "Search", which when clicked on will show our search overlay to the client.
 
-```jsx
+```jsx:title=src/components/SearchBar.jsx
 <h1
   className="hover:cursor-pointer text-orange-800 text-2xl my-10"
   onClick={() => setShowSearch(!showSearch)}
@@ -504,7 +344,7 @@ will just use the text "Search", which when clicked on will show our search over
 
 The main job of this component is to toggle the search on/off. To do this we use a state hook like so:
 
-```jsx
+```jsx:title=src/components/SearchBar.jsx
 const [showSearch, setShowSearch] = useState(false);
 
 function hideSearch(event) {
@@ -517,7 +357,7 @@ function hideSearch(event) {
 Where we have a function to hide the search if the user clicks anything outside of the search. Hence the if statement
 `event.target.placeholder`.
 
-```jsx
+```jsx:title=src/components/SearchBar.jsx
 <StaticQuery
   query={graphql`
     query SearchIndexQuery {

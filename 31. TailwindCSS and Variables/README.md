@@ -18,11 +18,11 @@ First, follow the installation guide found [here](https://tailwindcss.com/docs/i
 This will show you how you can add TailwindCSS to your current project. For part 2 I will assume you called your CSS
 file `global.css`. This is the file that contains `@tailwind base;` etc.
 
-## global.css
+## Global CSS
 
 First, we need to edit our TailwindCSS file so it looks something like this:
 
-```css
+```css:title=global.css
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -41,11 +41,11 @@ First, we need to edit our TailwindCSS file so it looks something like this:
 
 I wrap my entire body in an element with class `root` or id `root`, so that any of my elements can access it later.
 
-### gatsby-browser.js (optional)
+### Gatsby
 
 If you're using Gatsby, you can add the following to your `gatsby-browser.js` file:
 
-```js
+```js:title=gatsby-browser.js
 export const wrapRootElement = ({ element }) => (
   <div className="root overflow-hidden">{element}</div>
 );
@@ -58,7 +58,7 @@ This will wrap all of our pages in the class `root` and `overflow-hidden` CSS cl
 Now we've defined some CSS variables how can we use them with Tailwindcss? Simple, we update our tailwind config file
 with some of the new CSS variables. Here we simply want to extend the config to add new colour values.
 
-```js
+```js:title=tailwind.config.js
 module.exports = {
   theme: {
     extend: {
@@ -83,12 +83,12 @@ element {
 }
 ```
 
-## Logo.tsx
+## Logo
 
 Now how do we use our variable? Again pretty straight forward just like our normal tailwind classes. Let's imagine
 we have a React component called `Logo.tsx`, defined like so:
 
-```tsx
+```tsx:title=Logo.tsx
 import React from "react";
 import tw from "twin.macro";
 
@@ -121,7 +121,7 @@ if we change the value in the `global.css` file, it will automatically change he
 
 This can be easily extended to add a dark/light mode. Add the following to the `global.css` file like so:
 
-```css
+```css:title=global.css
 .theme-light {
   --background: #fff;
   --main: #0d0106;
