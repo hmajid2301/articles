@@ -59,7 +59,7 @@ Now onto actually developing our API.
 
 In this article our code will be using the following structure.
 
-```
+```text
 test-api/
 ├── openapi/
 ├── src/

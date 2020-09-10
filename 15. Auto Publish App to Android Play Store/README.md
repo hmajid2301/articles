@@ -141,7 +141,7 @@ information from the play store if you already have it. If you do not want to ru
 structure similar to the one shown below in your `android/app/src/main/play/` folder. You can find more information
 about meta-data [here](https://github.com/Triple-T/gradle-play-publisher#managing-play-store-metadata).
 
-```
+```text
 ├── contact-email.txt
 ├── contact-website.txt
 ├── default-language.txt

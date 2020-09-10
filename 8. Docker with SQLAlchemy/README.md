@@ -61,7 +61,7 @@ DATABASE_CONNECTION_URI = f'postgresql+psycopg2://{user}:{password}@{host}:{port
 
 These are examples of the variables that need to get passed as environment variables to the Flask app.
 
-```conf:title=database.conf file=./source_code/database.conf
+```text:title=database.conf file=./source_code/database.conf
 
 ```
 

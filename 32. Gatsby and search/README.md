@@ -100,9 +100,12 @@ on with our GraphQL queries if you don't understand.
 
 For example, if you type the following into the main field and press the play button at the top.
 
-```text
+```graphql
 query MyQuery {
-  allMarkdownRemark(sort: {order: DESC, fields: [frontmatter___date]}, filter: {frontmatter: {title: {ne: "Uses"}}}) {
+  allMarkdownRemark(
+    sort: { order: DESC, fields: [frontmatter___date] }
+    filter: { frontmatter: { title: { ne: "Uses" } } }
+  ) {
     edges {
       node {
         id

@@ -137,7 +137,7 @@ docker-compose up --build -d
 
 ### Environment Variables
 
-```conf:title=.env file=./source_code/.env
+```text:title=.env file=./source_code/.env
 
 ```
 

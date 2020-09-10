@@ -26,7 +26,7 @@ to add pets, remove pets, update pets and query pets we have in the store.
 
 You can find the source code here. Our project structure looks like this:
 
-```
+```text
 .
 ├── openapi
 │   └── specification.yml

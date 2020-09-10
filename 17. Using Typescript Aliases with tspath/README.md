@@ -28,7 +28,7 @@ There are a few tools we can use to help solve our problem.
 
 In the examples below let's assume we have a structure which looks something like this.
 
-```
+```text
 ├── app.json
 ├── babel.config.js
 ├── App.tsx

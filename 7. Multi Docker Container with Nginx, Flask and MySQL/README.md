@@ -42,7 +42,7 @@ The first Docker container called Nginx will be the main gateway into our applic
 
 This is a very simple dockerfile that takes uses the latest Nginx docker image. It then removes the default configuration and adds our configuration.
 
-```conf:title=docker/nginx/example.conf file=./source_code/docker/nginx/example.conf
+```text:title=docker/nginx/example.conf file=./source_code/docker/nginx/example.conf
 
 ```
 
@@ -85,7 +85,7 @@ This is the configuration file used by the uWSGI server. This is where we define
 
 The Postgres image is simpler the latest Postgres image from Docker hub, then we pass some environment variables to it to configure it.
 
-```conf:title=docker/database.conf file=./source_code/docker/database.conf
+```text:title=docker/database.conf file=./source_code/docker/database.conf
 
 ```
 

@@ -19,7 +19,7 @@ user visits your website again they will have the same theme they last selected.
 
 We will use a project structure like so:
 
-```
+```text
 .
 ├── src
 │   ├── App.tsx
