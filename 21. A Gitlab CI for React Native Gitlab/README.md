@@ -6,7 +6,7 @@ slug: "gitlab-ci-for-react-native"
 canonical_url: "https://haseebmajid.dev/blog/gitlab-ci-for-react-native/"
 date: "2020-02-23"
 license: "public-domain"
-cover_image: images/cover_image.jpg
+cover_image: images/cover.jpg
 ---
 
 A bit of backstory when I first started developing React Native applications (apps), I found there weren't
