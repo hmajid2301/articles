@@ -3,6 +3,7 @@
     "publish-article": "markdown-to-medium"
   },
   "dependencies": {
+    "gatsby-source-git": "^1.1.0",
     "markdown-to-medium": "1.4.4"
   }
 }
