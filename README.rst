@@ -5,11 +5,11 @@ This repo contains all my articles that I publish in Markdown and also all the s
 
 You can currently find them on
 
-- [dev.to](https://dev.to/hmajid2301)
-- [Medium](https://medium.com/@hmajid2301)
-- [Personal Blog](https://haseebmajid.dev/blog/)
+- https://dev.to/hmajid2301
+- https://medium.com/@hmajid2301
+- https://haseebmajid.dev/blog/
 
 Appendix
 --------
 
-- [Icon From FlatIcon](www.flaticon.com)
+- Icon From https://www.flaticon.com
