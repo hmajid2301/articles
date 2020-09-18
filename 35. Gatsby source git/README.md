@@ -180,7 +180,7 @@ save the newly created token to your CI/CD variables.
 
 Then also copy the `cURL` command shown and add the following to your `.gitlab-ci.yml`, with the `cURL` command.
 
-```yml{9}:title=.gitlab-ci.yml
+```yml{10}:title=.gitlab-ci.yml
 stages:
   - build
 
@@ -201,7 +201,7 @@ This will mean when it runs `yarn build` or `gatsby build` it'll source the mark
 our article git repo and will have the new article or whatever changes were made. The `.gitlab-ci` for our
 Gatsby blog may look something like this:
 
-```yml{29}:title=.gitlab-ci.yml
+```yml{29-30}:title=.gitlab-ci.yml
 image: node:12.13.0
 cache:
   key: ${CI_COMMIT_REF_SLUG}
@@ -258,7 +258,7 @@ use a webhook to trigger a rebuild of our site on Netlify. To do this select you
 Then `Settings` > `Build & deploy` > `Build hooks`. Add a new build hook. Then copy the `cURL` command,
 so your article repo `.gitlab-ci.yml` now looks something like:
 
-```yml{9}:title=.gitlab-ci.yml
+```yml{10}:title=.gitlab-ci.yml
 stages:
   - build
 
