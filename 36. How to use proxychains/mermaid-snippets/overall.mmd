@@ -1,0 +1,20 @@
+graph LR
+    subgraph Local Machine
+      A[TCP Port :8123]
+      B[SSH Client]
+      D[Proxychains]
+    end
+
+    subgraph Remote Server
+      C[Server A]
+      E[Server B]
+    end
+
+    subgraph Firewall
+      E
+    end
+
+    D -->|Connects to| A
+    B -->|Opens Port| A
+    B -->|SSH Tunnel| C
+    C -->|TCP Connection| E
