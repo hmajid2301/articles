@@ -9,7 +9,7 @@ published: true
 cover_image: "images/cover.jpg"
 ---
 
-In this article, we will go over how you use `proxychains` to proxy our traffic through a socks proxy.
+In this article, we will go over how you can use `proxychains` to proxy our traffic through a socks proxy.
 
 ## Background
 
