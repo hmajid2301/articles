@@ -262,7 +262,7 @@ The final test we have in this file looks like:
 def test_add_pet_fail_json(client, mocker):
     pet_data = {"name": "Yolo", "breed": "shorthair", "price": 100}
     url = "/api/v1/pet"
-    mock = mocker.post("connexion.request")
+    mock = mocker.patch("connexion.request")
     mock.is_json = False
     response = client.post(url, json=pet_data)
     assert response.status_code == 400
