@@ -13,7 +13,7 @@ In this article, we will go over how you can manage your markdown blog posts fro
 This is the same process that I use to manage [this repo](https://gitlab.com/hmajid2301/articles).
 
 So what this entails is the source code for my Gatsby site is in a repo called `portfolio-site` on Gitlab.
-Then I have another repo for all of the blog posts (in markdown) called `articles`. During build time of the
+Then I have another repo for all of my blog posts (in markdown) called `articles`. During build time of the
 Gatsby blog, we will import the markdown files from our `articles` git repo and use it as a source of data for
 our Gatsby blog.
 
