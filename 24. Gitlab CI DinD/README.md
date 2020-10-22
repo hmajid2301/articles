@@ -191,8 +191,8 @@ registry.gitlab.com/<username>/<project_name>/<tag>
 - docker push ${IMAGE_NAME}:${VERSION_TAG}
 ```
 
-We can also push our images to DockerHub, with the code above. We need to first login to DockerHub. Then change the
-name of our image `<username>/<project_name>`.
+We can also push our images to DockerHub, with the code shown above. We need to first login to DockerHub. Then change
+the name of our image `<username>/<project_name>`.
 
 ## Appendix
 
