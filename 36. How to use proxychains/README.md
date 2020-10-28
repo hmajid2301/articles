@@ -13,20 +13,27 @@ In this article, we will go over how you can use `proxychains` to proxy our traf
 
 ## Background
 
-Recently like everyone else, I've been working from home a lot more often. This means to access resources at work
+Recently, like everyone else, I've been working from home a lot more often. This means to access resources at work
 I need to use a VPN. However, to access some resources, such as production servers from my local machine, I need to
 use a SOCKS5 proxy. Without using a SOCKS proxy, I would need to do something shown in the diagram below.
 
 ### Example Setup
 
-![Local Server](images/local-server-server.png)
+```mermaid
+graph LR
+  A[Local Machine] -->|ssh| B[Server A]
+  B -->|ssh| C[Server B]
+  subgraph Firewall
+    C
+  end
+```
 
 First, I would need to SSH onto an intermediate server (`Server A`), which I have connectivity to from my local machine.
 Then on that intermediate server, I would need to SSH onto the production server. So this intermediate server needs
 to have connectivity to the `Server B` as well. As you can see `Server B` is behind a firewall, in this example, the
 firewall will only allow traffic from `Server A` to ingress to `Server B`. So we cannot connect directly from `Server A`.
 
-Another reason this setup is sub-optimal I lose all the development tools on my local machine. Say I wanted
+Another reason this setup is sub-optimal because, I lose all the development tools on my local machine. Say I wanted
 to use terraform to deploy/upgrade a service running on `Server B` server. I need to make sure terraform exists
 on the intermediate server. Now, this is fine for something simple like terraform which is a single binary file
 but may get more complicated for other pieces of software, especially if you cannot install extra packages on
@@ -43,8 +50,8 @@ production.
 
 ## SOCKS Proxy
 
-In this section, I will show you how to solve the problem we described above. To solve this problem we will need to use.
-A SOCKS (🧦 not this kinda socks) proxy, SOCKS is a layer 5 (on the OSI model, shown below) protocol. The protocol will allow
+In this section, I will show you how to solve the problem we described above. To solve this problem we will need to use,
+a SOCKS (🧦 not this kinda socks) proxy. SOCKS is a layer 5 (on the OSI model, shown below) protocol. The protocol will allow
 us to proxy to `Server A` and this server will then act as almost a middleman between the `Local Machine` and `Server B`.
 The SOCKS proxy doesn't interpret any network traffic between the client (`Local Machine`) and the
 server (`Server B`), it merely passes it onto between the two.
@@ -80,7 +87,20 @@ browsing using very much the same logic described above. Maybe you can access a 
 behind a firewall, such as an authentication server's GUI etc. You can read more about using a SOCKS
 proxy, in your browser [here](https://ma.ttias.be/socks-proxy-linux-ssh-bypass-content-filters/).
 
-![SSH Tunnel](images/socks-tunnel.png)
+```mermaid
+graph LR
+    subgraph Local Machine
+        A[TCP Port :8123]
+        B[SSH Client]
+    end
+
+    subgraph Remote Server
+        C[Server A]
+    end
+
+    B -->|Opens Port| A
+    B -->|SSH Tunnel| C
+```
 
 The diagram gives us a visual of what we've just done.
 
@@ -108,6 +128,23 @@ Edit the configuration file as shown above, `socks5 127.0.0.1 8123`. Adjust the 
 Now that `proxychains` is setup. This is what our setup now looks like:
 
 ![ProxyChains](images/proxychains.png)
+
+```mermaid
+graph LR
+    subgraph Local Machine
+      A[TCP Port :8123]
+      B[SSH Client]
+      D[Proxychains]
+    end
+
+    subgraph Remote Server
+      C[Server A]
+    end
+
+    D -->|Connects to| A
+    B -->|Opens Port| A
+    B -->|SSH Tunnel| C
+```
 
 ### Examples
 
@@ -146,7 +183,28 @@ What is essentially going on here is that traffic is being sent from our `Local 
 connect to `Server B` and pass traffic to the server. This in effect makes it seem our `Local Machine` can connect
 directly to `Server B`.
 
-![Overall Final Setup](images/overall.png)
+```mermaid
+graph LR
+    subgraph Local Machine
+      A[TCP Port :8123]
+      B[SSH Client]
+      D[Proxychains]
+    end
+
+    subgraph Remote Server
+      C[Server A]
+      E[Server B]
+    end
+
+    subgraph Firewall
+      E
+    end
+
+    D -->|Connects to| A
+    B -->|Opens Port| A
+    B -->|SSH Tunnel| C
+    C -->|TCP Connection| E
+```
 
 So overall we have something as described in the diagram above!
 
