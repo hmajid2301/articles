@@ -65,7 +65,7 @@ DNS is a system used to convert domain names into IP addresses because it's much
 For the sake of this article, we will be using the following docker-compose file:
 
 ```yaml:title=docker-compose.yml
-version: '3.5'
+version: "3.5"
 
 services:
   web_server:
@@ -94,7 +94,7 @@ services:
     image: postgres:latest
     env_file: docker/database.conf
     ports:
-      - 5432:5432  
+      - 5432:5432
     volumes:
       - db_volume:/var/lib/postgresql
 
@@ -105,7 +105,8 @@ volumes:
 It will create three containers, Nginx, a flask app and a Postgres database, when we run `docker-compose up --build`, in particular take **note** of the `container_name`(s): `postgres`, `nginx`, `flask`.
 
 :::tip Source Code
-The source code for those Docker containers can be found [here](https://gitlab.com/hmajid2301/articles/-/tree/master/7.%20Multi%20Docker%20Container%20with%20Nginx%2C%20Flask%20and%C2%A0MySQL/source_code)
+The source code for those Docker containers can be found
+[here](https://gitlab.com/hmajid2301/articles/-/tree/master/7.%20Multi%20Docker%20Container%20with%20Nginx%2C%20Flask%20and%C2%A0MySQL/source_code)
 :::
 
 ### Nginx
@@ -180,10 +181,7 @@ Let's take a slightly closer look into Docker's architecture to understand what 
 
 > Docker Engine is an open-source containerization technology for building and containerizing your applications. - https://docs.docker.com/engine/
 
-It contains the following components:
-    - A server with a long-running daemon process dockerd.
-    - APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon.
-    - A command-line interface (CLI) client docker.
+It contains the following components: - A server with a long-running daemon process dockerd. - APIs which specify interfaces that programs can use to talk to and instruct the Docker daemon. - A command-line interface (CLI) client docker.
 
 When we install Docker we are also installing the Docker Engine.
 
@@ -211,8 +209,9 @@ unless overwritten (explained below in the `Misc` section).
 :::
 
 :::important Daemon Vs Engine
+
 > Docker Daemon checks the client request and communicates with the Docker components to perform a service whereas, Docker Engine or Docker is the base engine installed on your host machine to build and run containers using Docker components and services - Anjali Nair, [Quora](https://www.quora.com/What-is-the-difference-between-the-Docker-Engine-and-Docker-Daemon)
-:::
+> :::
 
 ## Misc
 
