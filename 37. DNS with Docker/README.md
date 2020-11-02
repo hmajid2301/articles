@@ -113,7 +113,7 @@ The source code for those Docker containers can be found
 
 Our `nginx` config file looks something like:
 
-```title:example.conf{10}
+```conf:title=example.conf{10}
 server {
   listen 80;
   server_name _;
@@ -201,7 +201,7 @@ Engine then checks if the DNS query belongs to a container on the network that t
 If it does, then Docker Engine looks up the IP address that matches a container name in its key-value store and
 returns that IP back to the requesting container.
 
-![https://success.mirantis.com/api/images/.%2Frefarch%2Fnetworking%2Fimages%2FDNS.png](Docker DNS Explained)
+![https://success.mirantis.com/api/images/.%2Frefarch%2Fnetworking%2Fimages%2FDNS.png](https://success.mirantis.com/api/images/.%2Frefarch%2Fnetworking%2Fimages%2FDNS.png)
 
 :::note Normal Queries
 For all other DNS queries the Docker Engine will use the host machine's DNS settings,
@@ -211,7 +211,8 @@ unless overwritten (explained below in the `Misc` section).
 :::important Daemon Vs Engine
 
 > Docker Daemon checks the client request and communicates with the Docker components to perform a service whereas, Docker Engine or Docker is the base engine installed on your host machine to build and run containers using Docker components and services - Anjali Nair, [Quora](https://www.quora.com/What-is-the-difference-between-the-Docker-Engine-and-Docker-Daemon)
-> :::
+
+:::
 
 ## Misc
 
