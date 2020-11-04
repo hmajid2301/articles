@@ -86,6 +86,7 @@ If the command worked, you now have a SOCKS proxy. One common use case of a SOCK
 browsing using very much the same logic described above. Maybe you can access a website at work which is
 behind a firewall, such as an authentication server's GUI etc. You can read more about using a SOCKS
 proxy, in your browser [here](https://ma.ttias.be/socks-proxy-linux-ssh-bypass-content-filters/).
+The diagram gives us a visual of what we've just done.
 
 ```mermaid
 graph LR
@@ -101,8 +102,6 @@ graph LR
     B -->|Opens Port| A
     B -->|SSH Tunnel| C
 ```
-
-The diagram gives us a visual of what we've just done.
 
 ## Proxychains
 
