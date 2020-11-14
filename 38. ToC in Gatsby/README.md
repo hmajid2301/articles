@@ -49,7 +49,7 @@ You only need to add the emotion plugin if you want to use emotionjs, which is a
 You will see this later when we look at the `toc.js` component.
 :::
 
-```js:title=gatsby-config.js{1-2,5}
+```js{1-2,5}:title=gatsby-config.js
 `gatsby-plugin-emotion`,
 `gatsby-plugin-smoothscroll`,
 {
