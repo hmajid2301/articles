@@ -10,7 +10,9 @@ cover_image: "images/cover.jpg"
 ---
 
 In this article, we will go over what the `yield` keyword is used for. We will also cover how you can use a `yield`
-with a pytest fixture to allow us to clean up data after our tests.
+with a pytest fixture to allow us to "teardown" tests, after all of our tests have run. A common job being remvoving
+test data from the database, so that next time your run the tests your tests won't fail. Due to the database being
+in a different (unexpected) state.
 
 ## Background
 
