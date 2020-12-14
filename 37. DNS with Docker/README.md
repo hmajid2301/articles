@@ -10,7 +10,7 @@ cover_image: "images/cover.jpg"
 ---
 
 In this article, we will briefly go over what DNS (domain name system) is and explain how it is used in conjunction
-with Docker 🐳..
+with Docker 🐳.
 
 ## DNS
 
