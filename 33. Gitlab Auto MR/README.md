@@ -115,7 +115,7 @@ specify a merge request template to use by passing the `-d` and giving it the pa
 Fixes #<!-- Issue Number -->
 ```
 
-The final few options do the following:
+The other arguments do the following:
 
 - `-r`: Will remove the source branch (our feature branch) after the MR has been approved
 - `-s`: Will squash our commits into a single commit, so each feature branch will appear as a single commit onto the master branch
