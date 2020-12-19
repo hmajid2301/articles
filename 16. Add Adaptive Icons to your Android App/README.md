@@ -9,7 +9,7 @@ published: true
 cover_image: "images/cover.jpg"
 ---
 
-In this article, we will go over how you can use add the "new" adaptive app icons to your Android app.
+In this article, we will go over how you can use add the new adaptive app icons to your Android app.
 In his article I will be using a React Native project, so the structure of your Android app may vary.
 
 ![Mask](https://developer.android.com/guide/practices/ui_guidelines/images/NB_Icon_Mask_Shapes_Ext_02.gif)
