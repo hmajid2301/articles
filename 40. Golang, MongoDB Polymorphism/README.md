@@ -6,7 +6,7 @@ slug: "golang-mongodb-polymorphism"
 canonical_url: "https://haseebmajid.dev/blog/golang-mongodb-polymorphism/"
 date: "2020-12-20"
 published: true
-cover_image: "images/cover.jpg"
+cover_image: "images/cover.png"
 ---
 
 Recently I've been working on a new personal project called Banter Bus, a browser-based multiplayer game.
@@ -71,7 +71,7 @@ will have.
 Binary JSON the format used by MongoDB readme more about it [here](https://www.mongodb.com/json-and-bson)
 :::
 
-To do this we need to create a custom BSON unmarshal function. This will work very similarly to JSON unmarshalling.
+To do this we need to create a custom BSON unmarshal function. This will work very similarly to JSON unmarshaling.
 When we try to get data from MongoDB, doing something like:
 
 ```golang
