@@ -1,5 +1,5 @@
 ---
-title: "Golang & MongoDB with Polymorphism and BSON Unmarshall"
+title: "Golang & MongoDB with Polymorphism and BSON Unmarshal"
 tags: ["golang", "mongodb", "polymorphism", "bson"]
 license: "public-domain"
 slug: "golang-mongodb-polymorphism"
