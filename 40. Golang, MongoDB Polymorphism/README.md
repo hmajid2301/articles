@@ -67,7 +67,7 @@ will have.
 
 ## Unmarshal
 
-::: note BSON
+:::note BSON
 Binary JSON the format used by MongoDB readme more about it [here](https://www.mongodb.com/json-and-bson)
 :::
 
