@@ -1,0 +1,6 @@
+graph LR
+  A[Local Machine] -->|ssh| B[Server A]
+  B -->|ssh| C[Server B]
+  subgraph Firewall
+    C
+  end
