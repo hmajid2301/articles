@@ -10,7 +10,6 @@ import (
 	"gitlab.com/hmajid2301/articles/example-fizz-project/internal/server/models"
 )
 
-// Healthcheck checks if the API is healthy.
 func Healthcheck(_ *gin.Context) (*models.Healthcheck, error) {
 	host := "example.com"
 	port := "80"

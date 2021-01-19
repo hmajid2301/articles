@@ -4,10 +4,12 @@ tags: ["golang", "web-app", "fizz", "gin", "openapi"]
 license: "public-domain"
 slug: "golang-fizz-web-app"
 canonical_url: "https://haseebmajid.dev/blog/golang-fizz-web-app/"
-date: "2021-01-23"
+date: "2021-01-19"
 published: true
 cover_image: "images/cover.png"
 ---
+
+> Cover Photo from [Clipartmax](https://www.clipartmax.com/middle/m2i8m2K9G6K9N4d3_learn-golang-in-your-own-sandbox-golang-gopher/) and [Fizz Logo](https://github.com/wI2L/fizz)
 
 # Background
 
@@ -102,8 +104,14 @@ The Fizz library abstracts away routing partially for us, more on this later.
 This folder contains all the data structure and data types that will be received by the application
 from the client or sent back to the client from the application. For example:
 
-```go:title=internal/server/models/pets.go file=./source_code/internal/server/models/pets.go
+```go
+package models
 
+type Pet struct {
+	Name  string `json:"name"`
+	Price int    `json:"price"`
+	Breed string `json:"breed"`
+}
 ```
 
 This will be the object sent back to the client when they request to get a pet. Note the use of struct tags
@@ -111,14 +119,24 @@ This will be the object sent back to the client when they request to get a pet. 
 field will look for the `name` field in the JSON file. Later on we will see why we need to specify struct tags and not
 just us being explicit.
 
-```go:title=internal/server/models/params.go file=./source_code/internal/server/models/params.go
+```go
+package models
 
+type PetParams struct {
+	Name string `query:"name"`
+}
 ```
 
 Note the struct tag in this example is `query` and not `json` because it's used as a query parameter.
 We also have one final type of model to take a look at:
 
-```go:title=internal/server/models/input.go file=./source_code/internal/server/models/input.go
+```go
+package models
+
+type PetInput struct {
+	PetParams
+	Pet
+}
 
 ```
 
@@ -130,8 +148,33 @@ we will see exactly how we use this model a bit later.
 The controllers folder contains the main web service logic for the application. It contains the one function for every
 route/endpoint you have in your application. Let's take a look at the maintenance controller first
 
-```go:title=internal/server/controllers/maintenance_controllers.go file=./source_code/internal/server/controllers/maintenance_controllers.go
+```go
+package controllers
 
+import (
+	"net"
+	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/juju/errors"
+
+	"gitlab.com/hmajid2301/articles/example-fizz-project/internal/server/models"
+)
+
+func Healthcheck(_ *gin.Context) (*models.Healthcheck, error) {
+	host := "example.com"
+	port := "80"
+	timeout := time.Duration(1 * time.Second)
+	_, healthy := net.DialTimeout("tcp", host+":"+port, timeout)
+
+	if healthy != nil {
+		return &models.Healthcheck{}, errors.Errorf("Healthcheck Failed!")
+	}
+
+	return &models.Healthcheck{
+		Message: "The API is healthy.",
+	}, nil
+}
 ```
 
 So we have defined a new function, which receives a single argument the gin context (which we don't use, hence the `_`).
@@ -150,13 +193,40 @@ The second is an `error`, again we will see how errors are handled a bit later.
 
 Let's now take a look at the pets controller.
 
-```go:title=internal/server/controllers/pets_controller.go file=./source_code/internal/server/controllers/pets_controller.go
+```go
+package controllers
 
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/juju/errors"
+	"gitlab.com/hmajid2301/articles/example-fizz-project/internal/server/models"
+)
+
+func GetPet(_ *gin.Context, params *models.PetParams) (models.Pet, error) {
+	if params.Name != "bob" {
+		return models.Pet{}, errors.NotFoundf("Pet %s", params.Name)
+	}
+
+	return models.Pet{
+		Name:  "bob",
+		Price: 100,
+		Breed: "bengal",
+	}, nil
+
+}
+
+func UpdatePet(_ *gin.Context, input *models.PetInput) (models.Pet, error) {
+	if input.PetParams.Name != "bob" {
+		return models.Pet{}, errors.NotFoundf("Pet %s", input.PetParams.Name)
+	}
+
+	return input.Pet, nil
+}
 ```
 
 The first function:
 
-```go:title=internal/server/controllers/pets_controller.go
+```go
 func GetPet(_ *gin.Context, params *models.PetParams) (models.Pet, error) {
 	if params.Name != "bob" {
 		return models.Pet{}, errors.NotFoundf("Pet %s", params.Name)
@@ -181,7 +251,7 @@ reality you would look in your data store for information about the pet.
 
 The second function looks like:
 
-```go:title=internal/server/controllers/pets_controller.go
+```go
 func UpdatePet(_ *gin.Context, input *models.PetInput) (models.Pet, error) {
 	if input.PetParams.Name != "bob" {
 		return models.Pet{}, errors.NotFoundf("Pet %s", input.PetParams.Name)
@@ -214,7 +284,7 @@ example of how we can use Fizz, with more complicated HTTP requests.
 This file is where we link the routes to their specific handler functions (using Tonic). This is also where we
 provide most of the data that will be used to populate the OAS file.
 
-```go:title=internal/server/routes.go
+```go
 func NewRouter() (*fizz.Fizz, error) {
 	engine := gin.New()
 
@@ -257,7 +327,7 @@ func NewRouter() (*fizz.Fizz, error) {
 
 Let's break this function down:
 
-```go:title=internal/server/routes.go
+```go
 	engine := gin.New()
 
 	engine.Use(cors.Default())
@@ -281,7 +351,7 @@ Note we could change the path if we wanted and serve
 a YAML file as well `fizzApp.GET("/openapi", nil, fizzApp.OpenAPI(infos, "yaml"))`. Here we removed the
 extension and changed the generated file so that we will serve the client a YAML file.
 
-```go:title=internal/server/routes.go
+```go
 	group := fizzApp.Group("", "endpoints", "All of the endpoints.")
 	group.GET("/healthcheck", []fizz.OperationOption{
 		fizz.Summary("Checks API is healthy."),
@@ -303,7 +373,7 @@ extension and changed the generated file so that we will serve the client a YAML
 Next, let's get to the part of the function where we define our routes. First, we create a group, this will group the
 routes within the OAS (such as the tag).
 
-```go:title=internal/server/routes.go
+```go
 	group.GET("/pets:name", []fizz.OperationOption{
 		fizz.Summary("Get a pet by name."),
 		fizz.Response(fmt.Sprint(http.StatusInternalServerError), "Server Error", models.APIError{}, nil, nil),
@@ -321,7 +391,7 @@ choose the `GetPet` function we mentioned earlier and on a successful response w
 
 You can define whichever status code you want here such as an `http.StatusCreated` or `http.NoContent`.
 
-```go:title=internal/server/routes.go
+```go
 	if len(fizzApp.Errors()) != 0 {
 		return nil, fmt.Errorf("fizz errors: %v", fizzApp.Errors())
 	}
@@ -333,7 +403,7 @@ The final part of the function checks if Fizz returned any errors and sets up th
 any of the Tonic function handler return an error. As we saw earlier with some of the functions
 returning errors.
 
-```go:title=internal/server/routes.go
+```go
 func errHook(_ *gin.Context, e error) (int, interface{}) {
 	code, msg := http.StatusInternalServerError, http.StatusText(http.StatusInternalServerError)
 
