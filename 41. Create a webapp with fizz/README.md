@@ -375,9 +375,13 @@ In our cmd folder, we have the `main.go` file.
 
 ### main.go
 
-The `main.go` file, as is good practice in Golang, is used to start our application. In
-the root folder of our application run `go run cmd/example-fizz-project/main.go` then
-you should see something like:
+The `main.go` file, as is good practice in Golang, is used to start our application.
+
+```title:cmd/example-fizz-project/main.go file=./source_code/cmd/example-fizz-project/main.go
+
+```
+
+In the root folder of our application run `go run cmd/example-fizz-project/main.go` then you should see something like
 
 ```bash
 go run cmd/example-fizz-project/main.go
