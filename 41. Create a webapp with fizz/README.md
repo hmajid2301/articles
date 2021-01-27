@@ -381,7 +381,7 @@ The `main.go` file, as is good practice in Golang, is used to start our applicat
 
 ```
 
-In the root folder of our application run `go run cmd/example-fizz-project/main.go` then you should see something like
+In the root folder of our application run this command `go run cmd/example-fizz-project/main.go`. Then you should see something like:
 
 ```bash
 go run cmd/example-fizz-project/main.go
