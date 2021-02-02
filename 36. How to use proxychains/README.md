@@ -33,7 +33,7 @@ Then on that intermediate server, I would need to SSH onto the production server
 to have connectivity to the `Server B` as well. As you can see `Server B` is behind a firewall, in this example, the
 firewall will only allow traffic from `Server A` to ingress to `Server B`. So we cannot connect directly from `Server A`.
 
-Another reason this setup is sub-optimal because, I lose all the development tools on my local machine. Say I wanted
+Another reason this setup is sub-optimal is because, I lose all the development tools on my local machine. Say I wanted
 to use terraform to deploy/upgrade a service running on `Server B` server. I need to make sure terraform exists
 on the intermediate server. Now, this is fine for something simple like terraform which is a single binary file
 but may get more complicated for other pieces of software, especially if you cannot install extra packages on
