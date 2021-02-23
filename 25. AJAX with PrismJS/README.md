@@ -11,7 +11,7 @@ cover_image: "images/cover.jpg"
 
 ![demo](images/main.gif)
 
-In this article, we will go over how you can make PrismJS code blocks editable.
+In this article, we will go over how you can make PrismJS (syntax highlighted) code blocks editable.
 
 ## Introduction
 
