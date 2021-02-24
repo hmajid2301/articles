@@ -377,7 +377,7 @@ In our cmd folder, we have the `main.go` file.
 
 The `main.go` file, as is good practice in Golang, is used to start our application.
 
-```title:cmd/example-fizz-project/main.go file=./source_code/cmd/example-fizz-project/main.go
+```go:title=cmd/example-fizz-project/main.go file=./source_code/cmd/example-fizz-project/main.go
 
 ```
 

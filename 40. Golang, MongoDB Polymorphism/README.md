@@ -74,7 +74,7 @@ Binary JSON the format used by MongoDB readme more about it [here](https://www.m
 To do this we need to create a custom BSON unmarshal function. This will work very similarly to JSON unmarshaling.
 When we try to get data from MongoDB, doing something like:
 
-```golang
+```go
 collection := _database.Collection("games")
 err := collection.FindOne(_ctx, bson.M{"game_name": "quibly"}).Decode(interface{}{})
 ```

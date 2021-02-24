@@ -113,7 +113,7 @@ The source code for those Docker containers can be found
 
 Our `nginx` config file looks something like:
 
-```conf:title=example.conf{10}
+```nginx:title=example.conf{10}
 server {
   listen 80;
   server_name _;
