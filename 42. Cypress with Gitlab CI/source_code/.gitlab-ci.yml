@@ -1,0 +1,46 @@
+image: node:12.14.1
+
+variables:
+  CYPRESS_CACHE_FOLDER: "$CI_PROJECT_DIR/cache/Cypress"
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - cache/Cypress
+    - node_modules
+
+stages:
+  - test
+  - build
+  - deploy
+
+before_script:
+  - yarn install
+
+tests:
+  image: cypress/browsers:node12.14.1-chrome83-ff77
+  stage: test
+  script:
+    - yarn test:e2e:ci
+
+build:site:
+  stage: build
+  image: buildkite/puppeteer
+  only:
+    - master
+  script:
+    - apt-get update && apt-get install git -y
+    - yarn run build
+  artifacts:
+    paths:
+      - public
+
+deploy:site:
+  stage: deploy
+  only:
+    - master
+  script:
+    - npm i netlify-cli
+    - yarn deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_PERSONAL_TOKEN --message "$CI_COMMIT_TITLE"
+  dependencies:
+    - build:site

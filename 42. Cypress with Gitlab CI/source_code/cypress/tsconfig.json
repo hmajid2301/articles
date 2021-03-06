@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": "../node_modules",
+    "outDir": "integration/build",
+    "strict": true,
+    "sourceMap": false,
+    "jsx": "react",
+    "target": "es5",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "lib": ["es2015", "es2017", "dom"],
+    "types": ["cypress", "@testing-library/cypress/typings", "node"]
+  },
+  "include": ["integration/*.ts", "support/*.ts", "../node_modules/cypress"]
+}
