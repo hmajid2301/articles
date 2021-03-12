@@ -18,7 +18,7 @@ header would become blue.
 I ended up being able to do it using Redux. In this article, I will show you how you can theme your Expo
 app using Redux with React Navigation.
 
-_P.S_. This article is written in British English however, the code is written using American English to make it more consistent (colour vs color).
+This article is written in British English however, the code is written using American English to make it more consistent (colour vs color).
 
 ## React Navigation
 
