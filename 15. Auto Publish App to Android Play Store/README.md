@@ -51,7 +51,7 @@ more safe, for example, if your credentials are leaked, only one of your apps is
 
 ## GitLab
 
-Now we need the JSON file we just downloaded to be accessible for our GitLab jobs, where the JSON file should
+Now we need the JSON file we just downloaded to be accessible by our GitLab CI jobs, where the JSON file should
 look something like this;
 
 ```json
