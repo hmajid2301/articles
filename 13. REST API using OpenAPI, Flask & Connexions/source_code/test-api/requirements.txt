@@ -1,2 +1,2 @@
-connexion==2.3.0
-werkzeug==0.16.1
+connexion==2.9.0
+jsonschema==3.0.0
