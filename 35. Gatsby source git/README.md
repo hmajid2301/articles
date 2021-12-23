@@ -175,8 +175,8 @@ For example, in my use case [the article repo](https://gitlab.com/hmajid2301/art
 First, go to your Gatsby repo then go to `Settings > CI/CD > Pipeline triggers`. Then create a new pipeline trigger,
 save the newly created token to your CI/CD variables.
 
-`youtube: JbAk6xpBRxc`
-`youtube: X9m8UxmZgy8`
+`youtube: https://www.youtube.com/watch?v=JbAk6xpBRxc`
+`youtube: https://www.youtube.com/watch?v=X9m8UxmZgy8`
 
 Then also copy the `cURL` command shown and add the following to your `.gitlab-ci.yml`, with the `cURL` command.
 
@@ -273,7 +273,7 @@ rebuild:portfolio-site:
 
 You will want to turn `5f5e9c4f495aebe573c39aef` into a CI/CD variable, else anyone can force a rebuild of your site.
 
-`youtube: 7KRihyulbTQ`
+`youtube: https://www.youtube.com/watch?7KRihyulbTQ`
 
 That's it, we learnt how we can manage our markdown articles in a separate repo to our Gatsby blog! We went over how we
 can also automate the rebuild of our site using Gitlab CI and Netlify.
