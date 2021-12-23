@@ -15,7 +15,7 @@ take you directly to that heading.
 It's a nice little feature to have on your blog, which makes it easier for users to navigate and find the information
 they are looking for.
 
-`youtube: https://www.youtube.com/watch?YrUeiD4YO5E`
+`youtube: https://www.youtube.com/watch?v=YrUeiD4YO5E`
 
 ## Prerequisite
 

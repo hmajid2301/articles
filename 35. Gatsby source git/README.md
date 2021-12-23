@@ -273,7 +273,7 @@ rebuild:portfolio-site:
 
 You will want to turn `5f5e9c4f495aebe573c39aef` into a CI/CD variable, else anyone can force a rebuild of your site.
 
-`youtube: https://www.youtube.com/watch?7KRihyulbTQ`
+`youtube: https://www.youtube.com/watch?v=7KRihyulbTQ`
 
 That's it, we learnt how we can manage our markdown articles in a separate repo to our Gatsby blog! We went over how we
 can also automate the rebuild of our site using Gitlab CI and Netlify.

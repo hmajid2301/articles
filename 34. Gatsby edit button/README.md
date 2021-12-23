@@ -11,7 +11,7 @@ cover_image: "images/cover.jpg"
 
 In this article, we will look at how we can add an "edit post" button, to your Gatsby blog. When this button is clicked it will take the user to your markdown file, on github/gitlab that was used to generate the blog post they are currently viewing.
 
-`youtube: https://www.youtube.com/watch?rALo_BzGKs8`
+`youtube: https://www.youtube.com/watch?v=rALo_BzGKs8`
 
 ## Setup
 
