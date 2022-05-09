@@ -21,7 +21,7 @@ only. I also will be using a uvicorn to run the server.
 
 For example
 
-```python:title=app/main.py source=app/main.py
+```python:title=app/main.py file=./source_code/app/main.py
 
 ```
 
@@ -35,7 +35,7 @@ But this again can be done without the library, see this [Github issue](https://
 
 Anyhow we could simply do something like, this create a Socketio only server without FastAPI.
 
-```python:title=app/main.py source=app/main.py
+```python:title=app/main.py file=./source_code/app/main.py
 import socketio
 
 sio = socketio.AsyncServer()
@@ -46,7 +46,7 @@ application = socketio.ASGIApp(sio)
 
 Next lets take a look at the module which will handle our various events it should listen to from the client.
 
-```python:title=app/foo/foo_handlers.py source=app/foo/foo_handlers.py
+```python:title=app/foo/foo_handlers.py file=./source_code/app/foo/foo_handlers.py
 
 ```
 
@@ -58,7 +58,7 @@ What this function does specifically doesn't really matter.
 
 Finally let's put all this in our `app/__init__.py` module:
 
-```python:title=app/__init__.py source=app/__init__.py
+```python:title=app/__init__.py file=./source_code/app/__init__.py
 
 ```
 
