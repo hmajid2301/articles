@@ -1,0 +1,91 @@
+services:
+  app:
+    container_name: banter-bus-core-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+      cache_from:
+        - registry.gitlab.com/banter-bus/banter-bus-core-api:development
+    environment:
+      XDG_DATA_HOME: /commandhistory/
+      BANTER_BUS_CORE_API_DB_USERNAME: banterbus
+      BANTER_BUS_CORE_API_DB_PASSWORD: banterbus
+      BANTER_BUS_CORE_API_DB_HOST: banter-bus-database
+      BANTER_BUS_CORE_API_DB_PORT: 27017
+      BANTER_BUS_CORE_API_DB_NAME: test
+      BANTER_BUS_CORE_API_MANAGEMENT_API_URL: http://banter-bus-management-api
+      BANTER_BUS_CORE_API_MANAGEMENT_API_PORT: 8090
+      BANTER_BUS_CORE_API_CLIENT_ID: client_id
+      BANTER_BUS_CORE_API_USE_AUTH: "False"
+      BANTER_BUS_CORE_API_MESSAGE_QUEUE_HOST: banter-bus-message-queue
+      BANTER_BUS_CORE_API_MESSAGE_QUEUE_PORT: 6379
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./:/app
+      - /app/.venv/ # This stops local .venv getting mounted
+    depends_on:
+      - database
+      - management-api
+      - message-queue
+      - database-seed
+
+  management-api:
+    container_name: banter-bus-management-api
+    image: registry.gitlab.com/banter-bus/banter-bus-management-api:test
+    environment:
+      BANTER_BUS_MANAGEMENT_API_DB_USERNAME: banterbus
+      BANTER_BUS_MANAGEMENT_API_DB_PASSWORD: banterbus
+      BANTER_BUS_MANAGEMENT_API_DB_HOST: banter-bus-database
+      BANTER_BUS_MANAGEMENT_API_DB_NAME: banter_bus_management_api
+      BANTER_BUS_MANAGEMENT_API_WEB_PORT: 8090
+      BANTER_BUS_MANAGEMENT_API_CLIENT_ID: client_id
+      BANTER_BUS_MANAGEMENT_API_USE_AUTH: "False"
+    ports:
+      - 127.0.0.1:8090:8090
+    depends_on:
+      - database
+
+  database:
+    container_name: banter-bus-database
+    image: mongo:4.4.4
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: banterbus
+      MONGO_INITDB_ROOT_PASSWORD: banterbus
+      MONGO_INITDB_DATABASE: banterbus
+    volumes:
+      - /data/db
+    ports:
+      - 27017:27017
+
+  database-gui:
+    container_name: banter-bus-database-gui
+    image: mongoclient/mongoclient:4.0.1
+    depends_on:
+      - database
+    environment:
+      - MONGOCLIENT_DEFAULT_CONNECTION_URL=mongodb://banterbus:banterbus@banter-bus-database:27017
+    volumes:
+      - /data/db mongoclient/mongoclient
+    ports:
+      - 127.0.0.1:4000:3000
+
+  database-seed:
+    container_name: banter-bus-database-seed
+    image: registry.gitlab.com/banter-bus/banter-bus-management-api/database-seed:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: banterbus
+      MONGO_INITDB_ROOT_PASSWORD: banterbus
+      MONGO_INITDB_DATABASE: banter_bus_management_api
+      MONGO_HOSTNAME: banter-bus-database:27017
+    depends_on:
+      - database
+
+  message-queue:
+    container_name: banter-bus-message-queue
+    image: redis:6.2.4
+    volumes:
+      - /data/datastore /data
+    ports:
+      - 127.0.0.1:6379:6379

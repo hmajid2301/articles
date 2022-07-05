@@ -1,0 +1,81 @@
+image: python:3.10.5
+
+variables:
+  DOCKER_DRIVER: overlay2
+  PIP_CACHE_DIR: "${CI_PROJECT_DIR}/.cache/pip"
+  PIP_DOWNLOAD_DIR: ".pip"
+  DOCKER_HOST: tcp://docker:2375
+  FF_NETWORK_PER_BUILD: 1
+
+cache:
+  key: "${CI_JOB_NAME}"
+  paths:
+    - .cache/pip
+    - .venv
+
+.test:
+  services:
+    - name: mongo:4.4.4
+      alias: banter-bus-database
+    - name: redis:6.2.4
+      alias: banter-bus-message-queue
+    - name: registry.gitlab.com/banter-bus/banter-bus-management-api:test
+      alias: banter-bus-management-api
+    - name: registry.gitlab.com/banter-bus/banter-bus-management-api/database-seed:latest
+      alias: banter-bus-database-seed
+  variables:
+    MONGO_INITDB_ROOT_USERNAME: banterbus
+    MONGO_INITDB_ROOT_PASSWORD: banterbus
+    MONGO_INITDB_DATABASE: test
+    BANTER_BUS_MANAGEMENT_API_DB_USERNAME: banterbus
+    BANTER_BUS_MANAGEMENT_API_DB_PASSWORD: banterbus
+    BANTER_BUS_MANAGEMENT_API_DB_HOST: banter-bus-database
+    BANTER_BUS_MANAGEMENT_API_DB_PORT: 27017
+    BANTER_BUS_MANAGEMENT_API_DB_NAME: test
+    BANTER_BUS_MANAGEMENT_API_WEB_PORT: 8090
+    BANTER_BUS_MANAGEMENT_API_CLIENT_ID: client_id
+    BANTER_BUS_MANAGEMENT_API_USE_AUTH: "False"
+    MONGO_HOSTNAME: banter-bus-database:27017
+    BANTER_BUS_CORE_API_DB_USERNAME: banterbus
+    BANTER_BUS_CORE_API_DB_PASSWORD: banterbus
+    BANTER_BUS_CORE_API_DB_HOST: banter-bus-database
+    BANTER_BUS_CORE_API_DB_PORT: 27017
+    BANTER_BUS_CORE_API_DB_NAME: test
+    BANTER_BUS_CORE_API_MANAGEMENT_API_URL: http://banter-bus-management-api
+    BANTER_BUS_CORE_API_MANAGEMENT_API_PORT: 8090
+    BANTER_BUS_CORE_API_CLIENT_ID: client_id
+    BANTER_BUS_CORE_API_USE_AUTH: "False"
+    BANTER_BUS_CORE_API_MESSAGE_QUEUE_HOST: banter-bus-message-queue
+    BANTER_BUS_CORE_API_MESSAGE_QUEUE_PORT: 6379
+
+stages:
+  - test
+
+before_script:
+  - pip download --dest=${PIP_DOWNLOAD_DIR} poetry
+  - pip install --find-links=${PIP_DOWNLOAD_DIR} poetry
+  - poetry config virtualenvs.in-project true
+  - poetry install -vv
+
+test:lint:
+  stage: test
+  only:
+    - merge_request
+  script:
+    - poetry run pre-commit run --all-files
+
+test:unit-tests:
+  stage: test
+  only:
+    - merge_request
+  script:
+    - poetry run pytest -v tests/unit
+
+test:integration-tests:
+  stage: test
+  only:
+    - merge_request
+  extends:
+    - .test
+  script:
+    - poetry run pytest -v tests/integration
