@@ -43,7 +43,7 @@ All jobs also use `python:3.9.8` image, this is where our code is cloned into th
 
 Where our `.pre-commit-config.yaml` looks something like this:
 
-```yml:title=.pre-commit-config.yaml
+```yml:title=.pre-commit-config.yaml file=./source_code/.pre-commit-config.yaml
 ```
 
 `re-commit` is a library we can use to add pre-commit hooks before we commit our code to git. Adding some checks that
