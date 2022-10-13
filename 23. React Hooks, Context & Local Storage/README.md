@@ -40,7 +40,7 @@ We will use a project structure like so:
 
 Our `package.json` file looks like this:
 
-```json:title=package.json
+```json
 {
   "name": "ExampleApp",
   "version": "1.0.0",
@@ -83,7 +83,65 @@ First, let's create our React context that will store the current theme the user
 give us a function that other components can use to update the theme. Finally, after any change has been made
 it will update the local storage with the users latest settings.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx file=./source_code/src/providers/DarkModeProvider.tsx
+```tsx
+import React, { Context, createContext, useReducer, useEffect } from "react";
+
+export const LIGHT_THEME: Theme = {
+  background: "#fafafa" as BackgroundColors,
+  color: "#000000" as ForegroundColors,
+  isDark: false
+};
+
+export const DARK_THEME: Theme = {
+  background: "#333333" as BackgroundColors,
+  color: "#fafafa" as ForegroundColors,
+  isDark: true
+};
+
+export type BackgroundColors = "#333333" | "#fafafa";
+export type ForegroundColors = "#000000" | "#fafafa";
+
+export interface Theme {
+  background: BackgroundColors;
+  color: ForegroundColors;
+  isDark: boolean;
+}
+
+interface DarkModeContext {
+  mode: Theme;
+  dispatch: React.Dispatch<any>;
+}
+
+const darkModeReducer = (_: any, isDark: boolean) =>
+  isDark ? DARK_THEME : LIGHT_THEME;
+
+const DarkModeContext: Context<DarkModeContext> = createContext(
+  {} as DarkModeContext
+);
+
+const initialState =
+  JSON.parse(localStorage.getItem("DarkMode") as string) || LIGHT_THEME;
+
+const DarkModeProvider: React.FC = ({ children }) => {
+  const [mode, dispatch] = useReducer(darkModeReducer, initialState);
+
+  useEffect(() => {
+    localStorage.setItem("DarkMode", JSON.stringify(mode));
+  }, [mode]);
+
+  return (
+    <DarkModeContext.Provider
+      value={{
+        mode,
+        dispatch
+      }}
+    >
+      {children}
+    </DarkModeContext.Provider>
+  );
+};
+
+export { DarkModeProvider, DarkModeContext };
 
 ```
 
@@ -91,7 +149,7 @@ Next, we will import all of the modules we will need to use then. We will define
 and `DARK_THEME`. Then finally because we are using Typescript we will define types for the Themes and the context we
 will use.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx
+```tsx
 const darkModeReducer = (_: any, isDark: boolean) =>
   isDark ? DARK_THEME : LIGHT_THEME;
 ```
@@ -101,7 +159,7 @@ current app so it cannot have any unintended side-effects. Exactly the same func
 would define if we were using Redux. In this case, the reducer just returns the `DARK_THEME`
 if the `isDark` argument is `true` else it returns the `LIGHT_THEME`.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx
+```tsx
 const DarkModeContext: Context<DarkModeContext> = createContext(
   {} as DarkModeContext
 );
@@ -114,7 +172,7 @@ After this, we create our React context called `DarkModeContext` and we give it 
 (we don't really mind too much). We then define the default value. It tries to check the value
 stored in `localstorage`. If there is none, then we use the `LIGHT_THEME`. After which we define the provider.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx
+```tsx
 const DarkModeProvider: React.FC = ({ children }) => {
   const [mode, dispatch] = useReducer(darkModeReducer, initialState);
 
@@ -142,7 +200,7 @@ we use the `useReducer` hook and give it our `darkModeReducer` with the initial 
 reducer will then return a `mode` which is the current theme data and a function `dispatch`
 which will be used to update the current theme. Breaking it down a bit further we see:
 
-```tsx:title=./src/providers/DarkModeProvider.tsx
+```tsx
 useEffect(() => {
   localStorage.setItem("DarkMode", JSON.stringify(mode));
 }, [mode]);
@@ -154,7 +212,7 @@ stores the current theme into the user's local storage under the key `DarkMode`.
 this was changed from light -> dark and then the user comes back to the site, the initial value
 we would get from `localstorage.getItem("DarkMode")` would not, of course, be the dark theme.
 
-```tsx:title=./src/providers/DarkModeProvider.tsx
+```tsx
 return (
   <DarkModeContext.Provider
     value={{
@@ -182,7 +240,7 @@ theme, we will see how to do that later on.
 
 > Warning: The provider needs to be in a separate component to those that access the React Hook. Hence we import the `MainApp` component rather than including all of the `MainApp.tsx` in `App.tsx`.
 
-```tsx:title=src/App.tsx file=./source_code/src/App.tsx
+```tsx
 import React from "react";
 
 import { DarkModeProvider } from "~/providers/DarkModeProvider";
@@ -205,8 +263,35 @@ Now the MainApp is a very basic page: it contains a single button which is used 
 for dark to light and vice versa. Here we use React hooks with React context to be able to update and retrieve
 the theme.
 
-```tsx:title=src/views/MainApp.tsx file=./source_code/src/views/MainApp.tsx
+```tsx
+import React, { useContext } from "react";
 
+import { DarkModeContext } from "~/providers/DarkModeProvider";
+
+const MainApp = () => {
+  const theme = useContext(DarkModeContext);
+  const { background, color, isDark } = theme.mode;
+
+  return (
+    <div
+      style={{
+        background: background,
+        color: color,
+        minHeight: "100vh"
+      }}
+    >
+      <div>Theme is {isDark ? "Dark" : "Light"}</div>
+      <button onClick={() => setTheme(theme)}>Change Theme</button>
+    </div>
+  );
+};
+
+const setTheme = (darkMode: DarkModeContext) => {
+  const isDark = darkMode.mode.isDark;
+  darkMode.dispatch(!isDark);
+};
+
+export default MainApp;
 ```
 
 #### useContext
@@ -215,7 +300,7 @@ The `useContext` is an example of a React Hook. It allows users to access a spec
 component, a component which is not a class. The context has a mode property which stores the current theme we should
 display light or dark. Such as `background` and `color`.
 
-```tsx:title=src/views/MainApp.tsx
+```tsx
 const theme = useContext(DarkModeContext);
 const { background, color, isDark } = theme.mode;
 ```
@@ -230,7 +315,7 @@ has an `onClick` event. The `setTheme` function gets the current theme from the 
 It then calls the `dispatch` function we have defined in the context to change to the theme to the opposite
 it is at the moment. So light theme -> dark theme and dark theme -> light theme.
 
-```tsx:title=src/views/MainApp.tsx
+```tsx
 <button onClick={() => setTheme(theme)}>Change Theme</button>;
 
 //...
